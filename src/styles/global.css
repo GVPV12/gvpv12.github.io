@@ -39,6 +39,44 @@
     color: #cc0055 !important; /* Un poco más oscuro para hover */
   }
   
+  /* Links del contenido - Color #09e4e6 */
+  .prose a,
+  .content a,
+  article a,
+  p a,
+  main a,
+  section a {
+    color: #09e4e6 !important;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.2s ease;
+  }
+  
+  .prose a:hover,
+  .content a:hover,
+  article a:hover,
+  p a:hover,
+  main a:hover,
+  section a:hover {
+    color: #07b8ba !important; /* Un poco más oscuro para hover */
+  }
+  
+  /* Headers - Color #ff0077 */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .text-xl,
+  .text-2xl,
+  .text-3xl,
+  .text-4xl,
+  .text-5xl,
+  .text-6xl {
+    color: #ff0077 !important;
+  }
+  
   /* Texto en negrita - Color #19f711 */
   strong,
   b,
