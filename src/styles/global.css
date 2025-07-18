@@ -24,7 +24,7 @@
   .menu a,
   .navigation a,
   [role="navigation"] a {
-    color: #ff0077 !important;
+    color: #19f711 !important;
     text-decoration: none !important;
     border-bottom: none !important;
     transition: color 0.2s ease;
