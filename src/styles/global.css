@@ -83,13 +83,13 @@
   .font-bold,
   .font-semibold,
   .font-extrabold {
-    color: #19f711 !important;
+    color: #ff0077 !important;
   }
   
   /* Texto en cursiva - Color #ff0077 */
   em,
   i,
   .italic {
-    color: #ff0077 !important;
+    color: #19f711 !important;
   }
 }
