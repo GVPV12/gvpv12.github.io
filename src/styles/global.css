@@ -17,28 +17,7 @@
     font-family: 'Poppins', sans-serif;
   }
   
-  /* Links del menú/navegación - Color #ff0077 sin subrayado */
-  nav a,
-  header a,
-  .navbar a,
-  .menu a,
-  .navigation a,
-  [role="navigation"] a {
-    color: #ff0077 !important;
-    text-decoration: none !important;
-    border-bottom: none !important;
-    transition: color 0.2s ease;
-  }
-  
-  nav a:hover,
-  header a:hover,
-  .navbar a:hover,
-  .menu a:hover,
-  .navigation a:hover,
-  [role="navigation"] a:hover {
-    color: #cc0055 !important; /* Un poco más oscuro para hover */
-  }
-  
+
   /* Links del contenido - Color #09e4e6 */
   .prose a,
   .content a,
@@ -77,14 +56,7 @@
     color: #ff0077 !important;
   }
   
-  /* Texto en negrita - Color #19f711 */
-  strong,
-  b,
-  .font-bold,
-  .font-semibold,
-  .font-extrabold {
-    color: #ff0077 !important;
-  }
+
   
   /* Texto en cursiva - Color #ff0077 */
   em,
