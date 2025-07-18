@@ -5,36 +5,46 @@
 @tailwind utilities;
 
 @layer base {
-  html,
-  body {
-    font-family: 'Poppins', sans-serif;
-  }
   pre,
   code {
     font-size: 0.875rem;
   }
   
-  /* Estilos para links del menú */
+  /* Fuente Poppins para todo el sitio */
+  html,
+  body,
+  * {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Links del menú/navegación - Color #ff0077 sin subrayado */
   nav a,
   header a,
+  .navbar a,
   .menu a,
-  .navigation a {
+  .navigation a,
+  [role="navigation"] a {
     color: #ff0077 !important;
     text-decoration: none !important;
+    border-bottom: none !important;
     transition: color 0.2s ease;
   }
   
   nav a:hover,
   header a:hover,
+  .navbar a:hover,
   .menu a:hover,
-  .navigation a:hover {
-    color: #cc0055 !important; /* un poco más oscuro para hover */
+  .navigation a:hover,
+  [role="navigation"] a:hover {
+    color: #cc0055 !important; /* Un poco más oscuro para hover */
   }
   
-  /* Estilos para texto en negrita */
+  /* Texto en negrita - Color #19f711 */
   strong,
   b,
-  .font-bold {
+  .font-bold,
+  .font-semibold,
+  .font-extrabold {
     color: #19f711 !important;
   }
 }
