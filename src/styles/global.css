@@ -1,43 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  html,
+  body {
+    font-family: 'Poppins', sans-serif;
+  }
   pre,
   code {
     font-size: 0.875rem;
   }
-}
-
-/* Agregar aquí los estilos para links */
-@layer base {
-  a {
-    color: #0ae1e4; /* azul por defecto, cambia por tu color */
-    text-decoration: underline;
-    text-underline-offset: 2px;
+  
+  /* Estilos para links del menú */
+  nav a,
+  header a,
+  .menu a,
+  .navigation a {
+    color: #ff0077 !important;
+    text-decoration: none !important;
+    transition: color 0.2s ease;
   }
   
-  a:hover {
-    color: #c71d6d; /* azul más oscuro al hover */
-    text-decoration: underline;
-  }
-}
-
-/* O si prefieres ser más específico para links en contenido */
-@layer base {
-  .prose a,
-  .content a,
-  article a,
-  p a {
-    color: #c71d6d; 
-    text-decoration: underline;
-    text-underline-offset: 2px;
+  nav a:hover,
+  header a:hover,
+  .menu a:hover,
+  .navigation a:hover {
+    color: #cc0055 !important; /* un poco más oscuro para hover */
   }
   
-  .prose a:hover,
-  .content a:hover,
-  article a:hover,
-  p a:hover {
-    color: #0ae1e4; /* verde más oscuro */
+  /* Estilos para texto en negrita */
+  strong,
+  b,
+  .font-bold {
+    color: #19f711 !important;
   }
 }
