@@ -93,38 +93,5 @@
     color: #ff0077 !important;
   }
 
-  /* Estilos para la barra de navegación lateral (Table of Contents) */
-.toc h1,
-.toc h2,
-.toc h3,
-.toc h4,
-.toc h5,
-.toc h6,
-.table-of-contents h1,
-.table-of-contents h2,
-.table-of-contents h3,
-.table-of-contents h4,
-.table-of-contents h5,
-.table-of-contents h6,
-aside h1,
-aside h2,
-aside h3,
-aside h4,
-aside h5,
-aside h6 {
-  color: #cc0055 !important;
-}
-
-/* También para los links dentro de la navegación lateral */
-.toc a,
-.table-of-contents a,
-aside a {
-  color: #19f711 !important;
-}
-
-.toc a:hover,
-.table-of-contents a:hover,
-aside a:hover {
-  color: #990033 !important;
-}
+  
 }
