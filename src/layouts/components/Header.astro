@@ -5,23 +5,24 @@ import AvaLogo from '@src/assets/img/small-ava.jpg';
 import GithubWhite from '@src/assets/img/github-mark-white.svg';
 import GithubBlack from '@src/assets/img/github-mark.svg';
 
+
 const menu = [
   {
-    link: '/about/',
-    label: 'About'
-  },
-  {
-    link: '/posts/',
-    label: 'Posts'
-  },
-  {
-    link: '/projects/',
-    label: 'Projects'
-  },
-  {
-    link: '/tags/',
-    label: 'Tags'
-  },
+		link: '/about/',
+		label: 'About'
+	},
+	{
+		link: '/posts/',
+		label: 'Posts'
+	},
+	{
+		link: '/projects/',
+		label: 'Projects'
+	},
+	{
+		link: '/tags/',
+		label: 'Tags'
+	},
 ];
 ---
 
@@ -35,7 +36,9 @@ const menu = [
 		<nav class='flex gap-4 items-center justify-between py-3'>
 			<h2 class='m-0'>
 				<a href='/' class='flex gap-4 items-center text-xl font-black uppercase'>
-					<Image src={AvaLogo} alt='Your site name' class="rounded-full w-11 border-white border-2 shadow-lg"/> 
+					<!-- You can use your site logo, rounded ava or simply your site name here-->
+          <Image src={AvaLogo} alt='Your site name' class="rounded-full w-11 border-white border-2 shadow-lg"/> 
+					<!-- {SITE_TITLE} -->
 				</a>
 			</h2>
 			<div class='flex'>
@@ -88,14 +91,11 @@ const menu = [
           </HeaderLink>
         </div>
         {
-          menu.map((item, index) => (
+          menu.map((item) => (
             <div class='px-2.5 text-sm'>
               <HeaderLink class="py-3 flex items-center" href={item.link}>
                 {item.label}
               </HeaderLink>
-              {index < menu.length - 1 && (
-                <span class="menu-separator">|</span>
-              )}
             </div>
           ))
         }
@@ -113,18 +113,6 @@ const menu = [
 		.dark #themeToggle .moon {
 			display: block;
 		}
-
-			.menu-separator {
-			
-			margin: 0 0.5rem;
-			pointer-events: none;
-			user-select: none;
-			position: absolute;
-			right: -0.75rem;
-			top: 50%;
-			transform: translateY(-50%);
-		}
-
 	</style>
 
 	<script is:inline>
