@@ -5,7 +5,6 @@ import AvaLogo from '@src/assets/img/small-ava.jpg';
 import GithubWhite from '@src/assets/img/github-mark-white.svg';
 import GithubBlack from '@src/assets/img/github-mark.svg';
 
-
 const menu = [
   {
 		link: '/about/',
@@ -91,12 +90,18 @@ const menu = [
           </HeaderLink>
         </div>
         {
-          menu.map((item) => (
-            <div class='px-2.5 text-sm'>
-              <HeaderLink class="py-3 flex items-center" href={item.link}>
-                {item.label}
-              </HeaderLink>
-            </div>
+          menu.map((item, index) => (
+            <>
+              <!-- Separador antes de cada elemento del menú -->
+              <div class="flex items-center">
+                <span class="text-current opacity-30">|</span>
+              </div>
+              <div class='px-2.5 text-sm'>
+                <HeaderLink class="py-3 flex items-center" href={item.link}>
+                  {item.label}
+                </HeaderLink>
+              </div>
+            </>
           ))
         }
       </div>
