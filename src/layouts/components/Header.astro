@@ -26,6 +26,19 @@ const menu = [
 ];
 ---
 
+<nav>
+  {menu.map((item, index) => (
+    <>
+      <HeaderLink href={item.link}>
+        {item.label}
+      </HeaderLink>
+      {index < menu.length - 1 && (
+        <span class="menu-separator">|</span>
+      )}
+    </>
+  ))}
+</nav>
+
 <header
 	id='site-header'
 	class:list={[
