@@ -41,6 +41,23 @@ const menu = [
 				</a>
 			</h2>
 			<div class='flex'>
+				<!-- Google Translate Widget (oculto) -->
+				<div id="google_translate_element" class="hidden"></div>
+				
+				<!-- Botón de traducción personalizado -->
+				<button class='p-3' id='translateToggle' aria-label='Toggle translation' title='Traducir / Translate'>
+					<!-- Icono de traducción -->
+					<svg id="translateIcon" class='translate-icon' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+						<path d="M7 3h10v2H7zM4 7h16v2H4zM7 13h10v2H7zM4 17h16v2H4z"></path>
+						<path d="M12 6v12M9 9l3-3 3 3"></path>
+					</svg>
+					<!-- Icono de revertir (inicialmente oculto) -->
+					<svg id="revertIcon" class='revert-icon hidden' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+						<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+						<path d="M3 3v5h5"></path>
+					</svg>
+				</button>
+				
 				<a class='p-3 dark:hidden' href='https://github.com/devaradise/devolio' target='_blank'
 					><Image src={GithubBlack} width={24} height={24} alt='Github logo' /></a
 				>
@@ -118,9 +135,147 @@ const menu = [
 		.dark #themeToggle .moon {
 			display: block;
 		}
+
+		/* Estilos para Google Translate */
+		.goog-te-banner-frame.skiptranslate {
+			display: none !important;
+		}
+		
+		body {
+			top: 0px !important;
+		}
+		
+		.goog-te-gadget-icon {
+			display: none !important;
+		}
+		
+		.goog-te-gadget-simple {
+			background-color: transparent !important;
+			border: none !important;
+			font-size: 12px !important;
+		}
+
+		/* Animación para el botón de traducción */
+		#translateToggle {
+			transition: all 0.3s ease;
+		}
+
+		#translateToggle:hover {
+			transform: scale(1.1);
+		}
+
+		.translate-icon, .revert-icon {
+			transition: opacity 0.3s ease;
+		}
+
+		/* Indicador visual cuando está traducido */
+		.translated #translateIcon {
+			color: #10b981; /* green-500 */
+		}
+
+		.translated .revert-icon {
+			color: #ef4444; /* red-500 */
+		}
 	</style>
 
 	<script is:inline>
+		// Variables globales para la traducción
+		let isTranslated = false;
+		let currentLanguage = 'es'; // Idioma original de tu sitio
+		let userLanguage = '';
+
+		// Función requerida por Google Translate
+		function googleTranslateElementInit() {
+			new google.translate.TranslateElement({
+				pageLanguage: currentLanguage,
+				includedLanguages: 'en,fr,de,it,pt,ru,zh,ja,ko,ar',
+				autoDisplay: false,
+				layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+			}, 'google_translate_element');
+			
+			setTimeout(initializeTranslation, 1000);
+		}
+
+		// Inicializar la traducción automática
+		function initializeTranslation() {
+			// Detectar idioma del navegador
+			userLanguage = (navigator.language || navigator.userLanguage).substr(0, 2);
+			
+			// Si el idioma del usuario es diferente al original, traducir automáticamente
+			if (userLanguage !== currentLanguage) {
+				translateToLanguage(userLanguage);
+			}
+		}
+
+		// Función para traducir a un idioma específico
+		function translateToLanguage(langCode) {
+			const selectElement = document.querySelector('.goog-te-combo');
+			if (selectElement) {
+				// Buscar la opción del idioma
+				const options = selectElement.options;
+				for (let i = 0; i < options.length; i++) {
+					if (options[i].value.includes(langCode)) {
+						selectElement.selectedIndex = i;
+						selectElement.dispatchEvent(new Event('change'));
+						
+						// Actualizar estado
+						isTranslated = true;
+						updateTranslateButton();
+						
+						break;
+					}
+				}
+			}
+		}
+
+		// Función para revertir al idioma original
+		function revertToOriginal() {
+			const selectElement = document.querySelector('.goog-te-combo');
+			if (selectElement) {
+				selectElement.selectedIndex = 0; // Primera opción es siempre el idioma original
+				selectElement.dispatchEvent(new Event('change'));
+				
+				// Actualizar estado
+				isTranslated = false;
+				updateTranslateButton();
+			}
+		}
+
+		// Actualizar la apariencia del botón
+		function updateTranslateButton() {
+			const translateIcon = document.getElementById('translateIcon');
+			const revertIcon = document.getElementById('revertIcon');
+			const translateButton = document.getElementById('translateToggle');
+
+			if (isTranslated) {
+				translateIcon.classList.add('hidden');
+				revertIcon.classList.remove('hidden');
+				translateButton.classList.add('translated');
+				translateButton.title = 'Volver al idioma original / Back to original';
+			} else {
+				translateIcon.classList.remove('hidden');
+				revertIcon.classList.add('hidden');
+				translateButton.classList.remove('translated');
+				translateButton.title = 'Traducir / Translate';
+			}
+		}
+
+		// Manejar clic en el botón de traducción
+		function handleTranslateClick() {
+			if (isTranslated) {
+				revertToOriginal();
+			} else {
+				// Si no está traducido, traducir al idioma del navegador
+				if (userLanguage && userLanguage !== currentLanguage) {
+					translateToLanguage(userLanguage);
+				} else {
+					// Si el idioma del navegador es el mismo que el original, traducir a inglés por defecto
+					translateToLanguage('en');
+				}
+			}
+		}
+
+		// Tema toggle (código original)
 		const theme = (() => {
 			if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
 				return 'dark';
@@ -165,6 +320,14 @@ const menu = [
 			}
 			localStorage.setItem('theme', isDark ? 'dark' : 'light');
 		};
-		document.getElementById('themeToggle')?.addEventListener('click', handleToggleClick);
+
+		// Event listeners
+		document.addEventListener('DOMContentLoaded', () => {
+			document.getElementById('themeToggle')?.addEventListener('click', handleToggleClick);
+			document.getElementById('translateToggle')?.addEventListener('click', handleTranslateClick);
+		});
 	</script>
+
+	<!-- Cargar Google Translate -->
+	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </header>
