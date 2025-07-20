@@ -84,7 +84,7 @@ const menu = [
 								<span>Русский</span>
 								<span class="text-xs opacity-60">RUS</span>
 							</button>
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="zh" data-label="CHN">
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="zh-cn" data-label="CHN">
 								<span>中文</span>
 								<span class="text-xs opacity-60">CHN</span>
 							</button>
@@ -320,6 +320,7 @@ const menu = [
 			'it': 'ITA',
 			'pt': 'POR',
 			'ru': 'RUS',
+			'zh-cn': 'CHN',
 			'zh': 'CHN',
 			'ja': 'JPN',
 			'ko': 'KOR'
@@ -329,18 +330,21 @@ const menu = [
 		function googleTranslateElementInit() {
 			new google.translate.TranslateElement({
 				pageLanguage: 'es',
-				includedLanguages: 'en,fr,de,it,pt,ru,zh,ja,ko',
+				includedLanguages: 'en,fr,de,it,pt,ru,zh-cn,ja,ko',
 				autoDisplay: false,
-				layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+				layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+				multilanguagePage: true,
+				gaTrack: false,
+				gaId: null
 			}, 'google_translate_element');
 			
-			// Esperar a que se cargue completamente
+			// Reducir tiempo de espera y hacer carga más agresiva
 			setTimeout(() => {
 				googleTranslateLoaded = true;
 				console.log('Google Translate cargado');
 				detectCurrentLanguage();
 				startLanguageObserver();
-			}, 2000);
+			}, 800);
 		}
 
 		// Detectar el idioma actual desde la URL o selector
@@ -348,13 +352,16 @@ const menu = [
 			try {
 				// Método 1: Detectar desde la URL
 				const url = window.location.href;
-				const urlParams = new URLSearchParams(window.location.search);
 				
 				// Buscar parámetro de Google Translate en la URL
 				if (url.includes('#googtrans(')) {
 					const match = url.match(/#googtrans\(es\|([^)]+)\)/);
 					if (match && match[1]) {
-						const detectedLang = match[1];
+						let detectedLang = match[1];
+						// Normalizar códigos de chino
+						if (detectedLang === 'zh' || detectedLang === 'zh-cn') {
+							detectedLang = 'zh-cn';
+						}
 						console.log('Idioma detectado desde URL:', detectedLang);
 						updateLanguageUI(detectedLang, languageMap[detectedLang] || detectedLang.toUpperCase());
 						currentLang = detectedLang;
@@ -366,7 +373,11 @@ const menu = [
 				const selectElement = document.querySelector('.goog-te-combo');
 				if (selectElement && selectElement.value) {
 					const selectedValue = selectElement.value;
-					const langCode = selectedValue.includes('|') ? selectedValue.split('|')[1] : '';
+					let langCode = selectedValue.includes('|') ? selectedValue.split('|')[1] : '';
+					// Normalizar códigos de chino
+					if (langCode === 'zh' || langCode === 'zh-cn') {
+						langCode = 'zh-cn';
+					}
 					console.log('Idioma detectado desde selector:', langCode);
 					updateLanguageUI(langCode, languageMap[langCode] || 'ESP');
 					currentLang = langCode;
@@ -452,20 +463,26 @@ const menu = [
 					return;
 				}
 
+				// Normalizar código de chino
+				let normalizedLangCode = langCode;
+				if (langCode === 'zh' || langCode === 'zh-cn') {
+					normalizedLangCode = 'zh-cn';
+				}
+
 				// Para otros idiomas, usar el selector de Google Translate
 				function findAndChangeLanguage(attempts = 0) {
 					const selectElement = document.querySelector('.goog-te-combo');
 					
-					if (!selectElement && attempts < 20) {
+					if (!selectElement && attempts < 15) {
 						console.log(`Intento ${attempts + 1}: Esperando selector...`);
-						setTimeout(() => findAndChangeLanguage(attempts + 1), 250);
+						setTimeout(() => findAndChangeLanguage(attempts + 1), 200);
 						return;
 					}
 
 					if (!selectElement) {
 						console.log('Selector no encontrado, usando método alternativo');
 						// Método alternativo usando hash en la URL
-						window.location.hash = `googtrans(es|${langCode})`;
+						window.location.hash = `googtrans(es|${normalizedLangCode})`;
 						window.location.reload();
 						return;
 					}
@@ -476,7 +493,13 @@ const menu = [
 					
 					for (let i = 0; i < options.length; i++) {
 						const value = options[i].value;
-						if (value.includes(`|${langCode}`) || value === langCode) {
+						// Buscar tanto zh-cn como zh para compatibilidad
+						if (normalizedLangCode === 'zh-cn' && (value.includes('|zh-cn') || value.includes('|zh'))) {
+							console.log(`Idioma chino encontrado: ${value}`);
+							selectElement.selectedIndex = i;
+							found = true;
+							break;
+						} else if (value.includes(`|${normalizedLangCode}`) || value === normalizedLangCode) {
 							console.log(`Idioma encontrado: ${value}`);
 							selectElement.selectedIndex = i;
 							found = true;
@@ -485,7 +508,10 @@ const menu = [
 					}
 
 					if (!found) {
-						console.log(`Idioma ${langCode} no encontrado en opciones`);
+						console.log(`Idioma ${normalizedLangCode} no encontrado en opciones`);
+						// Intentar con método de URL como respaldo
+						window.location.hash = `googtrans(es|${normalizedLangCode})`;
+						setTimeout(() => window.location.reload(), 300);
 						window.changingLanguage = false;
 						return;
 					}
@@ -495,8 +521,8 @@ const menu = [
 					selectElement.dispatchEvent(changeEvent);
 
 					// Actualizar UI inmediatamente
-					updateLanguageUI(langCode, langLabel);
-					currentLang = langCode;
+					updateLanguageUI(normalizedLangCode, langLabel);
+					currentLang = normalizedLangCode;
 
 					console.log('Cambio de idioma iniciado');
 				}
@@ -506,10 +532,10 @@ const menu = [
 			} catch (error) {
 				console.error('Error cambiando idioma:', error);
 			} finally {
-				// Liberar el bloqueo después de un tiempo
+				// Liberar el bloqueo después de un tiempo más corto
 				setTimeout(() => {
 					window.changingLanguage = false;
-				}, 3000);
+				}, 2000);
 			}
 		}
 
