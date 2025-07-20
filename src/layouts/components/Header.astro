@@ -56,7 +56,7 @@ const menu = [
 					<!-- Lista desplegable de idiomas -->
 					<div id="languageDropdown" class="absolute top-full right-0 mt-1 bg-white dark:bg-zinc-900 border dark:border-zinc-700 rounded-lg shadow-lg min-w-[120px] z-[1000] hidden">
 						<div class="py-1">
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between active" data-lang="" data-label="ESP">
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="" data-label="ESP">
 								<span>Español</span>
 								<span class="text-xs opacity-60">ESP</span>
 							</button>
@@ -141,7 +141,7 @@ const menu = [
 				</button>
 			</div>
 		</nav>
-    <div class='fixed top-3 w-auto max-w-full px-3 left-1/2 -translate-x-1/2 z-[999]' id='floating-menu'>
+    <div class='fixed top-3 w-auto max-w-full px-3 left-1/2 -translate-x-1/2 z-[999]' id='navigation-menu'>
       <div class="flex px-2.5 bg-white/90 dark:bg-zinc-900/75 backdrop-blur-md leading-tight rounded-full border dark:border-zinc-700">
         <div class="px-2.5 text-sm">
           <HeaderLink class="py-3 flex items-center" href="/" aria-label="Home">
@@ -178,7 +178,7 @@ const menu = [
 			display: block;
 		}
 
-		/* Estilos básicos para Google Translate */
+		/* Estilos para Google Translate */
 		.goog-te-banner-frame.skiptranslate {
 			display: none !important;
 		}
@@ -197,45 +197,9 @@ const menu = [
 			font-size: 12px !important;
 		}
 
-		/* PROTECCIÓN ESPECÍFICA DEL MENÚ - NO TOCAR ESTOS ELEMENTOS */
-		#site-header,
-		#site-header *,
-		#floating-menu,
-		#floating-menu *,
-		#languageSelector,
-		#languageSelector *,
-		#languageDropdown,
-		#languageDropdown * {
-			-webkit-transform: none !important;
-			-moz-transform: none !important;
-			-ms-transform: none !important;
-			-o-transform: none !important;
-			transform: none !important;
-			position: relative !important;
+		/* Forzar visibilidad del menú de navegación */
+		#navigation-menu {
 			display: block !important;
-			visibility: visible !important;
-			opacity: 1 !important;
-		}
-
-		/* Asegurar que el header y menú flotante mantengan su posición */
-		#site-header {
-			position: relative !important;
-			z-index: 9999 !important;
-		}
-
-		#floating-menu {
-			position: fixed !important;
-			top: 12px !important;
-			left: 50% !important;
-			transform: translateX(-50%) !important;
-			z-index: 9999 !important;
-		}
-
-		/* Proteger botones específicos */
-		#themeToggle,
-		#languageToggle {
-			position: relative !important;
-			display: flex !important;
 			visibility: visible !important;
 			opacity: 1 !important;
 		}
@@ -272,36 +236,16 @@ const menu = [
 		}
 
 		.language-option.active {
-			background-color: #3b82f6 !important;
-			color: white !important;
+			background-color: #3b82f6;
+			color: white;
 		}
 
 		.language-option.active:hover {
-			background-color: #2563eb !important;
+			background-color: #2563eb;
 		}
 
 		#languageArrow.rotate {
-			transform: rotate(180deg) !important;
-		}
-
-		/* Forzar visibilidad cuando Google Translate está activo */
-		body.translated-ltr #site-header,
-		body.translated-rtl #site-header,
-		body.translated-ltr #floating-menu,
-		body.translated-rtl #floating-menu {
-			display: flex !important;
-			visibility: visible !important;
-			opacity: 1 !important;
-			position: relative !important;
-			z-index: 9999 !important;
-		}
-
-		body.translated-ltr #floating-menu,
-		body.translated-rtl #floating-menu {
-			position: fixed !important;
-			top: 12px !important;
-			left: 50% !important;
-			transform: translateX(-50%) !important;
+			transform: rotate(180deg);
 		}
 	</style>
 
@@ -309,6 +253,21 @@ const menu = [
 		// Variables globales
 		let googleTranslateLoaded = false;
 		let currentLang = '';
+		let languageObserver = null;
+
+		// Mapa de códigos de idioma a etiquetas
+		const languageMap = {
+			'': 'ESP',
+			'en': 'ENG', 
+			'fr': 'FRA',
+			'de': 'DEU',
+			'it': 'ITA',
+			'pt': 'POR',
+			'ru': 'RUS',
+			'zh': 'CHN',
+			'ja': 'JPN',
+			'ko': 'KOR'
+		};
 
 		// Función requerida por Google Translate
 		function googleTranslateElementInit() {
@@ -323,90 +282,179 @@ const menu = [
 			setTimeout(() => {
 				googleTranslateLoaded = true;
 				console.log('Google Translate cargado');
-				
-				// Proteger el menú después de la carga
-				protectMenuElements();
-			}, 1500);
+				detectCurrentLanguage();
+				startLanguageObserver();
+			}, 2000);
 		}
 
-		// Función para proteger elementos del menú
-		function protectMenuElements() {
-			const elementsToProtect = [
-				'#site-header',
-				'#floating-menu',
-				'#languageSelector',
-				'#languageDropdown',
-				'#themeToggle',
-				'#languageToggle'
-			];
-
-			elementsToProtect.forEach(selector => {
-				const element = document.querySelector(selector);
-				if (element) {
-					// Aplicar estilos de protección
-					element.style.cssText += `
-						position: relative !important;
-						display: block !important;
-						visibility: visible !important;
-						opacity: 1 !important;
-						transform: none !important;
-						z-index: 9999 !important;
-					`;
-					
-					// Si es el menú flotante, mantener su posición fija
-					if (selector === '#floating-menu') {
-						element.style.cssText += `
-							position: fixed !important;
-							top: 12px !important;
-							left: 50% !important;
-							transform: translateX(-50%) !important;
-						`;
+		// Detectar el idioma actual desde la URL o selector
+		function detectCurrentLanguage() {
+			try {
+				// Método 1: Detectar desde la URL
+				const url = window.location.href;
+				const urlParams = new URLSearchParams(window.location.search);
+				
+				// Buscar parámetro de Google Translate en la URL
+				if (url.includes('#googtrans(')) {
+					const match = url.match(/#googtrans\(es\|([^)]+)\)/);
+					if (match && match[1]) {
+						const detectedLang = match[1];
+						console.log('Idioma detectado desde URL:', detectedLang);
+						updateLanguageUI(detectedLang, languageMap[detectedLang] || detectedLang.toUpperCase());
+						currentLang = detectedLang;
+						return;
 					}
 				}
+
+				// Método 2: Detectar desde el selector de Google Translate
+				const selectElement = document.querySelector('.goog-te-combo');
+				if (selectElement && selectElement.value) {
+					const selectedValue = selectElement.value;
+					const langCode = selectedValue.includes('|') ? selectedValue.split('|')[1] : '';
+					console.log('Idioma detectado desde selector:', langCode);
+					updateLanguageUI(langCode, languageMap[langCode] || 'ESP');
+					currentLang = langCode;
+					return;
+				}
+
+				// Método 3: Detectar cambios en el DOM
+				const translatedElements = document.querySelectorAll('font[style*="vertical-align: inherit"]');
+				if (translatedElements.length > 0) {
+					console.log('Traducción detectada en el DOM');
+					// Si hay elementos traducidos pero no podemos detectar el idioma específico,
+					// mantener el último idioma seleccionado
+					if (currentLang && currentLang !== '') {
+						updateLanguageUI(currentLang, languageMap[currentLang]);
+					}
+				} else {
+					// No hay traducción, volver a español
+					updateLanguageUI('', 'ESP');
+					currentLang = '';
+				}
+			} catch (error) {
+				console.log('Error detectando idioma:', error);
+				// En caso de error, mantener español como predeterminado
+				updateLanguageUI('', 'ESP');
+			}
+		}
+
+		// Observer para detectar cambios en el idioma
+		function startLanguageObserver() {
+			// Observer para cambios en la URL
+			let lastUrl = location.href;
+			new MutationObserver(() => {
+				const url = location.href;
+				if (url !== lastUrl) {
+					lastUrl = url;
+					setTimeout(detectCurrentLanguage, 500);
+				}
+			}).observe(document, { subtree: true, childList: true });
+
+			// Observer para cambios en el selector de Google Translate
+			const observer = new MutationObserver((mutations) => {
+				mutations.forEach((mutation) => {
+					if (mutation.type === 'childList') {
+						const selectElement = document.querySelector('.goog-te-combo');
+						if (selectElement && !selectElement.hasAttribute('data-observed')) {
+							selectElement.setAttribute('data-observed', 'true');
+							selectElement.addEventListener('change', () => {
+								setTimeout(detectCurrentLanguage, 500);
+							});
+						}
+					}
+				});
 			});
+
+			observer.observe(document.body, {
+				childList: true,
+				subtree: true
+			});
+
+			// Verificar periódicamente el estado del idioma
+			setInterval(detectCurrentLanguage, 3000);
 		}
 
 		// Función para cambiar idioma
 		function changeLanguage(langCode, langLabel) {
 			console.log('Cambiando idioma a:', langCode, langLabel);
-			
-			if (!googleTranslateLoaded) {
-				console.log('Google Translate no cargado aún');
-				setTimeout(() => changeLanguage(langCode, langLabel), 500);
+
+			// Prevenir cambios múltiples rápidos
+			if (window.changingLanguage) {
+				console.log('Ya hay un cambio de idioma en progreso');
 				return;
 			}
+			window.changingLanguage = true;
 
-			// Encontrar el selector
-			const selectElement = document.querySelector('.goog-te-combo');
-			
-			if (!selectElement) {
-				console.log('Selector no encontrado');
-				return;
-			}
-
-			// Cambiar idioma
-			if (langCode === '') {
-				selectElement.selectedIndex = 0;
-			} else {
-				for (let i = 0; i < selectElement.options.length; i++) {
-					if (selectElement.options[i].value.includes(langCode)) {
-						selectElement.selectedIndex = i;
-						break;
-					}
+			try {
+				// Si es idioma original (español)
+				if (langCode === '') {
+					// Eliminar cualquier parámetro de traducción de la URL
+					const url = new URL(window.location);
+					url.hash = '';
+					window.history.replaceState({}, '', url.toString());
+					window.location.reload();
+					return;
 				}
-			}
 
-			// Disparar evento
-			selectElement.dispatchEvent(new Event('change'));
-			
-			// Actualizar UI
-			updateLanguageUI(langCode, langLabel);
-			currentLang = langCode;
-			
-			// Proteger menú después del cambio
-			setTimeout(() => {
-				protectMenuElements();
-			}, 1000);
+				// Para otros idiomas, usar el selector de Google Translate
+				function findAndChangeLanguage(attempts = 0) {
+					const selectElement = document.querySelector('.goog-te-combo');
+					
+					if (!selectElement && attempts < 20) {
+						console.log(`Intento ${attempts + 1}: Esperando selector...`);
+						setTimeout(() => findAndChangeLanguage(attempts + 1), 250);
+						return;
+					}
+
+					if (!selectElement) {
+						console.log('Selector no encontrado, usando método alternativo');
+						// Método alternativo usando hash en la URL
+						window.location.hash = `googtrans(es|${langCode})`;
+						window.location.reload();
+						return;
+					}
+
+					// Buscar y seleccionar el idioma
+					let found = false;
+					const options = selectElement.options;
+					
+					for (let i = 0; i < options.length; i++) {
+						const value = options[i].value;
+						if (value.includes(`|${langCode}`) || value === langCode) {
+							console.log(`Idioma encontrado: ${value}`);
+							selectElement.selectedIndex = i;
+							found = true;
+							break;
+						}
+					}
+
+					if (!found) {
+						console.log(`Idioma ${langCode} no encontrado en opciones`);
+						window.changingLanguage = false;
+						return;
+					}
+
+					// Disparar evento de cambio
+					const changeEvent = new Event('change', { bubbles: true });
+					selectElement.dispatchEvent(changeEvent);
+
+					// Actualizar UI inmediatamente
+					updateLanguageUI(langCode, langLabel);
+					currentLang = langCode;
+
+					console.log('Cambio de idioma iniciado');
+				}
+
+				findAndChangeLanguage();
+
+			} catch (error) {
+				console.error('Error cambiando idioma:', error);
+			} finally {
+				// Liberar el bloqueo después de un tiempo
+				setTimeout(() => {
+					window.changingLanguage = false;
+				}, 3000);
+			}
 		}
 
 		// Actualizar la interfaz del selector
@@ -425,6 +473,30 @@ const menu = [
 					option.classList.remove('active');
 				}
 			});
+
+			// Guardar el idioma actual en localStorage para persistencia
+			if (typeof localStorage !== 'undefined') {
+				localStorage.setItem('selectedLanguage', JSON.stringify({
+					code: langCode,
+					label: langLabel
+				}));
+			}
+		}
+
+		// Cargar idioma guardado al iniciar
+		function loadSavedLanguage() {
+			try {
+				if (typeof localStorage !== 'undefined') {
+					const saved = localStorage.getItem('selectedLanguage');
+					if (saved) {
+						const { code, label } = JSON.parse(saved);
+						updateLanguageUI(code, label);
+						currentLang = code;
+					}
+				}
+			} catch (error) {
+				console.log('Error cargando idioma guardado:', error);
+			}
 		}
 
 		// Toggle del dropdown
@@ -455,24 +527,19 @@ const menu = [
 			}
 		}
 
-		// Observer para proteger el menú cuando cambie la página
-		function observePageChanges() {
-			const observer = new MutationObserver((mutations) => {
-				// Proteger elementos cuando detecte cambios
-				protectMenuElements();
-			});
-
-			observer.observe(document.body, {
-				childList: true,
-				subtree: true,
-				attributes: true,
-				attributeFilter: ['class', 'style']
-			});
+		// Forzar visibilidad del menú de navegación
+		function ensureNavigationVisibility() {
+			const navMenu = document.getElementById('navigation-menu');
+			if (navMenu) {
+				navMenu.style.display = 'block';
+				navMenu.style.visibility = 'visible';
+				navMenu.style.opacity = '1';
+			}
 		}
 
 		// Tema toggle (código original)
 		const theme = (() => {
-			if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+			if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
 				return 'dark';
 			}
 			if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
@@ -487,8 +554,8 @@ const menu = [
 			document.documentElement.classList.add('dark');
 		}
 
-		if (typeof localStorage !== 'undefined') {
-			window.localStorage.setItem('theme', theme || '');
+		if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+			localStorage.setItem('theme', theme);
 		}
 
 		function sendMessage(message) {
@@ -515,6 +582,7 @@ const menu = [
 					}
 				});
 			}
+			
 			if (typeof localStorage !== 'undefined') {
 				localStorage.setItem('theme', isDark ? 'dark' : 'light');
 			}
@@ -522,6 +590,11 @@ const menu = [
 
 		// Event listeners
 		document.addEventListener('DOMContentLoaded', () => {
+			console.log('DOM cargado, inicializando...');
+
+			// Cargar idioma guardado
+			loadSavedLanguage();
+
 			// Theme toggle
 			const themeToggle = document.getElementById('themeToggle');
 			if (themeToggle) {
@@ -536,36 +609,52 @@ const menu = [
 			
 			// Language options
 			document.querySelectorAll('.language-option').forEach(option => {
-				option.addEventListener('click', () => {
+				option.addEventListener('click', (e) => {
+					e.preventDefault();
+					e.stopPropagation();
+					
 					const langCode = option.dataset.lang;
 					const langLabel = option.dataset.label;
-					changeLanguage(langCode, langLabel);
 					
-					// Cerrar dropdown
+					console.log('Opción de idioma clickeada:', langCode, langLabel);
+					
+					// Cerrar dropdown primero
 					const dropdown = document.getElementById('languageDropdown');
 					const arrow = document.getElementById('languageArrow');
 					if (dropdown && arrow) {
 						dropdown.classList.add('hidden');
 						arrow.classList.remove('rotate');
 					}
+					
+					// Cambiar idioma
+					setTimeout(() => {
+						changeLanguage(langCode, langLabel);
+					}, 100);
 				});
 			});
 
 			// Cerrar dropdown al hacer clic fuera
 			document.addEventListener('click', closeDropdownOnClickOutside);
 
-			// Marcar español como activo inicialmente
-			updateLanguageUI('', 'ESP');
+			// Asegurar visibilidad del menú
+			ensureNavigationVisibility();
 			
-			// Iniciar observador de cambios
-			observePageChanges();
-			
-			// Proteger elementos inicialmente
-			protectMenuElements();
+			// Verificar visibilidad del menú periódicamente
+			setInterval(ensureNavigationVisibility, 2000);
 		});
 
-		// Proteger elementos periódicamente
-		setInterval(protectMenuElements, 2000);
+		// Detectar cuando la página esté completamente cargada
+		window.addEventListener('load', () => {
+			setTimeout(() => {
+				detectCurrentLanguage();
+				ensureNavigationVisibility();
+			}, 1000);
+		});
+
+		// Limpiar el bloqueo de cambio de idioma si la página se recarga
+		window.addEventListener('beforeunload', () => {
+			window.changingLanguage = false;
+		});
 	</script>
 
 	<!-- Cargar Google Translate -->
