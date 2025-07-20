@@ -256,38 +256,126 @@ const menu = [
 				layout: google.translate.TranslateElement.InlineLayout.SIMPLE
 			}, 'google_translate_element');
 			
-			googleTranslateLoaded = true;
+			// Esperar a que se cargue completamente
+			setTimeout(() => {
+				googleTranslateLoaded = true;
+				console.log('Google Translate cargado');
+			}, 1500);
 		}
 
-		// Función para cambiar idioma
-		function changeLanguage(langCode, langLabel) {
-			if (!googleTranslateLoaded) {
-				console.log('Google Translate no está cargado aún');
-				return;
-			}
-
-			const selectElement = document.querySelector('.goog-te-combo');
-			if (!selectElement) {
-				console.log('Selector de Google Translate no encontrado');
-				return;
-			}
-
-			// Si es idioma original (español)
-			if (langCode === '') {
-				selectElement.selectedIndex = 0;
+		// Función para cambiar idioma (método alternativo más directo)
+		function changeLanguageAlternative(langCode, langLabel) {
+			console.log('Método alternativo - Cambiando a:', langCode, langLabel);
+			
+			// Usar el método directo de Google Translate si está disponible
+			if (window.google && window.google.translate) {
+				try {
+					if (langCode === '') {
+						// Recargar la página para volver al idioma original
+						window.location.reload();
+					} else {
+						// Usar la función interna de Google Translate
+						const gt = window.google.translate;
+						if (gt.TranslateElement) {
+							// Forzar la traducción usando la URL de Google Translate
+							const currentUrl = window.location.href;
+							const translateUrl = `https://translate.google.com/translate?sl=es&tl=${langCode}&u=${encodeURIComponent(currentUrl)}`;
+							window.location.href = translateUrl;
+						}
+					}
+				} catch (error) {
+					console.log('Error con método directo:', error);
+					// Fallback al método original
+					changeLanguage(langCode, langLabel);
+				}
 			} else {
-				// Buscar el idioma en las opciones
+				// Si Google Translate no está disponible, usar método original
+				changeLanguage(langCode, langLabel);
+			}
+
+			// Actualizar la UI inmediatamente
+			updateLanguageUI(langCode, langLabel);
+			currentLang = langCode;
+		}
+
+		// Función para cambiar idioma (método mejorado)
+		function changeLanguage(langCode, langLabel) {
+			console.log('Intentando cambiar a:', langCode, langLabel);
+			
+			// Buscar el selector con múltiples intentos
+			function findAndChangeLanguage(attempts = 0) {
+				const selectElement = document.querySelector('.goog-te-combo');
+				
+				if (!selectElement && attempts < 10) {
+					console.log(`Intento ${attempts + 1}: Selector no encontrado, reintentando...`);
+					setTimeout(() => findAndChangeLanguage(attempts + 1), 300);
+					return;
+				}
+
+				if (!selectElement) {
+					console.log('No se pudo encontrar el selector después de múltiples intentos');
+					// Usar método alternativo
+					changeLanguageAlternative(langCode, langLabel);
+					return;
+				}
+
+				console.log('Selector encontrado, opciones disponibles:');
 				const options = selectElement.options;
 				for (let i = 0; i < options.length; i++) {
-					if (options[i].value.includes(langCode)) {
-						selectElement.selectedIndex = i;
-						break;
+					console.log(`Opción ${i}: ${options[i].value} - ${options[i].text}`);
+				}
+
+				// Si es idioma original (español)
+				if (langCode === '') {
+					console.log('Cambiando a español (original)');
+					selectElement.selectedIndex = 0;
+				} else {
+					// Buscar el idioma en las opciones
+					let found = false;
+					for (let i = 0; i < options.length; i++) {
+						if (options[i].value.includes(langCode)) {
+							console.log(`Idioma encontrado en índice ${i}: ${options[i].value}`);
+							selectElement.selectedIndex = i;
+							found = true;
+							break;
+						}
+					}
+					if (!found) {
+						console.log(`Idioma ${langCode} no encontrado, usando método alternativo`);
+						changeLanguageAlternative(langCode, langLabel);
+						return;
 					}
 				}
+
+				// Disparar múltiples eventos para asegurar el cambio
+				const events = ['change', 'click', 'input'];
+				events.forEach(eventType => {
+					const event = new Event(eventType, { bubbles: true });
+					selectElement.dispatchEvent(event);
+				});
+				
+				// También disparar con jQuery si está disponible
+				if (window.jQuery) {
+					window.jQuery(selectElement).trigger('change');
+				}
+				
+				console.log('Eventos disparados');
+
+				// Verificar si el cambio fue exitoso
+				setTimeout(() => {
+					const currentValue = selectElement.value;
+					console.log('Valor actual del selector:', currentValue);
+					if ((langCode === '' && currentValue === '') || 
+						(langCode !== '' && currentValue.includes(langCode))) {
+						console.log('Cambio de idioma exitoso');
+					} else {
+						console.log('El cambio no se reflejó, usando método alternativo');
+						changeLanguageAlternative(langCode, langLabel);
+					}
+				}, 1000);
 			}
 
-			// Disparar evento de cambio
-			selectElement.dispatchEvent(new Event('change'));
+			findAndChangeLanguage();
 
 			// Actualizar la UI
 			updateLanguageUI(langCode, langLabel);
