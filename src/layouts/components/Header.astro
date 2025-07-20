@@ -178,23 +178,55 @@ const menu = [
 			display: block;
 		}
 
-		/* Estilos para Google Translate */
-		.goog-te-banner-frame.skiptranslate {
+		/* Estilos para Google Translate - Ocultar TODA la interfaz */
+		.goog-te-banner-frame.skiptranslate,
+		.goog-te-banner-frame,
+		.goog-te-ftab-frame.skiptranslate,
+		.goog-te-ftab-frame,
+		.goog-te-balloon-frame,
+		.goog-te-menu-frame.skiptranslate,
+		.goog-te-menu-frame {
 			display: none !important;
+			visibility: hidden !important;
+			opacity: 0 !important;
+			position: absolute !important;
+			left: -9999px !important;
+			top: -9999px !important;
+			width: 0 !important;
+			height: 0 !important;
+			overflow: hidden !important;
 		}
 		
+		/* Ocultar completamente cualquier frame de Google Translate */
+		iframe[src*="translate.google"]:not([src*="element.js"]) {
+			display: none !important;
+			visibility: hidden !important;
+			position: absolute !important;
+			left: -9999px !important;
+			top: -9999px !important;
+			width: 0 !important;
+			height: 0 !important;
+		}
+
+		/* Ocultar la barra superior de traducción */
+		.goog-te-banner-frame {
+			display: none !important;
+		}
+
+		/* Forzar que el body mantenga su posición original */
 		body {
 			top: 0px !important;
+			position: static !important;
+			margin-top: 0 !important;
 		}
-		
-		.goog-te-gadget-icon {
+
+		/* Ocultar elementos de la interfaz de Google Translate */
+		.goog-te-gadget-icon,
+		.goog-te-gadget-simple,
+		.goog-te-menu-value,
+		.goog-te-gadget {
 			display: none !important;
-		}
-		
-		.goog-te-gadget-simple {
-			background-color: transparent !important;
-			border: none !important;
-			font-size: 12px !important;
+			visibility: hidden !important;
 		}
 
 		/* Forzar visibilidad del menú de navegación */
@@ -202,6 +234,17 @@ const menu = [
 			display: block !important;
 			visibility: visible !important;
 			opacity: 1 !important;
+		}
+
+		/* Acelerar transiciones CSS para hacer la traducción más rápida */
+		* {
+			transition-duration: 0.1s !important;
+		}
+
+		/* Optimización para elementos traducidos */
+		font[style*="vertical-align: inherit"] {
+			transition: none !important;
+			animation: none !important;
 		}
 
 		/* Estilos para el selector de idioma */
@@ -275,16 +318,109 @@ const menu = [
 				pageLanguage: 'es',
 				includedLanguages: 'en,fr,de,it,pt,ru,zh,ja,ko',
 				autoDisplay: false,
-				layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+				layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+				multilanguagePage: true,
+				gaTrack: false,
+				gaId: null
 			}, 'google_translate_element');
+			
+			// Ocultar inmediatamente cualquier elemento de Google Translate UI
+			hideGoogleTranslateUI();
 			
 			// Esperar a que se cargue completamente
 			setTimeout(() => {
 				googleTranslateLoaded = true;
 				console.log('Google Translate cargado');
+				hideGoogleTranslateUI();
 				detectCurrentLanguage();
 				startLanguageObserver();
-			}, 2000);
+				
+				// Configurar interceptor para acelerar traducciones
+				setupFastTranslation();
+			}, 1500);
+		}
+
+		// Función para ocultar completamente la UI de Google Translate
+		function hideGoogleTranslateUI() {
+			// Ocultar elementos existentes
+			const elementsToHide = [
+				'.goog-te-banner-frame',
+				'.goog-te-ftab-frame', 
+				'.goog-te-balloon-frame',
+				'.goog-te-menu-frame',
+				'.skiptranslate',
+				'iframe[src*="translate.google"]',
+				'.goog-te-gadget',
+				'.goog-te-combo'
+			];
+
+			elementsToHide.forEach(selector => {
+				const elements = document.querySelectorAll(selector);
+				elements.forEach(el => {
+					if (el && !el.closest('#google_translate_element')) {
+						el.style.display = 'none';
+						el.style.visibility = 'hidden';
+						el.style.opacity = '0';
+						el.style.position = 'absolute';
+						el.style.left = '-9999px';
+						el.style.top = '-9999px';
+						el.style.width = '0';
+						el.style.height = '0';
+						el.remove();
+					}
+				});
+			});
+
+			// Remover la clase skiptranslate del body si existe
+			document.body.classList.remove('skiptranslate');
+
+			// Asegurar que el body mantenga su posición
+			document.body.style.top = '0px';
+			document.body.style.position = 'static';
+			document.body.style.marginTop = '0px';
+		}
+
+		// Configurar traducción más rápida
+		function setupFastTranslation() {
+			// Interceptar y acelerar el proceso de traducción
+			const originalSetTimeout = window.setTimeout;
+			window.setTimeout = function(fn, delay, ...args) {
+				// Reducir delays relacionados con Google Translate
+				if (delay > 100 && (fn.toString().includes('translate') || fn.toString().includes('goog'))) {
+					delay = Math.min(delay, 200);
+				}
+				return originalSetTimeout.call(this, fn, delay, ...args);
+			};
+
+			// Observer para ocultar UI inmediatamente cuando aparezca
+			const observer = new MutationObserver((mutations) => {
+				mutations.forEach((mutation) => {
+					mutation.addedNodes.forEach((node) => {
+						if (node.nodeType === Node.ELEMENT_NODE) {
+							// Verificar si es un elemento de Google Translate UI
+							if (node.classList && (
+								node.classList.contains('goog-te-banner-frame') ||
+								node.classList.contains('goog-te-ftab-frame') ||
+								node.classList.contains('skiptranslate') ||
+								node.tagName === 'IFRAME' && node.src && node.src.includes('translate.google')
+							)) {
+								node.remove();
+							}
+
+							// También verificar elementos hijos
+							const unwantedElements = node.querySelectorAll && node.querySelectorAll('.goog-te-banner-frame, .goog-te-ftab-frame, .skiptranslate, iframe[src*="translate.google"]');
+							if (unwantedElements) {
+								unwantedElements.forEach(el => el.remove());
+							}
+						}
+					});
+				});
+			});
+
+			observer.observe(document.body, {
+				childList: true,
+				subtree: true
+			});
 		}
 
 		// Detectar el idioma actual desde la URL o selector
@@ -374,7 +510,7 @@ const menu = [
 			setInterval(detectCurrentLanguage, 3000);
 		}
 
-		// Función para cambiar idioma
+		// Función para cambiar idioma (optimizada para velocidad)
 		function changeLanguage(langCode, langLabel) {
 			console.log('Cambiando idioma a:', langCode, langLabel);
 
@@ -385,43 +521,65 @@ const menu = [
 			}
 			window.changingLanguage = true;
 
+			// Ocultar UI de Google Translate inmediatamente
+			hideGoogleTranslateUI();
+
 			try {
 				// Si es idioma original (español)
 				if (langCode === '') {
-					// Eliminar cualquier parámetro de traducción de la URL
+					// Limpiar cualquier traducción
 					const url = new URL(window.location);
 					url.hash = '';
+					url.search = '';
 					window.history.replaceState({}, '', url.toString());
-					window.location.reload();
+					
+					// Método más rápido para volver al original
+					const translateElements = document.querySelectorAll('font[style*="vertical-align: inherit"]');
+					if (translateElements.length > 0) {
+						window.location.reload();
+					} else {
+						updateLanguageUI(langCode, langLabel);
+						currentLang = langCode;
+						window.changingLanguage = false;
+					}
 					return;
 				}
 
-				// Para otros idiomas, usar el selector de Google Translate
-				function findAndChangeLanguage(attempts = 0) {
+				// Para otros idiomas, usar método optimizado
+				function findAndChangeLanguageFast(attempts = 0) {
 					const selectElement = document.querySelector('.goog-te-combo');
 					
-					if (!selectElement && attempts < 20) {
-						console.log(`Intento ${attempts + 1}: Esperando selector...`);
-						setTimeout(() => findAndChangeLanguage(attempts + 1), 250);
+					if (!selectElement && attempts < 15) {
+						setTimeout(() => findAndChangeLanguageFast(attempts + 1), 100);
 						return;
 					}
 
 					if (!selectElement) {
-						console.log('Selector no encontrado, usando método alternativo');
-						// Método alternativo usando hash en la URL
-						window.location.hash = `googtrans(es|${langCode})`;
-						window.location.reload();
+						console.log('Usando método directo de URL');
+						// Método directo más rápido
+						const currentUrl = window.location.href.split('#')[0].split('?')[0];
+						window.location.href = currentUrl + `#googtrans(es|${langCode})`;
+						
+						// Forzar recarga si es necesario
+						setTimeout(() => {
+							if (!document.querySelector('font[style*="vertical-align: inherit"]')) {
+								window.location.reload();
+							}
+						}, 1000);
+						
+						updateLanguageUI(langCode, langLabel);
+						currentLang = langCode;
+						window.changingLanguage = false;
 						return;
 					}
 
-					// Buscar y seleccionar el idioma
+					// Buscar y seleccionar el idioma rápidamente
 					let found = false;
 					const options = selectElement.options;
 					
 					for (let i = 0; i < options.length; i++) {
 						const value = options[i].value;
 						if (value.includes(`|${langCode}`) || value === langCode) {
-							console.log(`Idioma encontrado: ${value}`);
 							selectElement.selectedIndex = i;
 							found = true;
 							break;
@@ -429,31 +587,50 @@ const menu = [
 					}
 
 					if (!found) {
-						console.log(`Idioma ${langCode} no encontrado en opciones`);
+						// Fallback a método de URL
+						window.location.hash = `googtrans(es|${langCode})`;
+						setTimeout(() => window.location.reload(), 500);
 						window.changingLanguage = false;
 						return;
 					}
 
-					// Disparar evento de cambio
-					const changeEvent = new Event('change', { bubbles: true });
-					selectElement.dispatchEvent(changeEvent);
+					// Disparar múltiples eventos para asegurar el cambio rápido
+					const events = ['change', 'click', 'input', 'mousedown', 'mouseup'];
+					events.forEach(eventType => {
+						const event = new Event(eventType, { bubbles: true });
+						selectElement.dispatchEvent(event);
+					});
 
 					// Actualizar UI inmediatamente
 					updateLanguageUI(langCode, langLabel);
 					currentLang = langCode;
 
-					console.log('Cambio de idioma iniciado');
+					// Verificar y acelerar traducción
+					setTimeout(() => {
+						hideGoogleTranslateUI();
+						
+						// Si no se ha traducido en 2 segundos, forzar recarga
+						setTimeout(() => {
+							if (!document.querySelector('font[style*="vertical-align: inherit"]')) {
+								console.log('Forzando recarga para completar traducción');
+								window.location.reload();
+							}
+						}, 2000);
+					}, 500);
+
+					console.log('Cambio de idioma iniciado (modo rápido)');
 				}
 
-				findAndChangeLanguage();
+				findAndChangeLanguageFast();
 
 			} catch (error) {
 				console.error('Error cambiando idioma:', error);
 			} finally {
-				// Liberar el bloqueo después de un tiempo
+				// Liberar el bloqueo después de menos tiempo
 				setTimeout(() => {
 					window.changingLanguage = false;
-				}, 3000);
+					hideGoogleTranslateUI();
+				}, 2000);
 			}
 		}
 
@@ -592,6 +769,9 @@ const menu = [
 		document.addEventListener('DOMContentLoaded', () => {
 			console.log('DOM cargado, inicializando...');
 
+			// Ocultar UI de Google Translate inmediatamente
+			hideGoogleTranslateUI();
+
 			// Cargar idioma guardado
 			loadSavedLanguage();
 
@@ -626,10 +806,8 @@ const menu = [
 						arrow.classList.remove('rotate');
 					}
 					
-					// Cambiar idioma
-					setTimeout(() => {
-						changeLanguage(langCode, langLabel);
-					}, 100);
+					// Cambiar idioma inmediatamente
+					changeLanguage(langCode, langLabel);
 				});
 			});
 
@@ -639,21 +817,39 @@ const menu = [
 			// Asegurar visibilidad del menú
 			ensureNavigationVisibility();
 			
-			// Verificar visibilidad del menú periódicamente
-			setInterval(ensureNavigationVisibility, 2000);
+			// Verificar visibilidad del menú más frecuentemente
+			setInterval(() => {
+				ensureNavigationVisibility();
+				hideGoogleTranslateUI();
+			}, 1000);
 		});
 
 		// Detectar cuando la página esté completamente cargada
 		window.addEventListener('load', () => {
 			setTimeout(() => {
+				hideGoogleTranslateUI();
 				detectCurrentLanguage();
 				ensureNavigationVisibility();
-			}, 1000);
+			}, 500);
 		});
+
+		// Ocultar UI de Google Translate continuamente
+		setInterval(hideGoogleTranslateUI, 2000);
 
 		// Limpiar el bloqueo de cambio de idioma si la página se recarga
 		window.addEventListener('beforeunload', () => {
 			window.changingLanguage = false;
+		});
+
+		// Interceptar y prevenir la aparición de elementos de Google Translate
+		document.addEventListener('DOMNodeInserted', function(e) {
+			if (e.target.classList && (
+				e.target.classList.contains('goog-te-banner-frame') ||
+				e.target.classList.contains('goog-te-ftab-frame') ||
+				e.target.classList.contains('skiptranslate')
+			)) {
+				e.target.remove();
+			}
 		});
 	</script>
 
