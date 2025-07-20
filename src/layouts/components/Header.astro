@@ -64,34 +64,6 @@ const menu = [
 								<span>English</span>
 								<span class="text-xs opacity-60">ENG</span>
 							</button>
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="fr" data-label="FRA">
-								<span>Français</span>
-								<span class="text-xs opacity-60">FRA</span>
-							</button>
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="de" data-label="DEU">
-								<span>Deutsch</span>
-								<span class="text-xs opacity-60">DEU</span>
-							</button>
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="it" data-label="ITA">
-								<span>Italiano</span>
-								<span class="text-xs opacity-60">ITA</span>
-							</button>
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="pt" data-label="POR">
-								<span>Português</span>
-								<span class="text-xs opacity-60">POR</span>
-							</button>
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="ru" data-label="RUS">
-								<span>Русский</span>
-								<span class="text-xs opacity-60">RUS</span>
-							</button>
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="ja" data-label="JPN">
-								<span>日本語</span>
-								<span class="text-xs opacity-60">JPN</span>
-							</button>
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="ko" data-label="KOR">
-								<span>한국어</span>
-								<span class="text-xs opacity-60">KOR</span>
-							</button>
 						</div>
 					</div>
 				</div>
@@ -258,17 +230,10 @@ const menu = [
 		let translateElement = null;
 		let isChangingLanguage = false;
 
-		// Mapa de códigos de idioma optimizado (sin chino)
+		// Mapa de códigos de idioma (solo inglés y español)
 		const languageMap = {
 			'': 'ESP',
-			'en': 'ENG', 
-			'fr': 'FRA',
-			'de': 'DEU',
-			'it': 'ITA',
-			'pt': 'POR',
-			'ru': 'RUS',
-			'ja': 'JPN',
-			'ko': 'KOR'
+			'en': 'ENG'
 		};
 
 		// Función requerida por Google Translate (optimizada)
@@ -276,7 +241,7 @@ const menu = [
 			try {
 				translateElement = new google.translate.TranslateElement({
 					pageLanguage: 'es',
-					includedLanguages: 'en,fr,de,it,pt,ru,ja,ko', // Removido 'zh' (chino)
+					includedLanguages: 'en', // Solo inglés
 					autoDisplay: false,
 					layout: google.translate.TranslateElement.InlineLayout.SIMPLE
 				}, 'google_translate_element');
