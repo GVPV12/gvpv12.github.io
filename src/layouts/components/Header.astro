@@ -110,10 +110,42 @@ const menu = [
 		.dark #themeToggle .sun { display: none; }
 		.dark #themeToggle .moon { display: block; }
 
-		/* Solo ocultar la barra superior molesta de Google Translate */
-		.goog-te-banner-frame { display: none !important; }
-		body.goog-te-compat { position: static !important; top: 0 !important; }
-		body { top: 0 !important; }
+		/* Minimizar la barra de Google Translate - mantener solo una línea azul muy pequeña */
+		.goog-te-banner-frame {
+			height: 2px !important;
+			border: none !important;
+			box-shadow: none !important;
+			background: #4285f4 !important;
+			position: fixed !important;
+			top: 0 !important;
+			left: 0 !important;
+			width: 100% !important;
+			z-index: 9999 !important;
+		}
+		
+		.goog-te-banner-frame.skiptranslate {
+			height: 2px !important;
+			border: none !important;
+			box-shadow: none !important;
+			background: #4285f4 !important;
+		}
+		
+		/* Ocultar contenido de la barra pero mantener estructura */
+		.goog-te-banner-frame * {
+			display: none !important;
+		}
+		
+		/* Ajustar body para la mini barra */
+		body.goog-te-compat { 
+			position: static !important; 
+			top: 2px !important;
+			padding-top: 2px !important;
+		}
+		
+		body { 
+			top: 2px !important;
+			padding-top: 2px !important;
+		}
 		
 		/* Mantener estilos del dropdown */
 		#languageDropdown { animation: slideDown 0.2s ease-out; }
@@ -125,6 +157,11 @@ const menu = [
 		.language-option.active { background-color: #3b82f6; color: white; }
 		.language-option.active:hover { background-color: #2563eb; }
 		#languageArrow.rotate { transform: rotate(180deg); }
+		
+		/* Ajustar el header principal para no chocar con la mini barra */
+		#site-header {
+			margin-top: 2px;
+		}
 	</style>
 
 	<script is:inline>
@@ -146,10 +183,34 @@ const menu = [
 			setTimeout(() => {
 				translateLoaded = true;
 				console.log('Google Translate cargado');
-				// Solo ocultar la barra molesta, no el selector
-				const banner = document.querySelector('.goog-te-banner-frame');
-				if (banner) banner.style.display = 'none';
+				setupMinimalBar();
 			}, 1000);
+		}
+
+		function setupMinimalBar() {
+			// Convertir la barra en una línea azul mínima
+			const banner = document.querySelector('.goog-te-banner-frame');
+			if (banner) {
+				banner.style.height = '2px';
+				banner.style.background = '#4285f4';
+				banner.style.border = 'none';
+				banner.style.boxShadow = 'none';
+				banner.style.position = 'fixed';
+				banner.style.top = '0';
+				banner.style.left = '0';
+				banner.style.width = '100%';
+				banner.style.zIndex = '9999';
+				
+				// Ocultar todo el contenido de la barra pero mantener la estructura
+				const bannerContent = banner.querySelectorAll('*');
+				bannerContent.forEach(element => {
+					element.style.display = 'none';
+				});
+			}
+			
+			// Ajustar body
+			document.body.style.top = '2px';
+			document.body.style.paddingTop = '2px';
 		}
 
 		function changeLanguage(langCode, langLabel) {
@@ -269,11 +330,9 @@ const menu = [
 			});
 		});
 
-		// Ocultar solo la barra molesta periódicamente
+		// Mantener la barra mínima periódicamente
 		setInterval(() => {
-			const banner = document.querySelector('.goog-te-banner-frame');
-			if (banner) banner.style.display = 'none';
-			document.body.style.top = '0px';
+			setupMinimalBar();
 		}, 2000);
 	</script>
 
