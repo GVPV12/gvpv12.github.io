@@ -46,6 +46,24 @@ const menu = [
 							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="de" data-label="DEU">
 								<span>Deutsch</span><span class="text-xs opacity-60">DEU</span>
 							</button>
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="it" data-label="ITA">
+								<span>Italiano</span><span class="text-xs opacity-60">ITA</span>
+							</button>
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="pt" data-label="POR">
+								<span>Português</span><span class="text-xs opacity-60">POR</span>
+							</button>
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="ru" data-label="RUS">
+								<span>Русский</span><span class="text-xs opacity-60">RUS</span>
+							</button>
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="zh" data-label="CHN">
+								<span>中文</span><span class="text-xs opacity-60">CHN</span>
+							</button>
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="ja" data-label="JPN">
+								<span>日本語</span><span class="text-xs opacity-60">JPN</span>
+							</button>
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="ko" data-label="KOR">
+								<span>한국어</span><span class="text-xs opacity-60">KOR</span>
+							</button>
 						</div>
 					</div>
 				</div>
@@ -70,7 +88,7 @@ const menu = [
       <div class="flex px-2.5 bg-white/90 dark:bg-zinc-900/75 backdrop-blur-md leading-tight rounded-full border dark:border-zinc-700">
         <div class="px-2.5 text-sm">
           <HeaderLink class="py-3 flex items-center" href="/">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill='none' stroke="currentColor" stroke-width="1.7">
               <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
             </svg>
           </HeaderLink>
@@ -92,12 +110,12 @@ const menu = [
 		.dark #themeToggle .sun { display: none; }
 		.dark #themeToggle .moon { display: block; }
 
-		/* Ocultar UI de Google Translate manteniendo funcionalidad */
-		.goog-te-banner-frame.skiptranslate { display: none !important; }
-		.goog-te-gadget-icon, .goog-te-gadget-simple { display: none !important; }
+		/* Solo ocultar la barra superior molesta de Google Translate */
+		.goog-te-banner-frame { display: none !important; }
+		body.goog-te-compat { position: static !important; top: 0 !important; }
+		body { top: 0 !important; }
 		
-		body { top: 0px !important; position: static !important; }
-		
+		/* Mantener estilos del dropdown */
 		#languageDropdown { animation: slideDown 0.2s ease-out; }
 		#languageDropdown.hidden { animation: slideUp 0.2s ease-out; }
 		
@@ -105,99 +123,89 @@ const menu = [
 		@keyframes slideUp { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-10px); } }
 		
 		.language-option.active { background-color: #3b82f6; color: white; }
+		.language-option.active:hover { background-color: #2563eb; }
 		#languageArrow.rotate { transform: rotate(180deg); }
 	</style>
 
 	<script is:inline>
-		let googleTranslateLoaded = false;
-		let currentLang = '';
-		
+		let translateLoaded = false;
 		const languageMap = {
-			'': 'ESP', 'en': 'ENG', 'fr': 'FRA', 'de': 'DEU', 
-			'it': 'ITA', 'pt': 'POR', 'ru': 'RUS', 'zh': 'CHN', 'ja': 'JPN', 'ko': 'KOR'
+			'': 'ESP', 'en': 'ENG', 'fr': 'FRA', 'de': 'DEU', 'it': 'ITA', 
+			'pt': 'POR', 'ru': 'RUS', 'zh': 'CHN', 'ja': 'JPN', 'ko': 'KOR'
 		};
 
+		// Función requerida por Google Translate
 		function googleTranslateElementInit() {
 			new google.translate.TranslateElement({
 				pageLanguage: 'es',
 				includedLanguages: 'en,fr,de,it,pt,ru,zh,ja,ko',
-				autoDisplay: false,
-				layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+				layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+				autoDisplay: false
 			}, 'google_translate_element');
 			
 			setTimeout(() => {
-				googleTranslateLoaded = true;
-				hideUIElements();
-				detectCurrentLanguage();
+				translateLoaded = true;
+				console.log('Google Translate cargado');
+				// Solo ocultar la barra molesta, no el selector
+				const banner = document.querySelector('.goog-te-banner-frame');
+				if (banner) banner.style.display = 'none';
 			}, 1000);
 		}
 
-		// Función más suave para ocultar UI sin interferir con traducción
-		function hideUIElements() {
-			const banner = document.querySelector('.goog-te-banner-frame');
-			if (banner) banner.style.display = 'none';
+		function changeLanguage(langCode, langLabel) {
+			console.log('Cambiando a:', langCode, langLabel);
 			
-			document.body.style.top = '0px';
-			document.body.style.position = 'static';
-		}
+			// Actualizar UI inmediatamente
+			updateLanguageUI(langCode, langLabel);
+			
+			if (langCode === '') {
+				// Volver al español original
+				window.location.href = window.location.href.split('#')[0].split('?')[0];
+				return;
+			}
 
-		function detectCurrentLanguage() {
-			const url = window.location.href;
-			if (url.includes('#googtrans(')) {
-				const match = url.match(/#googtrans\(es\|([^)]+)\)/);
-				if (match && match[1]) {
-					updateLanguageUI(match[1], languageMap[match[1]] || match[1].toUpperCase());
+			// Esperar a que Google Translate esté listo
+			function attemptTranslation(attempts = 0) {
+				const selector = document.querySelector('.goog-te-combo');
+				
+				if (!selector && attempts < 20) {
+					setTimeout(() => attemptTranslation(attempts + 1), 250);
 					return;
 				}
-			}
-			
-			const select = document.querySelector('.goog-te-combo');
-			if (select && select.value) {
-				const langCode = select.value.includes('|') ? select.value.split('|')[1] : '';
-				updateLanguageUI(langCode, languageMap[langCode] || 'ESP');
-				return;
-			}
-			
-			updateLanguageUI('', 'ESP');
-		}
-
-		function changeLanguage(langCode, langLabel) {
-			if (window.changingLanguage) return;
-			window.changingLanguage = true;
-
-			updateLanguageUI(langCode, langLabel);
-			currentLang = langCode;
-
-			if (langCode === '') {
-				window.location.href = window.location.href.split('#')[0];
-				window.changingLanguage = false;
-				return;
-			}
-
-			// Buscar y usar el selector de Google Translate
-			const select = document.querySelector('.goog-te-combo');
-			if (select) {
-				for (let i = 0; i < select.options.length; i++) {
-					if (select.options[i].value.includes(`|${langCode}`)) {
-						select.selectedIndex = i;
-						select.dispatchEvent(new Event('change'));
-						break;
+				
+				if (selector) {
+					// Encontrar y seleccionar el idioma
+					for (let i = 0; i < selector.options.length; i++) {
+						const option = selector.options[i];
+						if (option.value.endsWith('|' + langCode) || option.value === langCode) {
+							selector.selectedIndex = i;
+							// Disparar evento de cambio
+							selector.dispatchEvent(new Event('change', { bubbles: true }));
+							console.log('Traducción iniciada para:', langCode);
+							break;
+						}
 					}
+				} else {
+					console.log('Selector no encontrado, usando método URL');
+					window.location.href = window.location.href.split('#')[0] + '#googtrans(es|' + langCode + ')';
+					setTimeout(() => window.location.reload(), 500);
 				}
-			} else {
-				// Fallback usando URL
-				window.location.hash = `googtrans(es|${langCode})`;
 			}
 
-			setTimeout(() => { window.changingLanguage = false; }, 2000);
+			attemptTranslation();
 		}
 
 		function updateLanguageUI(langCode, langLabel) {
 			const currentSpan = document.getElementById('currentLanguage');
 			if (currentSpan) currentSpan.textContent = langLabel;
 
+			// Marcar opción activa
 			document.querySelectorAll('.language-option').forEach(option => {
-				option.classList.toggle('active', option.dataset.lang === langCode);
+				if (option.dataset.lang === langCode) {
+					option.classList.add('active');
+				} else {
+					option.classList.remove('active');
+				}
 			});
 		}
 
@@ -205,11 +213,13 @@ const menu = [
 			const dropdown = document.getElementById('languageDropdown');
 			const arrow = document.getElementById('languageArrow');
 			
-			dropdown.classList.toggle('hidden');
-			arrow.classList.toggle('rotate');
+			if (dropdown && arrow) {
+				dropdown.classList.toggle('hidden');
+				arrow.classList.toggle('rotate');
+			}
 		}
 
-		// Theme toggle
+		// Configuración de tema
 		const theme = (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) || 
 		             (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 		
@@ -218,35 +228,53 @@ const menu = [
 
 		// Event listeners
 		document.addEventListener('DOMContentLoaded', () => {
+			// Theme toggle
 			document.getElementById('themeToggle')?.addEventListener('click', () => {
 				document.documentElement.classList.toggle('dark');
 				const isDark = document.documentElement.classList.contains('dark');
-				if (typeof localStorage !== 'undefined') localStorage.setItem('theme', isDark ? 'dark' : 'light');
+				if (typeof localStorage !== 'undefined') {
+					localStorage.setItem('theme', isDark ? 'dark' : 'light');
+				}
 			});
 			
-			document.getElementById('languageToggle')?.addEventListener('click', toggleDropdown);
+			// Language dropdown toggle
+			document.getElementById('languageToggle')?.addEventListener('click', (e) => {
+				e.stopPropagation();
+				toggleDropdown();
+			});
 			
+			// Language options
 			document.querySelectorAll('.language-option').forEach(option => {
 				option.addEventListener('click', (e) => {
 					e.stopPropagation();
-					toggleDropdown(); // Cerrar dropdown
-					changeLanguage(option.dataset.lang, option.dataset.label);
+					const langCode = option.dataset.lang;
+					const langLabel = option.dataset.label;
+					
+					// Cerrar dropdown
+					document.getElementById('languageDropdown')?.classList.add('hidden');
+					document.getElementById('languageArrow')?.classList.remove('rotate');
+					
+					// Cambiar idioma
+					changeLanguage(langCode, langLabel);
 				});
 			});
 
+			// Cerrar dropdown al hacer clic fuera
 			document.addEventListener('click', (e) => {
-				if (!document.getElementById('languageSelector')?.contains(e.target)) {
+				const selector = document.getElementById('languageSelector');
+				if (selector && !selector.contains(e.target)) {
 					document.getElementById('languageDropdown')?.classList.add('hidden');
 					document.getElementById('languageArrow')?.classList.remove('rotate');
 				}
 			});
 		});
 
-		// Ocultar UI periódicamente pero sin interferir
+		// Ocultar solo la barra molesta periódicamente
 		setInterval(() => {
-			hideUIElements();
-			detectCurrentLanguage();
-		}, 3000);
+			const banner = document.querySelector('.goog-te-banner-frame');
+			if (banner) banner.style.display = 'none';
+			document.body.style.top = '0px';
+		}, 2000);
 	</script>
 
 	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
