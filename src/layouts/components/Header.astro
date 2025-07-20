@@ -40,23 +40,65 @@ const menu = [
 					<!-- {SITE_TITLE} -->
 				</a>
 			</h2>
-			<div class='flex'>
+			<div class='flex items-center'>
 				<!-- Google Translate Widget (oculto) -->
 				<div id="google_translate_element" class="hidden"></div>
 				
-				<!-- Botón de traducción personalizado -->
-				<button class='p-3' id='translateToggle' aria-label='Toggle translation' title='Traducir / Translate'>
-					<!-- Icono de traducción -->
-					<svg id="translateIcon" class='translate-icon' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
-						<path d="M7 3h10v2H7zM4 7h16v2H4zM7 13h10v2H7zM4 17h16v2H4z"></path>
-						<path d="M12 6v12M9 9l3-3 3 3"></path>
-					</svg>
-					<!-- Icono de revertir (inicialmente oculto) -->
-					<svg id="revertIcon" class='revert-icon hidden' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
-						<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
-						<path d="M3 3v5h5"></path>
-					</svg>
-				</button>
+				<!-- Selector de idioma personalizado -->
+				<div class="relative" id="languageSelector">
+					<button class='p-3 flex items-center gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors' id='languageToggle' aria-label='Select language'>
+						<span id="currentLanguage" class="text-sm font-semibold">ESP</span>
+						<svg class="w-4 h-4 transition-transform" id="languageArrow" xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+							<path d="m6 9 6 6 6-6"/>
+						</svg>
+					</button>
+					
+					<!-- Lista desplegable de idiomas -->
+					<div id="languageDropdown" class="absolute top-full right-0 mt-1 bg-white dark:bg-zinc-900 border dark:border-zinc-700 rounded-lg shadow-lg min-w-[120px] z-[1000] hidden">
+						<div class="py-1">
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="" data-label="ESP">
+								<span>Español</span>
+								<span class="text-xs opacity-60">ESP</span>
+							</button>
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="en" data-label="ENG">
+								<span>English</span>
+								<span class="text-xs opacity-60">ENG</span>
+							</button>
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="fr" data-label="FRA">
+								<span>Français</span>
+								<span class="text-xs opacity-60">FRA</span>
+							</button>
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="de" data-label="DEU">
+								<span>Deutsch</span>
+								<span class="text-xs opacity-60">DEU</span>
+							</button>
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="it" data-label="ITA">
+								<span>Italiano</span>
+								<span class="text-xs opacity-60">ITA</span>
+							</button>
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="pt" data-label="POR">
+								<span>Português</span>
+								<span class="text-xs opacity-60">POR</span>
+							</button>
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="ru" data-label="RUS">
+								<span>Русский</span>
+								<span class="text-xs opacity-60">RUS</span>
+							</button>
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="zh" data-label="CHN">
+								<span>中文</span>
+								<span class="text-xs opacity-60">CHN</span>
+							</button>
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="ja" data-label="JPN">
+								<span>日本語</span>
+								<span class="text-xs opacity-60">JPN</span>
+							</button>
+							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="ko" data-label="KOR">
+								<span>한국어</span>
+								<span class="text-xs opacity-60">KOR</span>
+							</button>
+						</div>
+					</div>
+				</div>
 				
 				<a class='p-3 dark:hidden' href='https://github.com/devaradise/devolio' target='_blank'
 					><Image src={GithubBlack} width={24} height={24} alt='Github logo' /></a
@@ -155,123 +197,142 @@ const menu = [
 			font-size: 12px !important;
 		}
 
-		/* Animación para el botón de traducción */
-		#translateToggle {
-			transition: all 0.3s ease;
+		/* Estilos para el selector de idioma */
+		#languageDropdown {
+			animation: slideDown 0.2s ease-out;
 		}
 
-		#translateToggle:hover {
-			transform: scale(1.1);
+		#languageDropdown.hidden {
+			animation: slideUp 0.2s ease-out;
 		}
 
-		.translate-icon, .revert-icon {
-			transition: opacity 0.3s ease;
+		@keyframes slideDown {
+			from {
+				opacity: 0;
+				transform: translateY(-10px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
 		}
 
-		/* Indicador visual cuando está traducido */
-		.translated #translateIcon {
-			color: #10b981; /* green-500 */
+		@keyframes slideUp {
+			from {
+				opacity: 1;
+				transform: translateY(0);
+			}
+			to {
+				opacity: 0;
+				transform: translateY(-10px);
+			}
 		}
 
-		.translated .revert-icon {
-			color: #ef4444; /* red-500 */
+		.language-option.active {
+			background-color: #3b82f6;
+			color: white;
+		}
+
+		.language-option.active:hover {
+			background-color: #2563eb;
+		}
+
+		#languageArrow.rotate {
+			transform: rotate(180deg);
 		}
 	</style>
 
 	<script is:inline>
-		// Variables globales para la traducción
-		let isTranslated = false;
-		let currentLanguage = 'es'; // Idioma original de tu sitio
-		let userLanguage = '';
+		// Variables globales
+		let googleTranslateLoaded = false;
+		let currentLang = '';
 
 		// Función requerida por Google Translate
 		function googleTranslateElementInit() {
 			new google.translate.TranslateElement({
-				pageLanguage: currentLanguage,
-				includedLanguages: 'en,fr,de,it,pt,ru,zh,ja,ko,ar',
+				pageLanguage: 'es',
+				includedLanguages: 'en,fr,de,it,pt,ru,zh,ja,ko',
 				autoDisplay: false,
 				layout: google.translate.TranslateElement.InlineLayout.SIMPLE
 			}, 'google_translate_element');
 			
-			setTimeout(initializeTranslation, 1000);
+			googleTranslateLoaded = true;
 		}
 
-		// Inicializar la traducción automática
-		function initializeTranslation() {
-			// Detectar idioma del navegador
-			userLanguage = (navigator.language || navigator.userLanguage).substr(0, 2);
-			
-			// Si el idioma del usuario es diferente al original, traducir automáticamente
-			if (userLanguage !== currentLanguage) {
-				translateToLanguage(userLanguage);
+		// Función para cambiar idioma
+		function changeLanguage(langCode, langLabel) {
+			if (!googleTranslateLoaded) {
+				console.log('Google Translate no está cargado aún');
+				return;
 			}
-		}
 
-		// Función para traducir a un idioma específico
-		function translateToLanguage(langCode) {
 			const selectElement = document.querySelector('.goog-te-combo');
-			if (selectElement) {
-				// Buscar la opción del idioma
+			if (!selectElement) {
+				console.log('Selector de Google Translate no encontrado');
+				return;
+			}
+
+			// Si es idioma original (español)
+			if (langCode === '') {
+				selectElement.selectedIndex = 0;
+			} else {
+				// Buscar el idioma en las opciones
 				const options = selectElement.options;
 				for (let i = 0; i < options.length; i++) {
 					if (options[i].value.includes(langCode)) {
 						selectElement.selectedIndex = i;
-						selectElement.dispatchEvent(new Event('change'));
-						
-						// Actualizar estado
-						isTranslated = true;
-						updateTranslateButton();
-						
 						break;
 					}
 				}
 			}
+
+			// Disparar evento de cambio
+			selectElement.dispatchEvent(new Event('change'));
+
+			// Actualizar la UI
+			updateLanguageUI(langCode, langLabel);
+			currentLang = langCode;
 		}
 
-		// Función para revertir al idioma original
-		function revertToOriginal() {
-			const selectElement = document.querySelector('.goog-te-combo');
-			if (selectElement) {
-				selectElement.selectedIndex = 0; // Primera opción es siempre el idioma original
-				selectElement.dispatchEvent(new Event('change'));
-				
-				// Actualizar estado
-				isTranslated = false;
-				updateTranslateButton();
-			}
-		}
+		// Actualizar la interfaz del selector
+		function updateLanguageUI(langCode, langLabel) {
+			const currentLanguageSpan = document.getElementById('currentLanguage');
+			currentLanguageSpan.textContent = langLabel;
 
-		// Actualizar la apariencia del botón
-		function updateTranslateButton() {
-			const translateIcon = document.getElementById('translateIcon');
-			const revertIcon = document.getElementById('revertIcon');
-			const translateButton = document.getElementById('translateToggle');
-
-			if (isTranslated) {
-				translateIcon.classList.add('hidden');
-				revertIcon.classList.remove('hidden');
-				translateButton.classList.add('translated');
-				translateButton.title = 'Volver al idioma original / Back to original';
-			} else {
-				translateIcon.classList.remove('hidden');
-				revertIcon.classList.add('hidden');
-				translateButton.classList.remove('translated');
-				translateButton.title = 'Traducir / Translate';
-			}
-		}
-
-		// Manejar clic en el botón de traducción
-		function handleTranslateClick() {
-			if (isTranslated) {
-				revertToOriginal();
-			} else {
-				// Si no está traducido, traducir al idioma del navegador
-				if (userLanguage && userLanguage !== currentLanguage) {
-					translateToLanguage(userLanguage);
+			// Actualizar estado activo en las opciones
+			const options = document.querySelectorAll('.language-option');
+			options.forEach(option => {
+				if (option.dataset.lang === langCode) {
+					option.classList.add('active');
 				} else {
-					// Si el idioma del navegador es el mismo que el original, traducir a inglés por defecto
-					translateToLanguage('en');
+					option.classList.remove('active');
 				}
+			});
+		}
+
+		// Toggle del dropdown
+		function toggleLanguageDropdown() {
+			const dropdown = document.getElementById('languageDropdown');
+			const arrow = document.getElementById('languageArrow');
+			
+			if (dropdown.classList.contains('hidden')) {
+				dropdown.classList.remove('hidden');
+				arrow.classList.add('rotate');
+			} else {
+				dropdown.classList.add('hidden');
+				arrow.classList.remove('rotate');
+			}
+		}
+
+		// Cerrar dropdown al hacer clic fuera
+		function closeDropdownOnClickOutside(event) {
+			const selector = document.getElementById('languageSelector');
+			const dropdown = document.getElementById('languageDropdown');
+			const arrow = document.getElementById('languageArrow');
+
+			if (!selector.contains(event.target)) {
+				dropdown.classList.add('hidden');
+				arrow.classList.remove('rotate');
 			}
 		}
 
@@ -323,8 +384,30 @@ const menu = [
 
 		// Event listeners
 		document.addEventListener('DOMContentLoaded', () => {
+			// Theme toggle
 			document.getElementById('themeToggle')?.addEventListener('click', handleToggleClick);
-			document.getElementById('translateToggle')?.addEventListener('click', handleTranslateClick);
+			
+			// Language selector toggle
+			document.getElementById('languageToggle')?.addEventListener('click', toggleLanguageDropdown);
+			
+			// Language options
+			document.querySelectorAll('.language-option').forEach(option => {
+				option.addEventListener('click', () => {
+					const langCode = option.dataset.lang;
+					const langLabel = option.dataset.label;
+					changeLanguage(langCode, langLabel);
+					
+					// Cerrar dropdown
+					document.getElementById('languageDropdown').classList.add('hidden');
+					document.getElementById('languageArrow').classList.remove('rotate');
+				});
+			});
+
+			// Cerrar dropdown al hacer clic fuera
+			document.addEventListener('click', closeDropdownOnClickOutside);
+
+			// Marcar español como activo inicialmente
+			updateLanguageUI('', 'ESP');
 		});
 	</script>
 
