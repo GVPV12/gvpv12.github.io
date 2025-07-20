@@ -6,335 +6,165 @@ import GithubWhite from '@src/assets/img/github-mark-white.svg';
 import GithubBlack from '@src/assets/img/github-mark.svg';
 
 const menu = [
-  { link: '/about/', label: 'About' },
-  { link: '/posts/', label: 'Posts' },
-  { link: '/projects/', label: 'Projects' },
-  { link: '/tags/', label: 'Tags' },
+  {
+		link: '/about/',
+		label: 'About'
+	},
+	{
+		link: '/posts/',
+		label: 'Posts'
+	},
+	{
+		link: '/projects/',
+		label: 'Projects'
+	},
+	{
+		link: '/tags/',
+		label: 'Tags'
+	},
 ];
 ---
 
-<header id='site-header' class='flex items-center w-full transition duration-300 z-[999] border-[var(--soft-border-color)]'>
+<header
+	id='site-header'
+	class:list={[
+		'flex items-center w-full transition duration-300 z-[999] border-[var(--soft-border-color)]'
+	]}
+>
 	<div class='container'>
 		<nav class='flex gap-4 items-center justify-between py-3'>
 			<h2 class='m-0'>
 				<a href='/' class='flex gap-4 items-center text-xl font-black uppercase'>
+					<!-- You can use your site logo, rounded ava or simply your site name here-->
           <Image src={AvaLogo} alt='Your site name' class="rounded-full w-11 border-white border-2 shadow-lg"/> 
+					<!-- {SITE_TITLE} -->
 				</a>
 			</h2>
-			<div class='flex items-center'>
-				<div id="google_translate_element" class="hidden"></div>
-				
-				<div class="relative" id="languageSelector">
-					<button class='p-3 flex items-center gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors' id='languageToggle'>
-						<span id="currentLanguage" class="text-sm font-semibold">ESP</span>
-						<svg class="w-4 h-4 transition-transform" id="languageArrow" xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'>
-							<path d="m6 9 6 6 6-6"/>
-						</svg>
-					</button>
-					
-					<div id="languageDropdown" class="absolute top-full right-0 mt-1 bg-white dark:bg-zinc-900 border dark:border-zinc-700 rounded-lg shadow-lg min-w-[120px] z-[1000] hidden">
-						<div class="py-1">
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="" data-label="ESP">
-								<span>Español</span><span class="text-xs opacity-60">ESP</span>
-							</button>
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="en" data-label="ENG">
-								<span>English</span><span class="text-xs opacity-60">ENG</span>
-							</button>
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="fr" data-label="FRA">
-								<span>Français</span><span class="text-xs opacity-60">FRA</span>
-							</button>
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="de" data-label="DEU">
-								<span>Deutsch</span><span class="text-xs opacity-60">DEU</span>
-							</button>
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="it" data-label="ITA">
-								<span>Italiano</span><span class="text-xs opacity-60">ITA</span>
-							</button>
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="pt" data-label="POR">
-								<span>Português</span><span class="text-xs opacity-60">POR</span>
-							</button>
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="ru" data-label="RUS">
-								<span>Русский</span><span class="text-xs opacity-60">RUS</span>
-							</button>
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="zh" data-label="CHN">
-								<span>中文</span><span class="text-xs opacity-60">CHN</span>
-							</button>
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="ja" data-label="JPN">
-								<span>日本語</span><span class="text-xs opacity-60">JPN</span>
-							</button>
-							<button class="language-option w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" data-lang="ko" data-label="KOR">
-								<span>한국어</span><span class="text-xs opacity-60">KOR</span>
-							</button>
-						</div>
-					</div>
-				</div>
-				
-				<a class='p-3 dark:hidden' href='https://github.com/devaradise/devolio' target='_blank'>
-					<Image src={GithubBlack} width={24} height={24} alt='Github logo' />
-				</a>
-				<a class='p-3 hidden dark:block' href='https://github.com/devaradise/devolio' target='_blank'>
-					<Image src={GithubWhite} width={24} height={24} alt='Github logo' />
-				</a>
-				<button class='p-3' id='themeToggle'>
-					<svg class='sun' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'>
-						<circle cx='12' cy='12' r='4'></circle><path d='M12 2v2'></path><path d='M12 20v2'></path><path d='m4.93 4.93 1.41 1.41'></path><path d='m17.66 17.66 1.41 1.41'></path><path d='M2 12h2'></path><path d='M20 12h2'></path><path d='m6.34 17.66-1.41 1.41'></path><path d='m19.07 4.93-1.41 1.41'></path>
-					</svg>
-					<svg class='moon' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'>
-						<path d='M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z'></path>
-					</svg>
+			<div class='flex'>
+				<a class='p-3 dark:hidden' href='https://github.com/devaradise/devolio' target='_blank'
+					><Image src={GithubBlack} width={24} height={24} alt='Github logo' /></a
+				>
+				<a class='p-3 hidden dark:block' href='https://github.com/devaradise/devolio' target='_blank'
+					><Image src={GithubWhite} width={24} height={24} alt='Github logo' /></a
+				>
+				<button class='p-3' id='themeToggle' aria-label='Theme mode'>
+					<svg
+						class='sun'
+						xmlns='http://www.w3.org/2000/svg'
+						width='24'
+						height='24'
+						viewBox='0 0 24 24'
+						fill='none'
+						stroke='currentColor'
+						stroke-width='2'
+						stroke-linecap='round'
+						stroke-linejoin='round'
+						class='lucide lucide-sun'
+						><circle cx='12' cy='12' r='4'></circle><path d='M12 2v2'></path><path d='M12 20v2'></path><path d='m4.93 4.93 1.41 1.41'
+						></path><path d='m17.66 17.66 1.41 1.41'></path><path d='M2 12h2'></path><path d='M20 12h2'></path><path
+							d='m6.34 17.66-1.41 1.41'></path><path d='m19.07 4.93-1.41 1.41'></path></svg
+					>
+					<svg
+						class='moon'
+						xmlns='http://www.w3.org/2000/svg'
+						width='24'
+						height='24'
+						viewBox='0 0 24 24'
+						fill='none'
+						stroke='currentColor'
+						stroke-width='2'
+						stroke-linecap='round'
+						stroke-linejoin='round'
+						class='lucide lucide-moon'
+					>
+						<path d='M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z'></path></svg
+					>
 				</button>
 			</div>
 		</nav>
-    <div class='fixed top-3 w-auto max-w-full px-3 left-1/2 -translate-x-1/2 z-[999]' id='navigation-menu'>
+    <div class='fixed top-3 w-auto max-w-full px-3 left-1/2 -translate-x-1/2 z-[999]'>
       <div class="flex px-2.5 bg-white/90 dark:bg-zinc-900/75 backdrop-blur-md leading-tight rounded-full border dark:border-zinc-700">
         <div class="px-2.5 text-sm">
-          <HeaderLink class="py-3 flex items-center" href="/">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill='none' stroke="currentColor" stroke-width="1.7">
-              <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-            </svg>
+          <HeaderLink class="py-3 flex items-center" href="/" aria-label="Home">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
           </HeaderLink>
         </div>
-        {menu.map((item) => (
-          <>
-            <div class="flex items-center"><span class="text-current opacity-30">|</span></div>
-            <div class='px-2.5 text-sm'>
-              <HeaderLink class="py-3 flex items-center" href={item.link}>{item.label}</HeaderLink>
-            </div>
-          </>
-        ))}
+        {
+          menu.map((item, index) => (
+            <>
+              <!-- Separador antes de cada elemento del menú -->
+              <div class="flex items-center">
+                <span class="text-current opacity-30">|</span>
+              </div>
+              <div class='px-2.5 text-sm'>
+                <HeaderLink class="py-3 flex items-center" href={item.link}>
+                  {item.label}
+                </HeaderLink>
+              </div>
+            </>
+          ))
+        }
       </div>
     </div>
 	</div>
 
 	<style is:global>
-		#themeToggle .moon { display: none; }
-		.dark #themeToggle .sun { display: none; }
-		.dark #themeToggle .moon { display: block; }
-
-		/* Minimizar la barra de Google Translate - mantener solo una línea azul muy pequeña */
-		.goog-te-banner-frame {
-			height: 2px !important;
-			border: none !important;
-			box-shadow: none !important;
-			background: #4285f4 !important;
-			position: fixed !important;
-			top: 0 !important;
-			left: 0 !important;
-			width: 100% !important;
-			z-index: 9999 !important;
+		#themeToggle .moon {
+			display: none;
 		}
-		
-		.goog-te-banner-frame.skiptranslate {
-			height: 2px !important;
-			border: none !important;
-			box-shadow: none !important;
-			background: #4285f4 !important;
+		.dark #themeToggle .sun {
+			display: none;
 		}
-		
-		/* Ocultar contenido de la barra pero mantener estructura */
-		.goog-te-banner-frame * {
-			display: none !important;
-		}
-		
-		/* Ajustar body para la mini barra */
-		body.goog-te-compat { 
-			position: static !important; 
-			top: 2px !important;
-			padding-top: 2px !important;
-		}
-		
-		body { 
-			top: 2px !important;
-			padding-top: 2px !important;
-		}
-		
-		/* Mantener estilos del dropdown */
-		#languageDropdown { animation: slideDown 0.2s ease-out; }
-		#languageDropdown.hidden { animation: slideUp 0.2s ease-out; }
-		
-		@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-		@keyframes slideUp { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-10px); } }
-		
-		.language-option.active { background-color: #3b82f6; color: white; }
-		.language-option.active:hover { background-color: #2563eb; }
-		#languageArrow.rotate { transform: rotate(180deg); }
-		
-		/* Ajustar el header principal para no chocar con la mini barra */
-		#site-header {
-			margin-top: 2px;
+		.dark #themeToggle .moon {
+			display: block;
 		}
 	</style>
 
 	<script is:inline>
-		let translateLoaded = false;
-		const languageMap = {
-			'': 'ESP', 'en': 'ENG', 'fr': 'FRA', 'de': 'DEU', 'it': 'ITA', 
-			'pt': 'POR', 'ru': 'RUS', 'zh': 'CHN', 'ja': 'JPN', 'ko': 'KOR'
-		};
+		const theme = (() => {
+			if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+				return 'dark';
+			}
+			if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+				return localStorage.getItem('theme');
+			}
+			return 'light';
+		})();
 
-		// Función requerida por Google Translate
-		function googleTranslateElementInit() {
-			new google.translate.TranslateElement({
-				pageLanguage: 'es',
-				includedLanguages: 'en,fr,de,it,pt,ru,zh,ja,ko',
-				layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-				autoDisplay: false
-			}, 'google_translate_element');
-			
-			setTimeout(() => {
-				translateLoaded = true;
-				console.log('Google Translate cargado');
-				setupMinimalBar();
-			}, 1000);
+		if (theme === 'light') {
+			document.documentElement.classList.remove('dark');
+		} else {
+			document.documentElement.classList.add('dark');
 		}
 
-		function setupMinimalBar() {
-			// Convertir la barra en una línea azul mínima
-			const banner = document.querySelector('.goog-te-banner-frame');
-			if (banner) {
-				banner.style.height = '2px';
-				banner.style.background = '#4285f4';
-				banner.style.border = 'none';
-				banner.style.boxShadow = 'none';
-				banner.style.position = 'fixed';
-				banner.style.top = '0';
-				banner.style.left = '0';
-				banner.style.width = '100%';
-				banner.style.zIndex = '9999';
-				
-				// Ocultar todo el contenido de la barra pero mantener la estructura
-				const bannerContent = banner.querySelectorAll('*');
-				bannerContent.forEach(element => {
-					element.style.display = 'none';
-				});
-			}
-			
-			// Ajustar body
-			document.body.style.top = '2px';
-			document.body.style.paddingTop = '2px';
+		window.localStorage.setItem('theme', theme || '');
+
+		function sendMessage(message) {
+			const iframe = document.querySelector('iframe.giscus-frame');
+			if (!iframe) return;
+			iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
 		}
 
-		function changeLanguage(langCode, langLabel) {
-			console.log('Cambiando a:', langCode, langLabel);
-			
-			// Actualizar UI inmediatamente
-			updateLanguageUI(langCode, langLabel);
-			
-			if (langCode === '') {
-				// Volver al español original
-				window.location.href = window.location.href.split('#')[0].split('?')[0];
-				return;
-			}
+		const handleToggleClick = () => {
+			const element = document.documentElement;
+			element.classList.toggle('dark');
 
-			// Esperar a que Google Translate esté listo
-			function attemptTranslation(attempts = 0) {
-				const selector = document.querySelector('.goog-te-combo');
-				
-				if (!selector && attempts < 20) {
-					setTimeout(() => attemptTranslation(attempts + 1), 250);
-					return;
-				}
-				
-				if (selector) {
-					// Encontrar y seleccionar el idioma
-					for (let i = 0; i < selector.options.length; i++) {
-						const option = selector.options[i];
-						if (option.value.endsWith('|' + langCode) || option.value === langCode) {
-							selector.selectedIndex = i;
-							// Disparar evento de cambio
-							selector.dispatchEvent(new Event('change', { bubbles: true }));
-							console.log('Traducción iniciada para:', langCode);
-							break;
-						}
+			const isDark = element.classList.contains('dark');
+			if (isDark) {
+				sendMessage({
+					setConfig: {
+						theme: 'dark_dimmed'
 					}
-				} else {
-					console.log('Selector no encontrado, usando método URL');
-					window.location.href = window.location.href.split('#')[0] + '#googtrans(es|' + langCode + ')';
-					setTimeout(() => window.location.reload(), 500);
-				}
-			}
-
-			attemptTranslation();
-		}
-
-		function updateLanguageUI(langCode, langLabel) {
-			const currentSpan = document.getElementById('currentLanguage');
-			if (currentSpan) currentSpan.textContent = langLabel;
-
-			// Marcar opción activa
-			document.querySelectorAll('.language-option').forEach(option => {
-				if (option.dataset.lang === langCode) {
-					option.classList.add('active');
-				} else {
-					option.classList.remove('active');
-				}
-			});
-		}
-
-		function toggleDropdown() {
-			const dropdown = document.getElementById('languageDropdown');
-			const arrow = document.getElementById('languageArrow');
-			
-			if (dropdown && arrow) {
-				dropdown.classList.toggle('hidden');
-				arrow.classList.toggle('rotate');
-			}
-		}
-
-		// Configuración de tema
-		const theme = (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) || 
-		             (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-		
-		document.documentElement.classList.toggle('dark', theme === 'dark');
-		if (typeof localStorage !== 'undefined') localStorage.setItem('theme', theme);
-
-		// Event listeners
-		document.addEventListener('DOMContentLoaded', () => {
-			// Theme toggle
-			document.getElementById('themeToggle')?.addEventListener('click', () => {
-				document.documentElement.classList.toggle('dark');
-				const isDark = document.documentElement.classList.contains('dark');
-				if (typeof localStorage !== 'undefined') {
-					localStorage.setItem('theme', isDark ? 'dark' : 'light');
-				}
-			});
-			
-			// Language dropdown toggle
-			document.getElementById('languageToggle')?.addEventListener('click', (e) => {
-				e.stopPropagation();
-				toggleDropdown();
-			});
-			
-			// Language options
-			document.querySelectorAll('.language-option').forEach(option => {
-				option.addEventListener('click', (e) => {
-					e.stopPropagation();
-					const langCode = option.dataset.lang;
-					const langLabel = option.dataset.label;
-					
-					// Cerrar dropdown
-					document.getElementById('languageDropdown')?.classList.add('hidden');
-					document.getElementById('languageArrow')?.classList.remove('rotate');
-					
-					// Cambiar idioma
-					changeLanguage(langCode, langLabel);
 				});
-			});
-
-			// Cerrar dropdown al hacer clic fuera
-			document.addEventListener('click', (e) => {
-				const selector = document.getElementById('languageSelector');
-				if (selector && !selector.contains(e.target)) {
-					document.getElementById('languageDropdown')?.classList.add('hidden');
-					document.getElementById('languageArrow')?.classList.remove('rotate');
-				}
-			});
-		});
-
-		// Mantener la barra mínima periódicamente
-		setInterval(() => {
-			setupMinimalBar();
-		}, 2000);
+			} else {
+				sendMessage({
+					setConfig: {
+						theme: 'light'
+					}
+				});
+			}
+			localStorage.setItem('theme', isDark ? 'dark' : 'light');
+		};
+		document.getElementById('themeToggle')?.addEventListener('click', handleToggleClick);
 	</script>
-
-	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </header>
