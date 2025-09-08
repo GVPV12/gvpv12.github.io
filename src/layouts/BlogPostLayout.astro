@@ -1,0 +1,441 @@
+---
+// src/layouts/BlogPostLayout.astro - MODIFICADO para soportar callouts
+
+export interface Props {
+  frontmatter: any;
+}
+
+const { frontmatter } = Astro.props;
+
+// Función para procesar callouts en el contenido
+function processCallouts(content: string): string {
+  let processed = content;
+  
+  // 1. Procesar callouts
+  processed = processed.replace(
+    />\s*\[!(\w+)\]([+-]?)\s*([^\n]*)\n((?:>.*\n?)*)/g,
+    (match, type, fold, title, contentBlock) => {
+      const cleanContent = contentBlock.replace(/^>\s*/gm, '').trim();
+      const displayTitle = title.trim() || type.charAt(0).toUpperCase() + type.slice(1);
+      const icon = getCalloutIcon(type);
+      const isCollapsible = fold === '+' || fold === '-';
+      const isInitiallyFolded = fold === '-';
+      
+      return `<div class="callout callout-${type.toLowerCase()}${isInitiallyFolded ? ' folded' : ''}" data-collapsible="${isCollapsible}">
+        <div class="callout-header"${isCollapsible ? ' onclick="toggleCallout(this)"' : ''}>
+          <span class="callout-icon">${icon}</span>
+          <span class="callout-title">${displayTitle}</span>
+          ${isCollapsible ? '<span class="callout-fold">▼</span>' : ''}
+        </div>
+        <div class="callout-content">${cleanContent}</div>
+      </div>`;
+    }
+  );
+  
+  // 2. Procesar ===resaltado===
+  processed = processed.replace(/===([^=]+)===/g, '<mark class="highlight">$1</mark>');
+  
+  // 3. Procesar `comandos`
+  processed = processed.replace(/`([^`\n]+)`/g, '<kbd class="key">$1</kbd>');
+  
+  return processed;
+}
+
+function getCalloutIcon(type: string): string {
+  const icons: Record<string, string> = {
+    note: '📝', info: 'ℹ️', tip: '💡', warning: '⚠️', error: '❌',
+    success: '✅', question: '❓', important: '🔥', example: '📋',
+    quote: '💬', abstract: '📄', summary: '📄', todo: '✅',
+    help: '❓', faq: '❓', caution: '⚠️', attention: '⚠️',
+    failure: '❌', fail: '❌', missing: '❌', danger: '⛔',
+    bug: '🐛', check: '✅', done: '✅'
+  };
+  return icons[type.toLowerCase()] || '📝';
+}
+
+// Obtener y procesar el contenido
+const rawContent = await Astro.slots.render('default');
+const processedContent = processCallouts(rawContent);
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{frontmatter.title}</title>
+  <meta name="description" content={frontmatter.description || frontmatter.title}>
+  
+  <style>
+    /* Estilos base del blog */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      background: #ffffff;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    /* Header del post */
+    .post-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid #e5e7eb;
+    }
+    
+    .post-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #111827;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    
+    .post-description {
+      color: #6b7280;
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+    
+    .post-meta {
+      color: #9ca3af;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .post-tags {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    
+    .tag {
+      background: #f3f4f6;
+      color: #374151;
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    
+    /* Contenido del post */
+    .post-content {
+      font-size: 1.125rem;
+      line-height: 1.7;
+    }
+    
+    .post-content h1,
+    .post-content h2,
+    .post-content h3,
+    .post-content h4 {
+      margin-top: 3rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.3;
+    }
+    
+    .post-content h1 { font-size: 2rem; }
+    .post-content h2 { font-size: 1.75rem; }
+    .post-content h3 { font-size: 1.5rem; }
+    .post-content h4 { font-size: 1.25rem; }
+    
+    .post-content p {
+      margin-bottom: 1.5rem;
+    }
+    
+    .post-content ul,
+    .post-content ol {
+      margin: 1.5rem 0;
+      padding-left: 2rem;
+    }
+    
+    .post-content li {
+      margin-bottom: 0.75rem;
+    }
+    
+    /* Enlaces */
+    .post-content a {
+      color: #3b82f6;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s ease;
+    }
+    
+    .post-content a:hover {
+      color: #1d4ed8;
+    }
+    
+    /* ===== CALLOUTS ===== */
+    .callout {
+      margin: 2.5rem 0;
+      border-radius: 12px;
+      border: 2px solid transparent;
+      background: #f8fafc;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+    }
+    
+    .callout:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      transform: translateY(-2px);
+    }
+    
+    .callout-header {
+      padding: 1rem 1.25rem;
+      background: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    
+    .callout-header:hover {
+      filter: brightness(0.95);
+    }
+    
+    .callout-icon {
+      font-size: 1.2rem;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .callout-title {
+      flex: 1;
+      font-size: 1.1rem;
+    }
+    
+    .callout-fold {
+      font-size: 0.9rem;
+      transition: transform 0.3s ease;
+      opacity: 0.8;
+      cursor: pointer;
+    }
+    
+    .callout.folded .callout-fold {
+      transform: rotate(-90deg);
+    }
+    
+    .callout-content {
+      padding: 1.25rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      transition: all 0.3s ease;
+    }
+    
+    .callout.folded .callout-content {
+      display: none;
+    }
+    
+    .callout-content p:last-child {
+      margin-bottom: 0;
+    }
+    
+    /* Tipos específicos de callouts */
+    .callout-note {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-color: #64748b;
+    }
+    .callout-note .callout-header {
+      background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+      color: #475569;
+    }
+    
+    .callout-info {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border-color: #3b82f6;
+    }
+    .callout-info .callout-header {
+      background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 100%);
+      color: #1d4ed8;
+    }
+    
+    .callout-tip {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border-color: #22c55e;
+    }
+    .callout-tip .callout-header {
+      background: linear-gradient(135deg, #bbf7d0 0%, #86efac 100%);
+      color: #15803d;
+    }
+    
+    .callout-warning {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border-color: #f59e0b;
+    }
+    .callout-warning .callout-header {
+      background: linear-gradient(135deg, #fde68a 0%, #fcd34d 100%);
+      color: #d97706;
+    }
+    
+    .callout-error {
+      background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+      border-color: #ef4444;
+    }
+    .callout-error .callout-header {
+      background: linear-gradient(135deg, #fca5a5 0%, #f87171 100%);
+      color: #dc2626;
+    }
+    
+    .callout-success {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border-color: #16a34a;
+    }
+    .callout-success .callout-header {
+      background: linear-gradient(135deg, #86efac 0%, #4ade80 100%);
+      color: #15803d;
+    }
+    
+    .callout-question {
+      background: linear-gradient(135deg, #fdf4ff 0%, #fae8ff 100%);
+      border-color: #a855f7;
+    }
+    .callout-question .callout-header {
+      background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+      color: #9333ea;
+    }
+    
+    .callout-important {
+      background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
+      border-color: #f97316;
+    }
+    .callout-important .callout-header {
+      background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+      color: #ea580c;
+    }
+    
+    /* ===== HIGHLIGHT Y KBD ===== */
+    .highlight {
+      background: linear-gradient(120deg, #fef08a 0%, #facc15 50%, #fef08a 100%);
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+    
+    .key {
+      background: linear-gradient(145deg, #f9fafb 0%, #f3f4f6 100%);
+      border: 1px solid #d1d5db;
+      border-bottom: 3px solid #9ca3af;
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
+      font-size: 0.9em;
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+      margin: 0 2px;
+      white-space: nowrap;
+    }
+    
+    /* Code blocks */
+    .post-content pre {
+      background: #1f2937;
+      color: #e5e7eb;
+      padding: 1.5rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      font-family: 'SF Mono', 'Monaco', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 2rem 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+      
+      .post-title {
+        font-size: 2rem;
+      }
+      
+      .post-content {
+        font-size: 1rem;
+      }
+      
+      .callout {
+        margin: 2rem 0;
+      }
+      
+      .callout-header,
+      .callout-content {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <article>
+    <!-- Header del post -->
+    <header class="post-header">
+      <h1 class="post-title">{frontmatter.title}</h1>
+      
+      {frontmatter.description && (
+        <p class="post-description">{frontmatter.description}</p>
+      )}
+      
+      <div class="post-meta">
+        {frontmatter.pubDate && (
+          <time>{new Date(frontmatter.pubDate).toLocaleDateString('es-ES', {
+            year: 'numeric',
+            month: 'long', 
+            day: 'numeric'
+          })}</time>
+        )}
+        
+        {frontmatter.author && (
+          <span> • Por {frontmatter.author}</span>
+        )}
+      </div>
+      
+      {frontmatter.tags && frontmatter.tags.length > 0 && (
+        <div class="post-tags">
+          {frontmatter.tags.map((tag: string) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <!-- Contenido procesado del post -->
+    <div class="post-content" set:html={processedContent} />
+  </article>
+
+  <script>
+    // Funcionalidad para callouts plegables
+    window.toggleCallout = function(header) {
+      const callout = header.closest('.callout');
+      const content = callout.querySelector('.callout-content');
+      
+      if (callout.classList.contains('folded')) {
+        // Expandir
+        callout.classList.remove('folded');
+        content.style.display = 'block';
+      } else {
+        // Colapsar
+        callout.classList.add('folded');
+        content.style.display = 'none';
+      }
+    };
+  </script>
+</body>
+</html>

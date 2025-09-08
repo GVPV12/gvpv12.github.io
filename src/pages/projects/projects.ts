@@ -12,54 +12,54 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    name: 'Devaradise.com',
-    description: 'A blog that sharing web development resources and tutorials',
-    demoLink: 'https://devaradise.com',
-    tags: ['Blog']
+    name: 'Youtube',
+    description: 'Comparto tutoriales, timelapses, animaciones 3D. Pienso compartir en el futuro procesos de mis proyectos.',
+    demoLink: 'https://www.youtube.com/@grevaleart',
+    tags: ['Tutoriales', 'Timelapses', 'Proyectos']
   },
   {
-    name: 'Sellercraft App',
-    description: 'An Ecommerce omnichannel platform in Southeast Asia',
-    demoLink: 'https://sellercraft.co',
+    name: 'Substack',
+    description: 'Algunos posts y opiniones sobre cosas que me interesan.',
+    demoLink: 'https://substack.com/@greciart',
     demoLinkRel: 'nofollow noopener noreferrer',
-    tags: ['ECommerce', 'Saas']
+    tags: ['Blog', 'Opiniones']
   },
   {
-    name: 'Gaji.id App',
-    description: 'Payroll and HR Management Information System',
-    demoLink: 'https://sellercraft.co',
+    name: 'GitHub',
+    description: 'Websites para clientes y algunos proyectos de desarrollo.',
+    demoLink: 'https://github.com/GVPV12',
     demoLinkRel: 'nofollow noopener noreferrer',
-    tags: ['HRIS', 'Saas']
+    tags: ['Web dev', 'Astro','Apps']
   },
   {
-    ...(await getRepositoryDetails('devaradise/paradise-ui')),
-    name: 'Paradise UI',
-    demoLink: 'https://paradise-ui.com',
-    postLink: 'https://devaradise.com/how-i-build-paradise-ui-react-component-library/',
-    tags: ['React', 'UI Library']
+    name: 'Itch io',
+    description: 'Algunos mini juegos y apps que he desarrollado.',
+    demoLink: 'https://grecia-v.itch.io/',
+    postLink: 'https://sorafutaba.itch.io/chop-n-roll',
+    tags: ['Mini apps', 'Mini juegos']
   },
   {
-    ...(await getRepositoryDetails('syakirurahman/react-lab')),
-    name: 'React Lab',
-    demoLink: 'https://devaradise.com/lab/react/',
-    tags: ['React']
+    name: 'Animaciones y Modelado 3D',
+    description: 'Mis animaciones y modelos 3D hechos en Blender.',
+    demoLink: 'https://3dgvart.carrd.co/',
+    tags: ['3D', 'Blender', 'Animaciones']
   },
   {
-    ...(await getRepositoryDetails('syakirurahman/pokemon-catcher')),
-    name: 'Pokemon Catcher',
-    demoLink: 'https://pokemon-catcher-18636.web.app/',
-    tags: ['Hobby']
+    name: 'Arte 2d y dibujos',
+    description: 'Dibujos y arte 2D.',
+    demoLink: 'https://gvart.carrd.co',
+    tags: ['Arte', 'Dibujos', 'Ilustraciones']
   },
   {
-    ...(await getRepositoryDetails('syakirurahman/movie-nominations')),
-    name: 'Movie Nominations',
-    demoLink: 'https://movie-nominations-c21c3.web.app/',
-    tags: ['Hobby']
+    name: 'Ko-fi',
+    description: 'Aca puedes donar a mis proyectos o pagarme por comisiones.',
+    demoLink: 'https://ko-fi.com/grevaleart',
+    tags: ['Donaciones', 'Support', 'Comisiones']
   },
   {
-    ...(await getRepositoryDetails('syakirurahman/organization-tree')),
-    name: 'Organization tree',
-    demoLink: 'https://organization-tree-2a446.web.app/',
-    tags: ['Hobby']
+    name: 'Pinterest',
+    description: 'Mi banco de ideas, referencias y inspiración.',
+    demoLink: 'https://www.pinterest.com/grevaleart',
+    tags: ['Ideas', 'Inspiración']
   }
 ]

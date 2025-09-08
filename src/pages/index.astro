@@ -23,9 +23,9 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
         <h1 class="text-4xl font-bold mb-4">welcome to my digital garden🌱 </h1>
         <Prose>
           <div class="text-lg">
-            <p>Soy una persona random multipotencial (o multipasional?) de internet con <u>muchos pensamientos, muchos intereses</u> y <b>muchas</b> cosas que decir que decidió crearse un jardín digital para acabar con su tóxico <b>doomscrolling</b>. </p>
+            <p>Soy una persona random multipotencial de internet con <u>muchos pensamientos, muchos intereses</u> y <b>muchas</b> cosas que decir que decidió crearse un jardín digital para acabar con su tóxico <b>doomscrolling</b>. </p>
             <p>Tras ver varios vídeos de internet sobre lo <u>genial que era el internet antes</u> y estar <i>positivamente de acuerdo</i> al respecto, decidí crear un espacio de internet que se asemejará un poco a como eran los <u>blogs retro</u>: simples, con ese sello de la personalidad de cada quien, y aunque algo feos al menos no eran todos iguales. Por eso veras que este pequeño sitio estará un <b>poco inspirado en eso</b>. </p>
-            <p>Si quieres saber un poco de mí, soy <b>diseñadora web freelance</b>. Estudié computación y mi sueño es hacer un <i>estudio de videojuegos</i>. <a href="https://instagram.com/grevaleartdraws/" target="_blank" rel="nofollow noopener">Dibujo</a> y ocasionalmente hago <a href="https://www.instagram.com/grevaleart3d/" target="_blank" rel="nofollow noopener">3D</a> principalmente para videojuegos o encargos freelance.</p>  
+            <p>Si quieres saber un poco de mí, soy <b>diseñadora y desarrolladora web freelance</b>. Estudié computación y mi sueño es hacer un <i>estudio de videojuegos</i>. <a href="https://instagram.com/grevaleartdraws/" target="_blank" rel="nofollow noopener">Dibujo</a> y ocasionalmente hago <a href="https://www.instagram.com/grevaleart3d/" target="_blank" rel="nofollow noopener">3D</a> principalmente para videojuegos o encargos freelance.</p>  
           </div>
         </Prose>
       </div>
@@ -34,8 +34,8 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
 		<main>
       <div class='mt-6 mb-12'>
         <div class="flex justify-between gap-2 border-b mb-1 dark:border-b-zinc-700">
-          <h2 class="text-lg font-bold mb-3">🌱Recent Posts</h2>
-          <a href="/posts/" class="inline-block py-2 underline dark:prose-invert">All posts &raquo;</a>
+          <h2 class="text-lg font-bold mb-3">🌱Blogs, notas, análisis como semillas, plantas y árboles</h2>
+          <a href="/posts/" class="inline-block py-2 underline dark:prose-invert">Todos los posts &raquo;</a>
         </div>
         <div>
           {
@@ -49,8 +49,8 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
       </div>
       <div>
         <div class="flex justify-between gap-2 mb-1">
-          <h2 class="text-lg font-bold mb-3">⭐My Projects</h2>
-          <a href="/projects/" class="inline-block py-2 underline dark:prose-invert">All projects &raquo;</a>
+          <h2 class="text-lg font-bold mb-3">⭐Mis Links</h2>
+          <a href="/projects/" class="inline-block py-2 underline dark:prose-invert">Todos mis links &raquo;</a>
         </div>
         <ProjectList projects={top6Projects}/>
       </div>
