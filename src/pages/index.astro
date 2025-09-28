@@ -24,8 +24,8 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
         <Prose>
           <div class="text-lg">
             <p>Soy una persona random multipotencial de internet con <u>muchos pensamientos, muchos intereses</u> y <b>muchas</b> cosas que decir que decidió crearse un jardín digital para acabar con su tóxico <b>doomscrolling</b>. </p>
-            <p>Tras ver varios vídeos de internet sobre lo <u>genial que era el internet antes</u> y estar <i>positivamente de acuerdo</i> al respecto, decidí crear un espacio de internet que se asemejará un poco a como eran los <u>blogs retro</u>: simples, con ese sello de la personalidad de cada quien, y aunque algo feos al menos no eran todos iguales. Por eso veras que este pequeño sitio estará un <b>poco inspirado en eso</b>. </p>
-            <p>Si quieres saber un poco de mí, soy <b>diseñadora y desarrolladora web freelance</b>. Estudié computación y mi sueño es hacer un <i>estudio de videojuegos</i>. <a href="https://instagram.com/grevaleartdraws/" target="_blank" rel="nofollow noopener">Dibujo</a> y ocasionalmente hago <a href="https://www.instagram.com/grevaleart3d/" target="_blank" rel="nofollow noopener">3D</a> principalmente para videojuegos o encargos freelance.</p>  
+            <p>Decidí crear un espacio de internet que se asemejará un poco a como eran los <u>blogs retro</u>: simples, con ese sello de la personalidad de cada quien, y aunque algo feos al menos no eran todos iguales. Por eso veras que este pequeño sitio estará un <b>poco inspirado en eso</b>. </p>
+            <p>Si quieres saber un poco de mí, soy <b>diseñadora y desarrolladora web freelance</b>. Estudié computación y mi sueño es hacer un <i>estudio de videojuegos</i>. Dibujo y ocasionalmente hago 3D principalmente para videojuegos o encargos freelance.</p>  
           </div>
         </Prose>
       </div>
@@ -34,7 +34,7 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
 		<main>
       <div class='mt-6 mb-12'>
         <div class="flex justify-between gap-2 border-b mb-1 dark:border-b-zinc-700">
-          <h2 class="text-lg font-bold mb-3">🌱Blogs, notas, análisis como semillas, plantas y árboles</h2>
+          <h2 class="text-lg font-bold mb-3">🌠Blogs, notas, análisis</h2>
           <a href="/posts/" class="inline-block py-2 underline dark:prose-invert">Todos los posts &raquo;</a>
         </div>
         <div>
@@ -57,3 +57,12 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
 		</main>
 	</div>
 </BaseLayout>
+
+<style>
+  .text-lg p {
+    font-size: 0.97rem;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  
+  }
+</style>

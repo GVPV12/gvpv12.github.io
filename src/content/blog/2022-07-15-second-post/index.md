@@ -1,20 +1,24 @@
 ---
-layout: '../../layouts/BlogPostLayout.astro'
-title: 'Mi Post con Callouts'
-description: 'Un post increíble con callouts'
-pubDate: '2024-08-18'
-tags: ['tutorial', 'callouts']
+layout: './layouts/BlogPostLayout.astro'
+title: '12345'
+description: 'Probando callouts en el blog'
+pubDate: '2024-08-20'
+tags: ['test']
 ---
 
-# Mi Post
+# Test de Callouts
 
-Texto con ===resaltado=== y `comandos`.
+Este es un test básico.
 
-> [!note] Nota Importante
-> Este es un callout básico.
+> [!note] Nota de Prueba
+> Esta es una nota simple para probar.
 
-> [!tip]+ Consejo Expandible
-> Este callout se puede plegar.
+Texto normal aquí.
 
-> [!warning]- Advertencia Plegada
-> Este empieza plegado.
+> [!tip] Consejo
+> Este es un consejo útil.
+
+Más texto con ===resaltado=== y `comandos`.
+
+> [!warning] Advertencia
+> Cuidado con esto.

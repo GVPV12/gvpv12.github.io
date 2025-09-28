@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import allInOne from './plugins/remark-obsidian-all-in-one.js';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwind from "@astrojs/tailwind";
@@ -13,6 +14,7 @@ export default defineConfig({
   output: 'static',
   integrations: [mdx(), sitemap(), tailwind(), partytown()],
   markdown: {
+    remarkPlugins: [allInOne],
     extendDefaultPlugins: true,
     rehypePlugins: [[autoNewTabExternalLinks, {
       domain: 'localhost:4321'

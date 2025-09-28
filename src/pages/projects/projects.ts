@@ -12,8 +12,32 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    name: 'LinkedIn',
+    description: 'Si no prefieres correo, puedes mandarme un DM (trabajos).',
+    demoLink: 'https://www.linkedin.com/in/grecia-valentina-valero/',
+    tags: ['Networking', 'Freelance', 'Proyectos']
+  },
+  {
+    name: 'Dribbble',
+    description: 'Portafolio de diseño web.',
+    demoLink: 'https://dribbble.com/gv_ui',
+    tags: ['Diseño web', 'Freelance', 'UI/UX']
+  },
+      {
+    name: 'Tienda modelos 3D CGtrader',
+    description: 'Aqui puedes comprar algunos de mis modelos 3D.',
+    demoLink: 'https://www.cgtrader.com/greciavalentinapv',
+    tags: ['3D Models', 'Freelance', 'Tienda']
+  },
+  {
+    name: 'Portafolio Contra',
+    description: 'Mis trabajos de diseño web y animaciones 3D.',
+    demoLink: 'https://greciavalentina.contra.com/',
+    tags: ['Networking', 'Freelance', 'Proyectos']
+  },
+  {
     name: 'Youtube',
-    description: 'Comparto tutoriales, timelapses, animaciones 3D. Pienso compartir en el futuro procesos de mis proyectos.',
+    description: 'Comparto proyectos, tutoriales, timelapses, animaciones 3D.',
     demoLink: 'https://www.youtube.com/@grevaleart',
     tags: ['Tutoriales', 'Timelapses', 'Proyectos']
   },
@@ -23,6 +47,13 @@ export const projects: Project[] = [
     demoLink: 'https://substack.com/@greciart',
     demoLinkRel: 'nofollow noopener noreferrer',
     tags: ['Blog', 'Opiniones']
+  },
+    {
+    name: 'Vgen',
+    description: 'Para comisiones pixel art, vtubers y animaciones 3D.',
+    demoLink: 'https://vgen.co/grevaleart',
+    demoLinkRel: 'nofollow noopener noreferrer',
+    tags: ['2D', '3D', 'Animaciones']
   },
   {
     name: 'GitHub',
@@ -52,7 +83,7 @@ export const projects: Project[] = [
   },
   {
     name: 'Ko-fi',
-    description: 'Aca puedes donar a mis proyectos o pagarme por comisiones.',
+    description: 'Donaciones y comisiones.',
     demoLink: 'https://ko-fi.com/grevaleart',
     tags: ['Donaciones', 'Support', 'Comisiones']
   },
