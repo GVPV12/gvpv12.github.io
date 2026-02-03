@@ -1,0 +1,70 @@
+---
+import { SITE_TITLE, SITE_TAGLINE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Ava from '@src/assets/img/ava.jpg';
+import Prose from '../components/Prose.astro';
+import { projects } from './projects/projects';
+import ProjectList from '../components/ProjectList.astro'
+import PostItem from '../components/PostItem.astro';
+
+type BlogPost = CollectionEntry<'blog'>;
+
+const top6Projects = projects.slice(0, 6);
+const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0, 5);
+---
+
+<BaseLayout title={SITE_TITLE + ' - ' + SITE_TAGLINE} description={SITE_DESCRIPTION}>
+	<div class='container'>
+		<div class='w-full md:flex md:items-center gap-16 mb-10'>
+      <div class="text-pretty leading-9">
+        <h1 class="text-3xl font-bold mb-4">welcome to my digital garden🌱 </h1>
+        <Prose>
+          <div class="text-sm">
+            <p>Soy una persona random multipotencial de internet con <u>muchos pensamientos, muchos intereses</u> y <b>muchas</b> cosas que decir que decidió crearse un jardín digital para acabar con su tóxico <b>doomscrolling</b>. </p>
+            <p>Decidí crear un espacio de internet que se asemejará un poco a como eran los <u>blogs retro</u>: simples, con ese sello de la personalidad de cada quien, y aunque algo feos al menos no eran todos iguales. Por eso veras que este pequeño sitio estará un <b>poco inspirado en eso</b>. </p>
+            <p>Si quieres saber un poco de mí, soy <b>diseñadora y desarrolladora web freelance</b>. Estudié computación y mi sueño es hacer un <i>estudio de videojuegos</i>. Dibujo y ocasionalmente hago 3D principalmente para videojuegos o encargos freelance.</p>  
+          </div>
+        </Prose>
+      </div>
+      <Image src={Ava} alt="Grecia V." width={300} loading="eager" class="rounded-3xl rotate-3 mx-4 md:mx-0"/>
+		</div>
+		<main>
+      <div class='mt-6 mb-12'>
+        <div class="flex justify-between gap-2 border-b mb-1 dark:border-b-zinc-700">
+          <h2 class="text-lg font-bold mb-3">🌠Blogs, notas, análisis</h2>
+          <a href="/posts/" class="inline-block py-2 underline dark:prose-invert">Todos los posts &raquo;</a>
+        </div>
+        <div class="text-sm">
+          {
+            posts.map((post: BlogPost) => (
+              <PostItem post={post} />
+            ))
+          }      
+        </div>
+        <div class="text-right">
+        </div>
+      </div>
+      <div>
+        <div class="flex justify-between gap-2 mb-1">
+          <h2 class="text-lg font-bold mb-3">⭐Mis Links</h2>
+          <a href="/projects/" class="inline-block py-2 underline dark:prose-invert">Todos mis links &raquo;</a>
+        </div>
+        <div class="text-sm"></div>
+        <ProjectList projects={top6Projects}/>
+      </div>
+      </div>
+		</main>
+	</div>
+</BaseLayout>
+
+<style>
+  .text-lg p {
+    font-size: 0.67rem;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  
+  }
+</style>

@@ -1,0 +1,124 @@
+---
+// src/components/WikilinkProcessor.astro
+// No props necesarios
+---
+
+<script>
+// Función para crear slug limpio
+function createSlug(text) {
+  return text
+    .toLowerCase()
+    .trim()
+    .normalize('NFD') // Normalizar acentos
+    .replace(/[\u0300-\u036f]/g, '') // Remover acentos
+    .replace(/[^\w\s-]/g, '') // Solo letras, números, espacios y guiones
+    .replace(/\s+/g, '-') // Espacios a guiones
+    .replace(/--+/g, '-') // Múltiples guiones a uno
+    .replace(/^-+|-+$/g, ''); // Remover guiones al inicio/final
+}
+
+// Función para convertir [[texto]] en enlaces
+function convertWikilinks() {
+  console.log('🔍 Buscando wikilinks...'); // DEBUG
+  
+  // Buscar todos los elementos que contengan contenido de posts
+  const contentElements = document.querySelectorAll(
+    'article, .post-content, .prose, main, .content, .markdown-content, .blog-post, [data-content]'
+  );
+  
+  console.log('📄 Elementos encontrados:', contentElements.length); // DEBUG
+  
+  contentElements.forEach(element => {
+    // Regex para encontrar [[texto]]
+    const wikilinkRegex = /\[\[([^\]]+)\]\]/g;
+    const originalHTML = element.innerHTML;
+    
+    // Reemplazar en todo el HTML del elemento
+    element.innerHTML = element.innerHTML.replace(wikilinkRegex, (match, linkText) => {
+      console.log('🔗 Wikilink encontrado:', linkText); // DEBUG
+      
+      // Crear slug: "La mierda de internet" -> "la-mierda-de-internet"
+      const slug = createSlug(linkText);
+      const url = `/${slug}/`;
+      
+      // CREAR EL ENLACE CON EMOJIS Y NUEVA LÍNEA
+      return `<div class="wikilink-container">↗️🔗<a href="${url}" class="wikilink" title="${linkText}" data-wikilink="${linkText}">${linkText}</a></div>`;
+    });
+    
+    if (originalHTML !== element.innerHTML) {
+      console.log('✅ Wikilinks convertidos en:', element); // DEBUG
+    }
+  });
+}
+
+// Ejecutar cuando la página cargue
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('🚀 Iniciando conversión de wikilinks...'); // DEBUG
+  convertWikilinks();
+});
+
+// Para compatibilidad con Astro (navegación SPA)
+document.addEventListener('astro:page-load', () => {
+  console.log('🔄 Astro page load - convirtiendo wikilinks...'); // DEBUG
+  convertWikilinks();
+});
+
+// Fallback para navegación tradicional
+window.addEventListener('popstate', () => {
+  setTimeout(() => {
+    console.log('🔙 Popstate - convirtiendo wikilinks...'); // DEBUG
+    convertWikilinks();
+  }, 100);
+});
+</script>
+
+<style is:global>
+/* Container para cada wikilink en nueva línea */
+.wikilink-container {
+  display: block !important;
+  margin: 8px 0 !important;
+  padding: 4px 0 !important;
+}
+
+/* Estilos para los wikilinks */
+.wikilink {
+  color: #09e4e6 !important;
+  text-decoration: none !important;
+  background: rgba(9, 228, 230, 0.1) !important;
+  padding: 3px 8px !important;
+  border-radius: 4px !important;
+  border-bottom: 1px dashed #09e4e6 !important;
+  transition: all 0.2s ease !important;
+  font-weight: 500 !important;
+  margin-left: 8px !important; /* Espacio después de los emojis */
+  display: inline-block !important;
+}
+
+.wikilink:hover {
+  background: rgba(9, 228, 230, 0.2) !important;
+  color: #07b8ba !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Enlaces rotos (opcional) */
+.wikilink.broken {
+  color: #ff6b6b !important;
+  border-bottom-color: #ff6b6b !important;
+  background: rgba(255, 107, 107, 0.1) !important;
+}
+
+/* Modo oscuro */
+@media (prefers-color-scheme: dark) {
+  .wikilink-container {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  
+  .wikilink {
+    background: rgba(9, 228, 230, 0.15) !important;
+  }
+  
+  .wikilink:hover {
+    background: rgba(9, 228, 230, 0.25) !important;
+  }
+}
+</style>
