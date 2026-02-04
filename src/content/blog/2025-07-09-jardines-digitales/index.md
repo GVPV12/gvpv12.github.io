@@ -3,11 +3,11 @@ title: 'Jardines digitales'
 slug: 'jardines-digitales'
 description: 'Mis notas sobre los jardines digitales'
 pubDate: '2025-09-07'
-tags: ["Notas"]
+tags: ["Notas","Jardin-digital"]
 coverImage: './blog-placeholder-1.jpg'
 ---
 
-[[La mierdificación de internet y los jardines digitales como alternativa]]
+[[La mierdificación de internet]]
 [[Consumir conscientemente]]
 
 https://github.com/MaggieAppleton/digital-gardeners?tab=readme-ov-file

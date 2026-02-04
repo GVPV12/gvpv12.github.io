@@ -107,7 +107,7 @@ kbd {
   em,
   i,
   .italic {
-    color: #f912a1 !important;
+    color: #fe24c0 !important;
   }
 
   
@@ -120,3 +120,136 @@ kbd {
     @apply shadow-sm align-baseline;
   }
 }
+
+/* CÓDIGO INLINE MORADO */
+p code,
+li code,
+td code,
+article code,
+.prose code,
+code:not(pre code) {
+  color: #a855f7 !important;  /* Morado brillante */
+  background-color: transparent !important;
+  font-size: 0.9em !important;
+  font-weight: 500 !important;
+  padding: 0.1em 0.3em !important;
+  border-radius: 0.25em !important;
+  font-family: 'Fira Code', 'JetBrains Mono', 'Consolas', 'Monaco', monospace !important;
+}
+
+/* Código en bloques NO se afecta */
+pre code {
+  color: inherit !important;
+  background-color: inherit !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+}
+
+
+/* ============================================
+   WIDGET DE GOODREADS - Agregar al final de global.css
+   ============================================ */
+
+/* Contenedor principal del widget */
+#gr_grid_widget_1770187143 .gr_grid_container {
+  width: 100% !important;
+  margin: 0 auto !important;
+  display: block !important;
+}
+
+/* Cada libro en la cuadrícula */
+#gr_grid_widget_1770187143 .gr_grid_book_container {
+  float: left !important;
+  width: 59px !important;
+  height: 90px !important;
+  padding: 4px !important;
+  overflow: hidden !important;
+  text-align: center !important;
+  display: inline-block !important;
+  margin: 0 !important;
+}
+
+/* Imágenes de las portadas */
+#gr_grid_widget_1770187143 .gr_grid_book_container img {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block !important;
+}
+
+/* Limpiar floats */
+#gr_grid_widget_1770187143 .gr_grid_container::after {
+  content: "" !important;
+  display: table !important;
+  clear: both !important;
+}
+
+/* Título del widget */
+#gr_grid_widget_1770187143 h2 {
+  margin-bottom: 1rem !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  display: block !important;
+}
+
+#gr_grid_widget_1770187143 h2 a {
+  color: #ff5ea9 !important;
+  text-decoration: none !important;
+}
+
+/* Link de branding de Goodreads */
+#gr_grid_widget_1770187143 .gr_grid_branding {
+  margin-top: 0.5rem !important;
+  display: block !important;
+  clear: both !important;
+}
+
+/* Saltos de línea */
+#gr_grid_widget_1770187143 br {
+  display: block !important;
+  clear: both !important;
+}
+
+#gr_quote_body {
+  font-size: 0.75rem !important;
+  line-height: 1.4 !important;
+}
+
+#gr_quote_body * {
+  font-size: 0.75rem !important;
+}
+
+#gr_quote_body .authorOrTitle {
+  font-size: 0.7rem !important;
+}
+
+#gr_quote_body a {
+  font-size: 0.7rem !important;
+}
+
+/* ============================================
+   COLOR ESPECÍFICO PARA TÍTULOS EN PÁGINA DE POSTS
+   Agregar al final de global.css
+   ============================================ */
+
+/* Títulos de posts (h3 con link dentro) */
+/* Esto sobrescribe el color rosa #ff5ea9 solo para los títulos de posts */
+
+/* El h3 dentro del PostItem */
+.post-item h3,
+div > h3.font-medium {
+  color: inherit !important; /* Hereda el color del link */
+}
+
+/* El link del título del post */
+.post-item h3 a,
+div > h3.font-medium > a {
+  color: #02ffc0 !important; /* Cyan - igual que tus links de contenido */
+  text-decoration: none !important;
+}
+
+/* Hover del link del título */
+.post-item h3 a:hover,
+div > h3.font-medium > a:hover {
+  color: #e44f94 !important; /* Cyan más brillante en hover */
+}
+

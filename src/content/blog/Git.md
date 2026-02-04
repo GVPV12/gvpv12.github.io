@@ -1,6 +1,6 @@
 ---
 title: ¿Que es Git? Explicación y resumen sencillo
-slug: Git-resumen-simple
+slug: git
 description: Si te cuesta entender que es Git acá te lo resumo como yo lo entendí.
 pubDate: 2026-02-03
 tags:
@@ -12,29 +12,22 @@ coverImage: ./git.png
 ---
 
 [[Github]]
-[[Github actions]]
-[[GitHub Codespaces y github.dev]]
-
-Comandos git terminal
-[[Github nuevos proyectos]]
-[[Cambiar de repositorio en Git]]
-[[Actualizar en git]]
-[[Subir a dos repositorios en git]]
+[[Comandos esenciales de Git INDEX]]
 
 
 *Tabla de contenidos*
-- [[#1. Git (El Sistema)|1. Git (El Sistema)]]
-- [[#2. GitHub (La Plataforma de Alojamiento)|2. GitHub (La Plataforma de Alojamiento)]]
-- [[#3. GitHub Desktop (La Interfaz Gráfica de Usuario - GUI)|3. GitHub Desktop (La Interfaz Gráfica de Usuario - GUI)]]
-- [[#4. GitLab (Una Alternativa a GitHub)|4. GitLab (Una Alternativa a GitHub)]]
-- [[#Comandos de Git Esenciales:|Comandos de Git Esenciales:]]
-- [[#Funciones y Conceptos Básicos de Git y Plataformas como GitHub/GitLab:|Funciones y Conceptos Básicos de Git y Plataformas como GitHub/GitLab:]]
+- Git (El Sistema)
+- 2. GitHub (La Plataforma de Alojamiento)
+- 3. GitHub Desktop (La Interfaz Gráfica de Usuario - GUI)
+- 4. GitLab (Una Alternativa a GitHub)
+- Comandos de Git Esenciales
+- Funciones y Conceptos Básicos de Git y Plataformas como GitHub/GitLab
 
 Git es un sistema de control de versiones distribuido que permite a varios desarrolladores trabajar en un mismo proyecto de forma colaborativa, rastreando los cambios y fusionándolos eficientemente. 
 
 Es común confundir estos términos, pero representan diferentes aspectos del control de versiones y el desarrollo colaborativo. Aquí te explico las diferencias clave:
 
-### 1. Git (El Sistema)
+## 1. Git (El Sistema)
 
 - **¿Qué es?** Git es un **sistema de control de versiones distribuido (VCS)** de código abierto. Es la tecnología subyacente que te permite rastrear y gestionar los cambios en tu código o cualquier conjunto de archivos a lo largo del tiempo.
 - **Función principal:** Permite a los desarrolladores:
@@ -46,7 +39,7 @@ Es común confundir estos términos, pero representan diferentes aspectos del co
 - **¿Dónde funciona?** Git es una herramienta de línea de comandos que se instala y funciona **localmente** en tu computadora. Puedes usar Git para gestionar proyectos en tu máquina sin necesidad de estar conectado a internet o de una plataforma externa.
 - **En resumen:** Git es la _tecnología_ que hace posible el control de versiones.
 
-### 2. GitHub (La Plataforma de Alojamiento)
+## 2. GitHub (La Plataforma de Alojamiento)
 
 - **¿Qué es?** GitHub es una **plataforma basada en la web (servicio en la nube)** que aloja repositorios Git. Es decir, utiliza Git como su tecnología principal, pero le añade una capa de funcionalidades sociales y de colaboración.
 - **Función principal:**
@@ -60,7 +53,7 @@ Es común confundir estos términos, pero representan diferentes aspectos del co
 - **¿Dónde funciona?** Es un servicio en la nube, accesible a través de tu navegador web.
 - **En resumen:** GitHub es el _sitio web_ o _plataforma_ que aloja tus proyectos Git y proporciona herramientas adicionales para la colaboración.
 
-### 3. GitHub Desktop (La Interfaz Gráfica de Usuario - GUI)
+## 3. GitHub Desktop (La Interfaz Gráfica de Usuario - GUI)
 
 - **¿Qué es?** GitHub Desktop es una **aplicación de escritorio (GUI)** gratuita y de código abierto desarrollada por GitHub. Sirve como una interfaz gráfica para interactuar con repositorios Git (tanto locales como alojados en GitHub u otros servicios Git) sin necesidad de usar la línea de comandos.
 - **Función principal:**
@@ -70,7 +63,7 @@ Es común confundir estos términos, pero representan diferentes aspectos del co
 - **¿Dónde funciona?** Se instala y funciona **localmente** en tu computadora (Windows y macOS).
 - **En resumen:** GitHub Desktop es una _aplicación_ que hace que usar Git sea más fácil y visual para aquellos que prefieren no usar la línea de comandos.
 
-### 4. GitLab (Una Alternativa a GitHub)
+## 4. GitLab (Una Alternativa a GitHub)
 
 - **¿Qué es?** GitLab es otra **plataforma basada en la web** para el control de versiones y el desarrollo colaborativo, similar a GitHub. También utiliza Git como su sistema subyacente.
 - **Función principal:**
@@ -83,7 +76,7 @@ Es común confundir estos términos, pero representan diferentes aspectos del co
 - **¿Dónde funciona?** Ofrece un servicio en la nube (gitlab.com) y también software que puedes instalar en tus propios servidores.
 - **En resumen:** GitLab es un _competidor_ de GitHub que busca ofrecer una solución más completa para el ciclo de vida de DevOps, con fuertes capacidades de CI/CD y opciones de auto-alojamiento.
 
-### Comandos de Git Esenciales:
+## Comandos de Git Esenciales:
 
 - **`git init`**: Inicializa un nuevo repositorio de Git en el directorio actual. Esto crea una carpeta oculta `.git` donde Git almacenará todo el historial y la metadata del proyecto.
 - **`git clone [URL]`**: Crea una copia local completa de un repositorio de Git existente (remoto) en tu máquina. Descarga todos los archivos y el historial del proyecto.
@@ -107,7 +100,7 @@ Es común confundir estos términos, pero representan diferentes aspectos del co
 - **`git remote -v`**: Muestra las URLs de los repositorios remotos configurados para tu repositorio local.
 - **`git remote add [nombre-remoto] [URL]`**: Añade un nuevo repositorio remoto a tu configuración.
 
-### Funciones y Conceptos Básicos de Git y Plataformas como GitHub/GitLab:
+## Funciones y Conceptos Básicos de Git y Plataformas como GitHub/GitLab:
 
 - **Fork (Bifurcación)**:
     - **Concepto**: Un "fork" es una copia personal de un repositorio de otro usuario o de un proyecto, que reside en tu propia cuenta en una plataforma como GitHub o GitLab. Es como crear tu propia versión del proyecto original, pero que sigue vinculada a él.
@@ -133,3 +126,17 @@ Es común confundir estos términos, pero representan diferentes aspectos del co
     - **Función**: Permite la colaboración entre desarrolladores. Los desarrolladores "empujan" sus cambios a un "remote" y "jalan" cambios de otros desarrolladores desde el mismo "remote". El `origin` es el nombre por defecto del primer repositorio remoto con el que interactúas, generalmente el que clonaste.
 
 
+## Adicional
+### Github actions
+GitHub Actions es una plataforma de automatización de CI/CD (devops) integrada directamente en GitHub que permite crear flujos de trabajo (workflows) para compilar, probar y desplegar código automáticamente. 
+
+GitHub Actions se utiliza en una amplia variedad de proyectos, desde pequeños hasta empresariales, destacando en: 
+
+- **Desarrollo Web (Frontend y Backend):** Automatización de pruebas y despliegue en servidores como AWS, Azure o Google Cloud.
+- **Proyectos de Código Abierto (Open Source):** Para ejecutar pruebas automáticamente en cada contribución (_Pull Request_).
+- **Aplicaciones Móviles:** Compilación y empaquetado automático de apps (Android/iOS).
+- **Proyectos de Ciencia de Datos:** Automatización de scripts de entrenamiento de modelos o análisis de datos.
+- **Automatización de Tareas (DevOps):** Gestión automática de _labels_ en issues, cierre de tareas inactivas o creación de lanzamientos (releases).
+
+## GitHub Codespaces y github.dev
+<span style="background:#fff88f">Si quieres editar código de manera online, esta es la manera más sencilla. </span>La principal diferencia es que ==**GitHub.dev** es un **editor de código ligero basado en navegador** para ediciones rápidas sin un entorno de ejecución completo, mientras que **GitHub Codespaces** es un **entorno de desarrollo completo (IDE) alojado en la nube** con recursos de cómputo dedicados, terminal integrado y capacidad para ejecutar y depurar código==.

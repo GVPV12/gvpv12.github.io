@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import remarkCallouts from './plugins/remark-callouts.js';
 import remarkHighlightToBold from './plugins/remark-highlight-to-bold.js';
+import remarkAutoSlug from './plugins/remark-auto-slug-simple.js'; // 👈 NUEVO
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwind from "@astrojs/tailwind";
@@ -13,7 +14,11 @@ export default defineConfig({
   output: 'static',
   integrations: [mdx(), sitemap(), tailwind(), partytown()],
   markdown: {
-    remarkPlugins: [remarkCallouts, remarkHighlightToBold],
+    remarkPlugins: [
+      remarkAutoSlug,          // 👈 NUEVO - debe ir PRIMERO
+      remarkCallouts, 
+      remarkHighlightToBold
+    ],
     extendDefaultPlugins: true,
     rehypePlugins: [[autoNewTabExternalLinks, {
       domain: 'localhost:4321'
