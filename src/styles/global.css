@@ -253,3 +253,8 @@ div > h3.font-medium > a:hover {
   color: #e44f94 !important; /* Cyan más brillante en hover */
 }
 
+/* Fecha (Published on) - más pequeña */
+.flex.flex-col .text-sm {
+  font-size: 0.76rem !important;
+}
+

@@ -6,7 +6,6 @@ pubDate: 2026-02-03
 tags:
   - github
   - Resumenes
-  - Cheat-sheet
   - dev
   - Notas
 coverImage: ./github.jpg

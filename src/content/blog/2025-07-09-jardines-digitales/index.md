@@ -128,5 +128,4 @@ Consideraciones al publicar contenido tipo blog en un jardín digital:
 En resumen, un jardín digital puede ser un excelente lugar para publicar contenido tipo blog, ofreciendo flexibilidad, creatividad y la oportunidad de conectar tus ideas de manera única.
 
 
-![Jardin digital](./blog-placeholder-2.jpg)
 
