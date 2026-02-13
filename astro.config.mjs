@@ -1,7 +1,8 @@
 import { defineConfig } from 'astro/config';
+import { fileURLToPath } from 'node:url'; // Necesario para resolver rutas locales
 import remarkCallouts from './plugins/remark-callouts.js';
 import remarkHighlightToBold from './plugins/remark-highlight-to-bold.js';
-import remarkAutoSlug from './plugins/remark-auto-slug-simple.js'; // 👈 NUEVO
+import remarkAutoSlug from './plugins/remark-auto-slug-simple.js'; 
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwind from "@astrojs/tailwind";
@@ -13,9 +14,18 @@ export default defineConfig({
   base: '/',
   output: 'static',
   integrations: [mdx(), sitemap(), tailwind(), partytown()],
+  // --- CONFIGURACIÓN DEL ALIAS ---
+  vite: {
+    resolve: {
+      alias: {
+        '@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
+      },
+    },
+  },
+  // -------------------------------
   markdown: {
     remarkPlugins: [
-      remarkAutoSlug,          // 👈 NUEVO - debe ir PRIMERO
+      remarkAutoSlug,
       remarkCallouts, 
       remarkHighlightToBold
     ],

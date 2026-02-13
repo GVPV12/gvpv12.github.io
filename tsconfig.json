@@ -3,10 +3,11 @@
   "compilerOptions": {
     "strictNullChecks": true,
     "baseUrl": ".",
-		"paths": {
-			"@src/*": ["src/*"]
-		},
+    "paths": {
+      "@src/*": ["src/*"],
+      "@assets/*": ["src/assets/*"]
+    },
     "outDir": "dist"
-	},
+  },
   "exclude": ["public", "node_modules", "dist"]
 }
