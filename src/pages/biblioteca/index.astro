@@ -1,6 +1,17 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import libros from '@src/assets/img/pfp.jpg'
+
+// OPCIÓN 1: Si mueves las imágenes a /public/
+// Mueve tus imágenes de /src/assets/img/ a /public/img/
+// Entonces las rutas serán /img/libros.png en vez de /src/assets/img/libros.png
+
+// OPCIÓN 2: Si prefieres usar imports (recomendado para optimización)
+import librosImg from '@assets/img/libros.png';
+import dibujoImg from '@assets/img/dibujo.png';
+import musicaImg from '@assets/img/musicafav.png';
+import juegosImg from '@assets/img/juegos.png';
+import recetasImg from '@assets/img/misrecetas.png';
+import favsImg from '@assets/img/favs.png';
 ---
 
 <BaseLayout
@@ -13,28 +24,40 @@ import libros from '@src/assets/img/pfp.jpg'
       <p class="text-zinc-700 dark:text-zinc-300 text-sm mb-10">Explora mi colección de contenido favorito: libros, música, dibujos, videojuegos y recetas.</p>
       
       <div class="media-grid">
-        <a href="/biblioteca/libros/" class="media-item" title="Libros" style="display: flex; justify-content: center; align-items: center;">
-          <Image src={libros} alt="Libros" height={300} />
+        <a href="/biblioteca/libros/" class="media-item" title="Libros">
+          <div class="image-container" style="height: 220px;">
+            <img src={librosImg.src} alt="Libros" />
+          </div>
         </a>
         
-        <a href="/biblioteca/dibujos/" class="media-item" title="Dibujos" style="display: flex; justify-content: center; align-items: center;">
-          <img src="@src/assets/img/dibujo.png" alt="Dibujos" style="height: 185px; width: auto;"/>
+        <a href="/biblioteca/dibujos/" class="media-item" title="Dibujos">
+          <div class="image-container" style="height: 185px;">
+            <img src={dibujoImg.src} alt="Dibujos" />
+          </div>
         </a>
         
-        <a href="/biblioteca/musica/" class="media-item" title="Música y albumes que adoro" style="display: flex; justify-content: center; align-items: center;">
-          <img src="@src/assets/img/musicafav.png" alt="Música" style="height: 230px; width: auto;"  />
+        <a href="/biblioteca/musica/" class="media-item" title="Música y albumes que adoro">
+          <div class="image-container" style="height: 230px;">
+            <img src={musicaImg.src} alt="Música" />
+          </div>
         </a>
         
-        <a href="/biblioteca/juegos/" class="media-item" title="Videojuegos"  style="display: flex; justify-content: center; align-items: center;">
-          <img src="@src/assets/img/juegos.png" alt="Videojuegos" />
+        <a href="/biblioteca/juegos/" class="media-item" title="Videojuegos">
+          <div class="image-container">
+            <img src={juegosImg.src} alt="Videojuegos" />
+          </div>
         </a>
         
-        <a href="/biblioteca/recetas/" class="media-item" title="Mis Recetas (creadas por mi misma: son libres de lactosa, gluten, azúcar)" style="display: flex; justify-content: center; align-items: center;">
-          <img src="@src/assets/img/misrecetas.png" alt="Recetas" style="height: 230px; width: auto;" />
+        <a href="/biblioteca/recetas/" class="media-item" title="Mis Recetas (creadas por mi misma: son libres de lactosa, gluten, azúcar)">
+          <div class="image-container" style="height: 230px;">
+            <img src={recetasImg.src} alt="Recetas" />
+          </div>
         </a>
         
-        <a href="/biblioteca/favs/" class="media-item" title="Mi colección de favoritos" style="display: flex; justify-content: center; align-items: center;">
-          <img src="@src/assets/img/favs.png" alt="Favoritos" style="height: 240px; width: auto;" />
+        <a href="/biblioteca/favs/" class="media-item" title="Mi colección de favoritos">
+          <div class="image-container" style="height: 240px;">
+            <img src={favsImg.src} alt="Favoritos" />
+          </div>
         </a>
       </div>
     </main>
@@ -64,11 +87,20 @@ import libros from '@src/assets/img/pfp.jpg'
     cursor: pointer;
   }
 
-  .media-item img {
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    height: auto;
+  }
+
+  .media-item img {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
     display: block;
     transition: transform 0.3s ease;
+    object-fit: contain;
   }
 
   .media-item:hover {
