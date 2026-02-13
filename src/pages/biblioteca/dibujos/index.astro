@@ -1,45 +1,55 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
 
-// Cada dibujo tiene su propia galería
+// Importamos las imágenes individualmente (Vite necesita esto para procesarlas)
+import imgAligned from '@assets/img/aligned.webp';
+import imgHibrida from '@assets/img/hibridachibi.webp';
+import imgTodoroki from '@assets/img/todoroki.webp';
+import imgGuilty from '@assets/img/guiltycrown.webp';
+import imgLibrarian from '@assets/img/cutelibrarian.webp';
+import imgCyra from '@assets/img/cyra.jpg';
+import imgEgo from '@assets/img/egochains.webp';
+import imgImagination from '@assets/img/imagination.webp';
+
 const dibujos = [
   { 
-    src: '/src/assets/img/aligned.webp', 
+    src: imgAligned, 
     alt: 'Papel negro',
     slug: 'papelnegro'
   },
   { 
-    src: '/src/assets/img/hibridachibi.webp', 
+    src: imgHibrida, 
     alt: 'Linearts',
     slug: 'lineart'
   },
   { 
-    src: '/src/assets/img/todoroki.webp', 
+    src: imgTodoroki, 
     alt: 'Editados con efecto neón',
     slug: 'efectoneon'
   },
   { 
-    src: '/src/assets/img/guiltycrown.webp', 
+    src: imgGuilty, 
     alt: 'Activismo',
     slug: 'activismo'
   },
   { 
-    src: '/src/assets/img/cutelibrarian.webp', 
+    src: imgLibrarian, 
     alt: 'Coloreados',
     slug: 'coloreados'
   },
   { 
-    src: '/src/assets/img/cyra.jpg', 
+    src: imgCyra, 
     alt: 'Sketches',
     slug: 'sketches'
   },
   { 
-    src: '/src/assets/img/egochains.webp', 
+    src: imgEgo, 
     alt: 'Vent art (trigger warning)',
     slug: 'ventart'
   },
   { 
-    src: '/src/assets/img/imagination.webp', 
+    src: imgImagination, 
     alt: 'Pinturas (acuarela, acrilico, paisajes)',
     slug: 'pinturas'
   },
@@ -58,7 +68,8 @@ const dibujos = [
       <div class="instagram-grid">
         {dibujos.map((dibujo) => (
           <a href={`/biblioteca/dibujos/${dibujo.slug}/`} class="grid-item" title={dibujo.alt}>
-            <img src={dibujo.src} alt={dibujo.alt} />
+            {/* Usamos el componente Image de Astro */}
+            <Image src={dibujo.src} alt={dibujo.alt} width={400} height={400} />
           </a>
         ))}
       </div>
@@ -67,6 +78,7 @@ const dibujos = [
 </BaseLayout>
 
 <style>
+  /* Tu CSS se mantiene igual, pero asegúrate de que el selector apunte bien */
   .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -82,7 +94,7 @@ const dibujos = [
   .grid-item {
     position: relative;
     width: 100%;
-    padding-bottom: 100%; /* Mantiene ratio 1:1 */
+    aspect-ratio: 1 / 1; /* Simplificado con aspect-ratio moderno */
     overflow: hidden;
     border-radius: 0.5rem;
     background-color: #f0f0f0;
@@ -99,10 +111,8 @@ const dibujos = [
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   }
 
+  /* Importante: El componente Image genera un img, así que esto sigue funcionando */
   .grid-item img {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
