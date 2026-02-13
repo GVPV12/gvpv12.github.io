@@ -1,0 +1,417 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+// Álbumes favoritos de siempre (estáticos)
+const lovedAlbums = [
+  { artist: 'Radiohead', album: 'OK Computer', cover: '/musica/ok-computer.jpg', url: 'https://open.spotify.com/album/6dVIqQ8qmQ5GBnJ9shOYGE' },
+  { artist: 'Pink Floyd', album: 'The Dark Side of the Moon', cover: '/musica/dark-side.jpg', url: 'https://open.spotify.com/album/4LH4d3cOWNNsVw41Gqt2kv' },
+  { artist: 'The Beatles', album: 'Abbey Road', cover: '/musica/abbey-road.jpg', url: 'https://open.spotify.com/album/0ETFjACtuP2ADo6LFhL6HN' },
+  { artist: 'Daft Punk', album: 'Discovery', cover: '/musica/discovery.jpg', url: 'https://open.spotify.com/album/2noRn2Aes5aoNVsU6iWThc' },
+  { artist: 'Kendrick Lamar', album: 'To Pimp a Butterfly', cover: '/musica/tpab.jpg', url: 'https://open.spotify.com/album/7ycBtnsMtyVbbwTfJwRjSP' },
+  { artist: 'Arctic Monkeys', album: 'AM', cover: '/musica/am.jpg', url: 'https://open.spotify.com/album/78bpIziExqiI9qztvNFlQu' },
+  { artist: 'Tame Impala', album: 'Currents', cover: '/musica/currents.jpg', url: 'https://open.spotify.com/album/79dL7FLiJFOO0EoehUHQBv' },
+  { artist: 'Gorillaz', album: 'Demon Days', cover: '/musica/demon-days.jpg', url: 'https://open.spotify.com/album/0bUTHlWbkSQysoM3VsWldT' },
+  { artist: 'Mac DeMarco', album: 'Salad Days', cover: '/musica/salad-days.jpg', url: 'https://open.spotify.com/album/79jMKEvHiaF0PB1WMUNdxx' },
+  { artist: 'Fleetwood Mac', album: 'Rumours', cover: '/musica/rumours.jpg', url: 'https://open.spotify.com/album/0BwWUstDMUbgq2NYONRqlu' },
+  { artist: 'Bon Iver', album: 'For Emma, Forever Ago', cover: '/musica/bon-iver.jpg', url: 'https://open.spotify.com/album/6XhjNHCyCDyyGJRM5mg40G' },
+  { artist: 'Sufjan Stevens', album: 'Illinois', cover: '/musica/illinois.jpg', url: 'https://open.spotify.com/album/6nlfXt0Z30AKN5TeYAkJP9' },
+  { artist: 'The Strokes', album: 'Is This It', cover: '/musica/is-this-it.jpg', url: 'https://open.spotify.com/album/2yNaksHgeMQM9Quse463b5' },
+  { artist: 'Arcade Fire', album: 'Funeral', cover: '/musica/funeral.jpg', url: 'https://open.spotify.com/album/65KwtzkJXw7oT819NFWmEP' },
+  { artist: 'Vampire Weekend', album: 'Modern Vampires of the City', cover: '/musica/mvotc.jpg', url: 'https://open.spotify.com/album/01Z37R80wFIUaBqMXjaF8S' },
+  { artist: 'MGMT', album: 'Oracular Spectacular', cover: '/musica/oracular.jpg', url: 'https://open.spotify.com/album/79ONNoS4M9tfIA1mYLBYVX' },
+];
+
+const STATSFM_USER = 'gvpv12'; // Tu username de stats.fm
+
+// MÉTODO ALTERNATIVO: Obtener álbumes desde los streams recientes
+async function getRecentAlbumsFromStreams() {
+  try {
+    const response = await fetch(
+      `https://api.stats.fm/api/v1/users/${STATSFM_USER}/streams/recent?limit=200`,
+      {
+        headers: {
+          'Accept': 'application/json'
+        }
+      }
+    );
+    
+    if (!response.ok) {
+      console.log('Stats.fm streams response not OK:', response.status);
+      return [];
+    }
+    
+    const data = await response.json();
+    console.log('Streams data:', data);
+    
+    const items = data.items || [];
+    
+    // Agrupar por álbum y contar streams
+    const albumMap = new Map();
+    
+    items.forEach(stream => {
+      const track = stream.track;
+      if (!track || !track.albums || track.albums.length === 0) return;
+      
+      const album = track.albums[0];
+      const albumId = album.id;
+      
+      if (albumMap.has(albumId)) {
+        albumMap.get(albumId).streams++;
+      } else {
+        albumMap.set(albumId, {
+          name: album.name,
+          artist: track.artists?.[0]?.name || 'Unknown Artist',
+          image: album.image,
+          url: album.externalUrls?.spotify || '#',
+          streams: 1
+        });
+      }
+    });
+    
+    // Convertir a array y ordenar por streams
+    const albums = Array.from(albumMap.values())
+      .sort((a, b) => b.streams - a.streams)
+      .slice(0, 24);
+    
+    console.log('Albums procesados:', albums);
+    return albums;
+  } catch (error) {
+    console.error('Error fetching streams from stats.fm:', error);
+    return [];
+  }
+}
+
+// Función para obtener canciones más escuchadas
+async function getTopTracks() {
+  try {
+    const response = await fetch(
+      `https://api.stats.fm/api/v1/users/${STATSFM_USER}/top/tracks?range=weeks`,
+      {
+        headers: {
+          'Accept': 'application/json'
+        }
+      }
+    );
+    
+    if (!response.ok) {
+      console.log('Stats.fm response not OK para tracks:', response.status);
+      return [];
+    }
+    
+    const data = await response.json();
+    console.log('Tracks data structure:', JSON.stringify(data, null, 2));
+    
+    const items = data.items || [];
+    
+    return items.slice(0, 50).map(item => {
+      const track = item.track;
+      const artist = track.artists?.[0] || {};
+      const album = track.albums?.[0] || {};
+      
+      return {
+        name: track.name,
+        artist: artist.name,
+        image: album.image,
+        url: track.externalUrls?.spotify || '#',
+        playcount: item.streams || 0
+      };
+    });
+  } catch (error) {
+    console.error('Error fetching tracks from stats.fm:', error);
+    return [];
+  }
+}
+
+let recentAlbums = [];
+let topTracks = [];
+
+if (STATSFM_USER && STATSFM_USER !== 'tu_username_statsfm') {
+  recentAlbums = await getRecentAlbumsFromStreams();
+  topTracks = await getTopTracks();
+  
+  console.log('Final albums count:', recentAlbums.length);
+  console.log('Final tracks count:', topTracks.length);
+}
+---
+
+<BaseLayout
+  title="Música"
+  description="Mi colección musical y estadísticas de escucha"
+>
+  <div class="container">
+    <main>
+      <h1 class="text-3xl font-bold mb-2">Música</h1>
+      <p class="text-zinc-700 dark:text-zinc-300 text-sm mb-10">Mi colección musical personal y lo que he estado escuchando recientemente.</p>
+      
+      <!-- Sección 1: Música que amo desde siempre -->
+      <section class="section-block">
+        <h2 class="text-2xl font-bold mb-6 text-cyan-400">🎵 Música que amo desde siempre</h2>
+        <div class="music-grid-loved">
+          {lovedAlbums.map((album) => (
+            <a 
+              href={album.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="album-cover"
+              title={`${album.artist} - ${album.album}`}
+            >
+              <img src={album.cover} alt={`${album.artist} - ${album.album}`} />
+              <div class="album-overlay">
+                <p class="album-name">{album.album}</p>
+                <p class="artist-name">{album.artist}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <!-- Sección 2: Álbumes más recientes de Spotify -->
+      <section class="section-block">
+        <h2 class="text-2xl font-bold mb-6 text-cyan-400">📀 Álbumes recientes de Spotify</h2>
+        {recentAlbums.length > 0 ? (
+          <div class="music-grid">
+            {recentAlbums.map((album) => (
+              <a 
+                href={album.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="album-cover"
+                title={`${album.artist} - ${album.name}`}
+              >
+                <img src={album.image} alt={`${album.artist} - ${album.name}`} />
+                <div class="album-overlay">
+                  <p class="album-name">{album.name}</p>
+                  <p class="artist-name">{album.artist}</p>
+                  <p class="playcount">{album.streams} streams</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="api-placeholder">
+            <p class="text-zinc-500 dark:text-zinc-400 mb-2">
+              {STATSFM_USER === 'tu_username_statsfm' 
+                ? 'Conecta tu cuenta de stats.fm para ver tus álbumes recientes aquí.'
+                : 'Cargando álbumes... Si no aparecen, verifica tu username de stats.fm.'}
+            </p>
+            <p class="text-sm text-zinc-400 dark:text-zinc-500 mb-4">
+              Stats.fm analiza TODA tu historia de Spotify, no solo desde que te registras.
+            </p>
+            <a 
+              href="https://stats.fm" 
+              target="_blank"
+              class="text-cyan-400 hover:text-cyan-300 underline inline-block"
+            >
+              Crear cuenta en stats.fm (gratis) →
+            </a>
+            <p class="text-xs text-zinc-400 dark:text-zinc-500 mt-4">
+              Username actual: <code>{STATSFM_USER}</code>
+            </p>
+          </div>
+        )}
+      </section>
+
+      <!-- Sección 3: Canciones más escuchadas -->
+      <section class="section-block">
+        <h2 class="text-2xl font-bold mb-6 text-cyan-400">🎧 Canciones más escuchadas</h2>
+        {topTracks.length > 0 ? (
+          <div class="music-grid-square">
+            {topTracks.map((track) => (
+              <a 
+                href={track.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="track-cover"
+                title={`${track.artist} - ${track.name}`}
+              >
+                <img src={track.image} alt={`${track.artist} - ${track.name}`} />
+                <div class="album-overlay">
+                  <p class="album-name">{track.name}</p>
+                  <p class="artist-name">{track.artist}</p>
+                  <p class="playcount">{track.playcount} streams</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="api-placeholder">
+            <p class="text-zinc-500 dark:text-zinc-400 mb-2">
+              Conecta tu cuenta de stats.fm para ver tus canciones más escuchadas aquí.
+            </p>
+            <a 
+              href="https://stats.fm" 
+              target="_blank"
+              class="text-cyan-400 hover:text-cyan-300 underline inline-block"
+            >
+              Crear cuenta en stats.fm (gratis) →
+            </a>
+          </div>
+        )}
+      </section>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .section-block {
+    margin-bottom: 4rem;
+  }
+
+  .music-grid-loved {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 1rem;
+  }
+
+  .music-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 1rem;
+  }
+
+  .music-grid-square {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 1rem;
+  }
+
+  .album-cover,
+  .track-cover {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    border-radius: 0.375rem;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: block;
+  }
+
+  :global(.dark) .album-cover,
+  :global(.dark) .track-cover {
+    background-color: #2a2a2a;
+  }
+
+  .album-cover:hover,
+  .track-cover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .album-cover img,
+  .track-cover img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .album-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 60%, transparent 100%);
+    padding: 0.75rem 0.5rem 0.5rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .album-cover:hover .album-overlay,
+  .track-cover:hover .album-overlay {
+    opacity: 1;
+  }
+
+  .album-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .artist-name {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.8);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .playcount {
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 0.25rem;
+  }
+
+  .api-placeholder {
+    grid-column: 1 / -1;
+    padding: 3rem;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 0.75rem;
+    border: 2px dashed rgba(0, 0, 0, 0.1);
+  }
+
+  :global(.dark) .api-placeholder {
+    background-color: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  code {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-family: monospace;
+  }
+
+  :global(.dark) code {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  @media (max-width: 1400px) {
+    .music-grid-loved,
+    .music-grid,
+    .music-grid-square {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .music-grid-loved,
+    .music-grid,
+    .music-grid-square {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .music-grid-loved,
+    .music-grid,
+    .music-grid-square {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .music-grid-loved,
+    .music-grid,
+    .music-grid-square {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+  }
+</style>

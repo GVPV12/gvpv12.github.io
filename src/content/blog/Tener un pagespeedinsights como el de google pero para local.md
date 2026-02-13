@@ -1,5 +1,5 @@
 ---
-title: Mejorar velocidad web hecha con Astro con pagespeedinsights como el de google pero para local
+title: Mejorar velocidad web hecha con Astro
 description: Comandos para tener un pagespeedinsights como el de google pero para local
 pubDate: 2026-02-06
 tags:

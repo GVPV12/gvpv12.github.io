@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LinksList from '../../components/LinksList.astro';
+import { projects } from './links';
+---
+
+<BaseLayout
+  title="Todos mis links"
+  description="Todos los sitios donde también estoy en internet."
+>
+  <div class="container">
+    <div class="mb-10">
+      <h1 class="text-xl font-bold mb-2">Encuéntrame en</h1>
+      <p class="text-zinc-700 dark:text-zinc-300 text-sm">Todos los sitios donde también estoy en internet.</p>
+    </div>
+    <LinksList projects={projects}/>
+  </div>
+</BaseLayout>

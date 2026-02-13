@@ -6,35 +6,64 @@ type BlogPost = CollectionEntry<'blog'>;
 const { posts } = Astro.props;
 
 function groupPostsByYear(posts: BlogPost[]) {
-  const grouped = posts.reduce((acc, post) => {
-    const year = post.data.pubDate.getFullYear();
-    if (!acc[year]) {
-      acc[year] = [];
-    }
-    acc[year].push(post);
-    return acc;
-  }, {} as Record<number, BlogPost[]>);
+    const grouped = posts.reduce((acc, post) => {
+        const year = post.data.pubDate.getFullYear();
+        if (!acc[year]) {
+            acc[year] = [];
+        }
+        acc[year].push(post);
+        return acc;
+    }, {} as Record<number, BlogPost[]>);
 
-  return Object.entries(grouped)
-    .sort(([a], [b]) => Number(b) - Number(a))
-    .map(([year, posts]) => ({
-      year: Number(year),
-      posts: posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()),
-    }));
+    return Object.entries(grouped)
+        .sort(([a], [b]) => Number(b) - Number(a))
+        .map(([year, posts]) => ({
+            year: Number(year),
+            posts: posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()),
+        }));
+}
+
+const monthNames = [
+    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+];
+
+function groupPostsByMonth(posts: BlogPost[]) {
+    const grouped = posts.reduce((acc, post) => {
+        const month = post.data.pubDate.getMonth();
+        if (!acc[month]) {
+            acc[month] = [];
+        }
+        acc[month].push(post);
+        return acc;
+    }, {} as Record<number, BlogPost[]>);
+
+    return Object.entries(grouped)
+        .sort(([a], [b]) => Number(b) - Number(a))
+        .map(([month, posts]) => ({
+            month: Number(month),
+            monthName: monthNames[Number(month)],
+            posts: posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()),
+        }));
 }
 
 const groupedPosts = groupPostsByYear(posts);
-
-
 ---
 
-{groupedPosts.map(({ year, posts }) => (
-  <div class="mb-8">
-    <h2 class="text-sm font-bold mb-4">{year}</h2>
-    <div>
-      {posts.map((post: BlogPost) => (
-        <PostItem post={post} />
-      ))}
-    </div>
-  </div>
-))}
+{groupedPosts.map(({ year, posts }) => {
+    const postsByMonth = groupPostsByMonth(posts);
+    
+    return (
+        <div class="mb-8">
+            <h2 class="text-sm font-bold mb-4">{year}</h2>
+            {postsByMonth.map(({ monthName, posts }) => (
+                <div class="mb-6">
+                    <h3 class="text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2 uppercase tracking-wide">{monthName}</h3>
+                    {posts.map((post: BlogPost) => (
+                        <PostItem post={post} />
+                    ))}
+                </div>
+            ))}
+        </div>
+    );
+})}

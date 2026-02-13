@@ -91,7 +91,7 @@ kbd {
   .text-4xl,
   .text-5xl,
   .text-6xl {
-    color: #ff5ea9 !important;
+    color: #00fbff !important;
   }
   
   /* Texto en negrita - Color #19f711 */
@@ -243,14 +243,14 @@ div > h3.font-medium {
 /* El link del título del post */
 .post-item h3 a,
 div > h3.font-medium > a {
-  color: #02ffc0 !important; /* Cyan - igual que tus links de contenido */
+  color: #b7feff !important; /* Cyan - igual que tus links de contenido */
   text-decoration: none !important;
 }
 
 /* Hover del link del título */
 .post-item h3 a:hover,
 div > h3.font-medium > a:hover {
-  color: #e44f94 !important; /* Cyan más brillante en hover */
+  color: #c1faec !important; /* Cyan más brillante en hover */
 }
 
 /* Fecha (Published on) - más pequeña */

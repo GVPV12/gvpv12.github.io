@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectList from '../../components/ProjectList.astro';
+import { projects } from './lab';
+---
+
+<BaseLayout
+  title="Lab - Mis proyectos"
+  description="Explora mis proyectos y experimentos creativos."
+>
+  <div class="container">
+    <div class="mb-10">
+      <h1 class="text-xl font-bold mb-2">Laboratorio de proyectos</h1>
+      <p class="text-zinc-700 dark:text-zinc-300 text-sm">Proyectos, experimentos y cosas en las que trabajo.</p>
+    </div>
+    <ProjectList projects={projects}/>
+  </div>
+</BaseLayout>

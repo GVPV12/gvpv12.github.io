@@ -6,7 +6,7 @@ pubDate: 2026-02-03
 tags:
   - Notas
   - Jardin-digital
-coverImage: './consumir (1).jpg'
+coverImage: './consumir-(1).jpg'
 ---
 
 Antes de decir "Yo creo..." pregunta el porque. https://www.instagram.com/reel/DJpgObGiMS3

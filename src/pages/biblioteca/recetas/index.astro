@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const favsLinks = [
+  {
+    title: 'Recetas favoritas',
+    url: '#',
+    description: 'Lista de mis recetas más queridas de todos los tiempos'
+  },
+  {
+    title: 'Recetas sin lactosa',
+    url: '#',
+    description: 'Recetas que no contienen lactosa'
+  },
+  {
+    title: 'Recetas sin gluten',
+    url: '#',
+    description: 'Recetas que no contienen gluten'
+  },
+  {
+    title: 'Recetas sin azúcar',
+    url: '#',
+    description: 'Recetas que no contienen azúcar'
+  },
+  {
+    title: 'Recetas antiinflamatorias',
+    url: '#',
+    description: 'Recetas que ayudan a reducir la inflamación'
+    },
+  { 
+    title: 'Recetas veganas',
+    url: '#',
+    description: 'Recetas que me dan energía y vitalidad'
+  },  
+];
+---
+
+<BaseLayout
+  title="Favoritos"
+  description="Mis cosas favoritas de internet y entretenimiento"
+>
+  <div class="container">
+    <main>
+      <h1 class="text-3xl font-bold mb-2">Recetas</h1>
+      <p class="text-zinc-700 dark:text-zinc-300 text-sm mb-8">Una colección curada de mis recetas favoritas: fáciles, saludables y deliciosas.</p>
+      
+      <div class="links-list">
+        {favsLinks.map((link) => (
+          <a href={link.url} class="link-item">
+            <h3 class="text-lg font-semibold mb-2">{link.title}</h3>
+            <p class="text-sm text-zinc-600 dark:text-zinc-400">{link.description}</p>
+          </a>
+        ))}
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .link-item {
+    display: block;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  :global(.dark) .link-item {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .link-item:hover {
+    transform: translateX(8px);
+    background-color: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  :global(.dark) .link-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 1rem;
+    }
+  }
+</style>

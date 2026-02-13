@@ -6,14 +6,25 @@ import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import Ava from '@src/assets/img/ava.jpg';
 import Prose from '../components/Prose.astro';
-import { projects } from './projects/projects';
-import ProjectList from '../components/ProjectList.astro'
+import { projects } from './links/links';
+import LinksList from '../components/LinksList.astro'
 import PostItem from '../components/PostItem.astro';
 
 type BlogPost = CollectionEntry<'blog'>;
 
+const allPosts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Filtrar posts del jardín (todos EXCEPTO los que tienen tag "blog")
+const gardenPosts = allPosts.filter((post: BlogPost) => 
+  !post.data.tags?.some((tag: string) => tag.toLowerCase() === 'blog')
+).slice(0, 5);
+
+// Filtrar posts de blogs (solo los que tienen tag "blog")
+const blogPosts = allPosts.filter((post: BlogPost) => 
+  post.data.tags?.some((tag: string) => tag.toLowerCase() === 'blog')
+).slice(0, 5);
+
 const top6Projects = projects.slice(0, 6);
-const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0, 5);
 ---
 
 <BaseLayout title={SITE_TITLE + ' - ' + SITE_TAGLINE} description={SITE_DESCRIPTION}>
@@ -23,38 +34,54 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
         <h1 class="text-3xl font-bold mb-4">welcome to my digital garden🌱 </h1>
         <Prose>
           <div class="text-sm">
-            <p>Soy una persona random multipotencial de internet con <u>muchos pensamientos, muchos intereses</u> y <b>muchas</b> cosas que decir que decidió crearse un jardín digital para acabar con su tóxico <b>doomscrolling</b>. </p>
-            <p>Decidí crear un espacio de internet que se asemejará un poco a como eran los <u>blogs retro</u>: simples, con ese sello de la personalidad de cada quien, y aunque algo feos al menos no eran todos iguales. Por eso veras que este pequeño sitio estará un <b>poco inspirado en eso</b>. </p>
-            <p>Si quieres saber un poco de mí, soy <b>diseñadora y desarrolladora web freelance</b>. Estudié computación y mi sueño es hacer un <i>estudio de videojuegos</i>. Dibujo y ocasionalmente hago 3D principalmente para videojuegos o encargos freelance.</p>  
+            <p>Soy alguien multipotencial de internet con <u>muchos pensamientos, muchos intereses</u> y <b>muchas</b> cosas que decir que decidió crearse un jardín digital para acabar con el tóxico <b>doomscrolling</b>. </p>
+            <p>Quisé crear un espacio de internet que se asemejará un poco a como eran los <u>blogs retro</u>: simples, con ese sello de la personalidad de cada quien, y aunque algo feos al menos no eran todos iguales. Por eso veras que este pequeño sitio estará un <b>poco inspirado en eso</b>. </p>
+            <p>Si quieres saber un poco de mí, soy <b>diseñadora y desarrolladora web freelance</b>. Estudié computación y mi sueño es hacer un <i>estudio de videojuegos</i>. Dibujo y ocasionalmente hago 3D principalmente para videojuegos o encargos freelance.</p>
+            <p>En este espacio compartiré mis <b>notas, análisis, reflexiones y aprendizajes</b> sobre los temas que me interesan como tecnología, animación, diseño, desarrollo web y diseño UI-UX, desarrollo de videojuegos, productividad, filosofía, cultura, espiritualidad, entre otros. </p>  
           </div>
         </Prose>
       </div>
       <Image src={Ava} alt="Grecia V." width={300} loading="eager" class="rounded-3xl rotate-3 mx-4 md:mx-0"/>
 		</div>
 		<main>
+      <!-- Sección Jardín: todos los posts EXCEPTO los que tienen tag "blog" -->
       <div class='mt-6 mb-12'>
         <div class="flex justify-between gap-2 border-b mb-1 dark:border-b-zinc-700">
-          <h2 class="text-lg font-bold mb-3">🌠Blogs, notas, análisis</h2>
-          <a href="/posts/" class="inline-block py-2 underline dark:prose-invert">Todos los posts &raquo;</a>
+          <h2 class="text-lg font-bold mb-3">🌱Jardín</h2>
+          <a href="/jardin/" class="inline-block py-2 underline dark:prose-invert">Todos los posts &raquo;</a>
         </div>
         <div class="text-sm">
           {
-            posts.map((post: BlogPost) => (
+            gardenPosts.map((post: BlogPost) => (
               <PostItem post={post} />
             ))
           }      
         </div>
-        <div class="text-right">
+      </div>
+
+      <!-- Sección Blogs y análisis: solo posts con tag "blog" -->
+      <div class='mt-6 mb-12'>
+        <div class="flex justify-between gap-2 border-b mb-1 dark:border-b-zinc-700">
+          <h2 class="text-lg font-bold mb-3">🌠Blogs y análisis</h2>
+          <a href="/blog/" class="inline-block py-2 underline dark:prose-invert">Todos los blogs &raquo;</a>
+        </div>
+        <div class="text-sm">
+          {
+            blogPosts.map((post: BlogPost) => (
+              <PostItem post={post} />
+            ))
+          }      
         </div>
       </div>
+
+      <!-- Sección Mis Links -->
       <div>
         <div class="flex justify-between gap-2 mb-1">
           <h2 class="text-lg font-bold mb-3">⭐Mis Links</h2>
           <a href="/projects/" class="inline-block py-2 underline dark:prose-invert">Todos mis links &raquo;</a>
         </div>
         <div class="text-sm"></div>
-        <ProjectList projects={top6Projects}/>
-      </div>
+        <LinksList projects={top6Projects}/>
       </div>
 		</main>
 	</div>

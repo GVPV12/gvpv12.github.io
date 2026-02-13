@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+// Cada dibujo tiene su propia galería
+const dibujos = [
+  { 
+    src: '/src/assets/img/aligned.webp', 
+    alt: 'Papel negro',
+    slug: 'papelnegro'
+  },
+  { 
+    src: '/src/assets/img/hibridachibi.webp', 
+    alt: 'Linearts',
+    slug: 'lineart'
+  },
+  { 
+    src: '/src/assets/img/todoroki.webp', 
+    alt: 'Editados con efecto neón',
+    slug: 'efectoneon'
+  },
+  { 
+    src: '/src/assets/img/guiltycrown.webp', 
+    alt: 'Activismo',
+    slug: 'activismo'
+  },
+  { 
+    src: '/src/assets/img/cutelibrarian.webp', 
+    alt: 'Coloreados',
+    slug: 'coloreados'
+  },
+  { 
+    src: '/src/assets/img/cyra.jpg', 
+    alt: 'Sketches',
+    slug: 'sketches'
+  },
+  { 
+    src: '/src/assets/img/egochains.webp', 
+    alt: 'Vent art (trigger warning)',
+    slug: 'ventart'
+  },
+  { 
+    src: '/src/assets/img/imagination.webp', 
+    alt: 'Pinturas (acuarela, acrilico, paisajes)',
+    slug: 'pinturas'
+  },
+];
+---
+
+<BaseLayout
+  title="Dibujos"
+  description="Mi galería de arte digital"
+>
+  <div class="container">
+    <main>
+      <h1 class="text-3xl font-bold mb-2">Dibujos</h1>
+      <p class="text-zinc-700 dark:text-zinc-300 text-sm mb-10">Galería de mis trabajos de arte digital e ilustraciones.</p>
+      
+      <div class="instagram-grid">
+        {dibujos.map((dibujo) => (
+          <a href={`/biblioteca/dibujos/${dibujo.slug}/`} class="grid-item" title={dibujo.alt}>
+            <img src={dibujo.src} alt={dibujo.alt} />
+          </a>
+        ))}
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .instagram-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .grid-item {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* Mantiene ratio 1:1 */
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  :global(.dark) .grid-item {
+    background-color: #2a2a2a;
+  }
+
+  .grid-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .grid-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  @media (max-width: 1024px) {
+    .instagram-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .instagram-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .instagram-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+  }
+</style>

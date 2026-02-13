@@ -1,0 +1,31 @@
+---
+import LinkCard from './LinkCard.astro';
+
+export interface Project {
+  name: string;
+  demoLink: string;
+  tags?: string[];
+  description?: string;
+  postLink?: string;
+  demoLinkRel?: string;
+  [key: string]: any;
+}
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<div class="grid grid-cols-12 gap-5">
+  {projects.map((project) => (
+    <LinkCard
+      name={project.name}
+      description={project.description}
+      demoLink={project.demoLink}
+      tags={project.tags}
+      postLink={project.postLink}
+    />
+  ))}
+</div>

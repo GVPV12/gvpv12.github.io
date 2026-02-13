@@ -21,6 +21,7 @@ export const projects: Project[] = [
     name: 'Dribbble',
     description: 'Portafolio de diseño web.',
     demoLink: 'https://dribbble.com/gv_ui',
+    postLink: 'https://dribbble.com/shots/22907928-Portfolio-Website-Design',
     tags: ['Diseño web', 'Freelance', 'UI/UX']
   },
       {

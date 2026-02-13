@@ -1,0 +1,63 @@
+---
+interface Props {
+  name: string;
+  description?: string;
+  demoLink: string;
+  tags?: string[];
+  postLink?: string;
+}
+
+const { name, description, demoLink, tags, postLink } = Astro.props;
+---
+
+<div class="col-span-12 sm:col-span-6 lg:col-span-4 border dark:border-zinc-700 rounded-xl p-5 hover:shadow-lg transition-all duration-300">
+  <div class="flex flex-wrap gap-2 mb-3">
+    {tags && tags.map((tag) => (
+      <span class="border border-zinc-300 dark:border-zinc-700 rounded-2xl text-xs text-zinc-700 dark:text-zinc-300 px-2 py-1">
+        {tag}
+      </span>
+    ))}
+  </div>
+  
+  <a 
+    href={demoLink}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="block mb-2"
+  >
+    <h3 class="text-sm font-bold text-cyan-400 hover:text-cyan-300 transition-colors">
+      {name}
+    </h3>
+  </a>
+  
+  {description && (
+    <p class="text-xs text-zinc-400 mb-4">
+      {description}
+    </p>
+  )}
+  
+  <div class="flex gap-3 text-xs">
+    <a 
+      href={demoLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-zinc-400 hover:text-zinc-200 transition-colors flex items-center gap-1"
+    >
+      Link
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+        <polyline points="15 3 21 3 21 9"></polyline>
+        <line x1="10" y1="14" x2="21" y2="3"></line>
+      </svg>
+    </a>
+    
+    {postLink && (
+      <a 
+        href={postLink}
+        class="text-zinc-400 hover:text-zinc-200 transition-colors"
+      >
+        Último proyecto
+      </a>
+    )}
+  </div>
+</div>

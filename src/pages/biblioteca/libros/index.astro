@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Libros"
+  description="Libros que he leído y recomiendo"
+>
+  <div class="container">
+    <main class="prose text-lg dark:prose-invert">
+      <article>
+        <h1 class="text-3xl font-bold mb-4">Libros</h1>
+        <p class="text-zinc-700 dark:text-zinc-300 text-sm mb-6">Aquí comparto una lista de libros que he leído en los últimos años y que recomiendo o no, para ver la reseña que les he dado haz click en ellos.</p>
+
+        <!-- Widget de Goodreads -->
+        <div class="goodreads-widget-wrapper">
+          <div id="gr_grid_widget_1738288035"></div>
+          <script src="https://www.goodreads.com/review/grid_widget/28477539.Moonlight's%20bookshelf:%20read?cover_size=medium&hide_link=true&hide_title=true&num_books=104&order=d&shelf=read&sort=date_read&widget_id=1770736386" type="text/javascript" charset="utf-8"></script>
+        </div>
+
+        <div class="mt-8">
+
+        </div>
+      </article>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .goodreads-widget-wrapper {
+    width: 100%;
+    margin: 2rem 0;
+    padding: 0;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 1rem;
+    }
+  }
+</style>
+
+<script is:inline>
+(function() {
+  'use strict';
+  
+  let attemptCount = 0;
+  const maxAttempts = 20;
+  
+  function forceGridLayout() {
+    attemptCount++;
+    console.log('Intento #' + attemptCount + ' de aplicar estilos...');
+    
+    const container = document.querySelector('.gr_grid_container');
+    
+    if (!container) {
+      if (attemptCount < maxAttempts) {
+        setTimeout(forceGridLayout, 200);
+      }
+      return;
+    }
+    
+    // FORZAR estilos inline que tienen máxima prioridad
+    container.setAttribute('style', 'width: 100% !important; margin: 0 auto !important; padding: 0 !important; overflow: hidden !important;');
+    
+    const books = container.querySelectorAll('.gr_grid_book_container');
+    console.log('Encontrados ' + books.length + ' libros');
+    
+    books.forEach(function(book, index) {
+      // Aplicar estilos inline directamente
+      book.setAttribute('style', 'float: left !important; width: 98px !important; height: 160px !important; padding: 0px 8px 8px 8px !important; overflow: hidden !important; box-sizing: border-box !important; display: block !important;');
+      
+      const img = book.querySelector('img');
+      if (img) {
+        img.setAttribute('style', 'width: 98px !important; height: auto !important; max-width: 98px !important; display: block !important;');
+      }
+    });
+    
+    // Agregar clearfix
+    let clearfix = container.querySelector('.clearfix-custom');
+    if (!clearfix && books.length > 0) {
+      clearfix = document.createElement('div');
+      clearfix.className = 'clearfix-custom';
+      clearfix.setAttribute('style', 'clear: both !important; display: block !important; height: 0 !important; overflow: hidden !important;');
+      container.appendChild(clearfix);
+    }
+    
+    // Continuar aplicando estilos periódicamente por si el widget los sobrescribe
+    if (attemptCount < maxAttempts) {
+      setTimeout(forceGridLayout, 500);
+    }
+  }
+  
+  // Iniciar el proceso
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(forceGridLayout, 100);
+    });
+  } else {
+    setTimeout(forceGridLayout, 100);
+  }
+  
+  // Observer para detectar cuando se agreguen los libros al DOM
+  const widgetContainer = document.getElementById('gr_grid_widget_1738288035');
+  if (widgetContainer) {
+    const observer = new MutationObserver(function(mutations) {
+      const hasBooks = document.querySelector('.gr_grid_book_container');
+      if (hasBooks) {
+        console.log('Widget detectado, aplicando estilos...');
+        forceGridLayout();
+      }
+    });
+    
+    observer.observe(widgetContainer, { 
+      childList: true, 
+      subtree: true,
+      attributes: false
+    });
+  }
+})();
+</script>

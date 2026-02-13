@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Media"
+  description="Mi colección de libros, música, arte, juegos y más"
+>
+  <div class="container">
+    <main>
+      <h1 class="text-3xl font-bold mb-2">Biblioteca</h1>
+      <p class="text-zinc-700 dark:text-zinc-300 text-sm mb-10">Explora mi colección de contenido favorito: libros, música, dibujos, videojuegos y recetas.</p>
+      
+      <div class="media-grid">
+        <a href="/biblioteca/libros/" class="media-item" title="Libros" style="display: flex; justify-content: center; align-items: center;">
+          <img src="/src/assets/img/libros.png" alt="Libros" style="height: 220px; width: auto;" />
+        </a>
+        
+        <a href="/biblioteca/dibujos/" class="media-item" title="Dibujos" style="display: flex; justify-content: center; align-items: center;">
+          <img src="/src/assets/img/dibujo.png" alt="Dibujos" style="height: 185px; width: auto;"/>
+        </a>
+        
+        <a href="/biblioteca/musica/" class="media-item" title="Música y albumes que adoro" style="display: flex; justify-content: center; align-items: center;">
+          <img src="/src/assets/img/musicafav.png" alt="Música" style="height: 230px; width: auto;"  />
+        </a>
+        
+        <a href="/biblioteca/juegos/" class="media-item" title="Videojuegos"  style="display: flex; justify-content: center; align-items: center;">
+          <img src="/src/assets/img/juegos.png" alt="Videojuegos" />
+        </a>
+        
+        <a href="/biblioteca/recetas/" class="media-item" title="Mis Recetas (creadas por mi misma: son libres de lactosa, gluten, azúcar)" style="display: flex; justify-content: center; align-items: center;">
+          <img src="/src/assets/img/misrecetas.png" alt="Recetas" style="height: 230px; width: auto;" />
+        </a>
+        
+        <a href="/biblioteca/favs/" class="media-item" title="Mi colección de favoritos" style="display: flex; justify-content: center; align-items: center;">
+          <img src="/src/assets/img/favs.png" alt="Favoritos" style="height: 240px; width: auto;" />
+        </a>
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .media-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .media-item {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+
+  .media-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .media-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .media-item:hover img {
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 768px) {
+    .media-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .media-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+</style>

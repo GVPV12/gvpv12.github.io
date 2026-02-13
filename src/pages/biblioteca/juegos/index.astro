@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const juegos = [
+  { title: 'Hollow Knight', cover: '/juegos/covers/hollow-knight.jpg', url: 'https://store.steampowered.com/app/367520/Hollow_Knight/' },
+  { title: 'Celeste', cover: '/juegos/covers/celeste.jpg', url: 'https://store.steampowered.com/app/504230/Celeste/' },
+  { title: 'Stardew Valley', cover: '/juegos/covers/stardew.jpg', url: 'https://store.steampowered.com/app/413150/Stardew_Valley/' },
+  { title: 'Hades', cover: '/juegos/covers/hades.jpg', url: 'https://store.steampowered.com/app/1145360/Hades/' },
+  { title: 'Dead Cells', cover: '/juegos/covers/dead-cells.jpg', url: 'https://store.steampowered.com/app/588650/Dead_Cells/' },
+  { title: 'Undertale', cover: '/juegos/covers/undertale.jpg', url: 'https://store.steampowered.com/app/391540/Undertale/' },
+  { title: 'The Binding of Isaac', cover: '/juegos/covers/isaac.jpg', url: 'https://store.steampowered.com/app/250900/' },
+  { title: 'Cuphead', cover: '/juegos/covers/cuphead.jpg', url: 'https://store.steampowered.com/app/268910/Cuphead/' },
+  
+  { title: 'Terraria', cover: '/juegos/covers/terraria.jpg', url: 'https://store.steampowered.com/app/105600/Terraria/' },
+  { title: 'Enter the Gungeon', cover: '/juegos/covers/gungeon.jpg', url: 'https://store.steampowered.com/app/311690/' },
+  { title: 'Ori and the Blind Forest', cover: '/juegos/covers/ori.jpg', url: 'https://store.steampowered.com/app/261570/' },
+  { title: 'Shovel Knight', cover: '/juegos/covers/shovel-knight.jpg', url: 'https://store.steampowered.com/app/250760/' },
+  { title: 'Slay the Spire', cover: '/juegos/covers/slay-spire.jpg', url: 'https://store.steampowered.com/app/646570/' },
+  { title: 'Minecraft', cover: '/juegos/covers/minecraft.jpg', url: 'https://www.minecraft.net/' },
+  { title: 'Portal 2', cover: '/juegos/covers/portal2.jpg', url: 'https://store.steampowered.com/app/620/' },
+  { title: 'The Witness', cover: '/juegos/covers/witness.jpg', url: 'https://store.steampowered.com/app/210970/' },
+
+  { title: 'Gris', cover: '/juegos/covers/gris.jpg', url: 'https://store.steampowered.com/app/683320/GRIS/' },
+  { title: 'A Short Hike', cover: '/juegos/covers/short-hike.jpg', url: 'https://store.steampowered.com/app/1055540/' },
+  { title: 'Spiritfarer', cover: '/juegos/covers/spiritfarer.jpg', url: 'https://store.steampowered.com/app/972660/' },
+  { title: 'Inside', cover: '/juegos/covers/inside.jpg', url: 'https://store.steampowered.com/app/304430/INSIDE/' },
+  { title: 'Limbo', cover: '/juegos/covers/limbo.jpg', url: 'https://store.steampowered.com/app/48000/LIMBO/' },
+  { title: 'Journey', cover: '/juegos/covers/journey.jpg', url: 'https://store.steampowered.com/app/638230/Journey/' },
+  { title: 'Fez', cover: '/juegos/covers/fez.jpg', url: 'https://store.steampowered.com/app/224760/FEZ/' },
+  { title: 'Outer Wilds', cover: '/juegos/covers/outer-wilds.jpg', url: 'https://store.steampowered.com/app/753640/' },
+];
+---
+
+<BaseLayout
+  title="Videojuegos"
+  description="Mis videojuegos favoritos y recomendaciones"
+>
+  <div class="container">
+    <main>
+      <h1 class="text-3xl font-bold mb-2">Videojuegos</h1>
+      <p class="text-zinc-700 dark:text-zinc-300 text-sm mb-10">Una colección de mis videojuegos favoritos que recomiendo totalmente.</p>
+      
+      <div class="games-grid">
+        {juegos.map((juego) => (
+          <a 
+            href={juego.url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="game-cover"
+            title={juego.title}
+          >
+            <img src={juego.cover} alt={juego.title} />
+          </a>
+        ))}
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 1rem;
+  }
+
+  .game-cover {
+    position: relative;
+    width: 100%;
+    padding-bottom: 140%; /* Ratio 5:7 típico de covers */
+    overflow: hidden;
+    border-radius: 0.375rem;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: block;
+  }
+
+  :global(.dark) .game-cover {
+    background-color: #2a2a2a;
+  }
+
+  .game-cover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .game-cover img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  @media (max-width: 1400px) {
+    .games-grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .games-grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .games-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .games-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+  }
+</style>
