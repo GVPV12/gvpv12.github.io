@@ -1,53 +1,156 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+
+const allImages = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/img/favs/*.{jpg,jpeg,png,webp}',
+  { eager: true }
+);
+
+function getImage(file: string): ImageMetadata | null {
+  const key = Object.keys(allImages).find((k) => k.includes(`/favs/${file}.`));
+  return key ? allImages[key].default : null;
+}
 
 const sections = [
   {
     title: 'Libros',
     items: [
-      { title: 'El Nombre del Viento', cover: '/favs/libros/nombre-viento.jpg', url: 'https://www.goodreads.com/book/show/186074.The_Name_of_the_Wind' },
-      { title: '1984', cover: '/favs/libros/1984.jpg', url: 'https://www.goodreads.com/book/show/40961427-1984' },
-      { title: 'Cien Años de Soledad', cover: '/favs/libros/cien-anos.jpg', url: 'https://www.goodreads.com/book/show/320.One_Hundred_Years_of_Solitude' },
-      // Agrega más libros hasta completar 24 (8x3)
+      { title: 'Mujercitas',                   file: 'mujercitas',               url: 'https://www.goodreads.com/book/show/1934.Little_Women' },
+      { title: 'Orgullo y Prejuicio',           file: 'orgulloyprejuicio',        url: 'https://www.goodreads.com/book/show/1885.Pride_and_Prejudice' },
+      { title: 'Ikigai Esencial',               file: 'ikigai-esencial',         url: 'https://www.goodreads.com/book/show/39995046-ikigai' },
+      { title: 'Kintsugi',                      file: 'kintsugi',                 url: 'https://www.goodreads.com/book/show/42202746-kintsugi?ref=nav_sb_ss_1_15' },
+      { title: 'Jane Eyre',                     file: 'janeeyre',                 url: 'https://www.goodreads.com/book/show/10210.Jane_Eyre' },
+      { title: 'Muchas Vidas, Muchos Maestros', file: 'muchasvidasmuchosmaestros',url: 'https://www.goodreads.com/book/show/29meaning.Many_Lives_Many_Masters' },
+      { title: 'Cómo criar y mantener un dragón',     file: 'entrenardragon',           url: 'https://www.goodreads.com/book/show/45866069-c-mo-criar-y-mantener-un-drag-n-albumes-deluxe' },
+      { title: 'Ella Enchanted',                file: 'ellaenchanted',            url: 'https://www.goodreads.com/book/show/24337.Ella_Enchanted' },
+      { title: 'El Camino del Artista',         file: 'elcaminodelartista',       url: 'https://www.goodreads.com/book/show/615570.The_Artist_s_Way' },
+      { title: 'Big Mushy Happy Lump',          file: 'bigmushyhappylump',        url: 'https://www.goodreads.com/book/show/28186562-big-mushy-happy-lump' },
+      { title: 'La Invención de Hugo Cabret',   file: 'hugocabret',               url: 'https://www.goodreads.com/book/show/9673436-the-invention-of-hugo-cabret' },
+      { title: 'Los que se Alejan de Omelas',   file: 'omelas',                   url: 'https://www.goodreads.com/book/show/92625.The_Ones_Who_Walk_Away_from_Omelas' },
+      { title: 'La casa de los Mil Pasillos',                  file: 'milpasillos',              url: 'https://www.goodreads.com/book/show/2173611.House_of_Many_Ways' },
+      { title: 'Sabriel',                       file: 'sabriel',                  url: 'https://www.goodreads.com/book/show/518848.Sabriel' },
+      { title: 'Lirael',                        file: 'lirael',                   url: 'https://www.goodreads.com/book/show/518849.Lirael' },
+      { title: 'Abhorsen',                      file: 'abhorsen',                 url: 'https://www.goodreads.com/book/show/518850.Abhorsen' },
+      { title: 'Juana de Arco',                 file: 'juanadearco',              url: 'https://www.goodreads.com/book/show/223442.Saint_Joan' },
+      { title: 'Ondina',                        file: 'ondina',                   url: 'https://www.goodreads.com/book/show/16240498-ondina?ref=nav_sb_ss_1_6' },
+      { title: 'Cress',                         file: 'cress',                    url: 'https://www.goodreads.com/book/show/13206828-cress?ref=nav_sb_ss_1_5' },
+      { title: 'Winter',                        file: 'winter',                   url: 'https://www.goodreads.com/book/show/13206900-winter?ref=nav_sb_ss_2_7' },
+      { title: 'Radio Silence',                 file: 'radiosilence',             url: 'https://www.goodreads.com/book/show/25322449-radio-silence' },
+      { title: 'Libera tu Magia',               file: 'liberatumagia',            url: 'https://www.goodreads.com/book/show/30652271-libera-tu-magia' },
+      { title: 'Narnia 1',                      file: 'narnia1',                  url: 'https://www.goodreads.com/book/show/100915.The_Lion_the_Witch_and_the_Wardrobe' },
+      { title: 'Narnia 2',                      file: 'narnia2',                  url: 'https://www.goodreads.com/book/show/65641.Prince_Caspian' },
+      { title: 'Tormenta',                      file: 'tormenta',                 url: 'https://www.goodreads.com/book/show/10852343-stormdancer' },
+      { title: 'Kinslayer',                     file: 'kinslayer',                url: 'https://www.goodreads.com/book/show/15773979-kinslayer' },
+      { title: 'Última',                        file: 'ultima',                   url: 'https://www.goodreads.com/book/show/17928198-endsinger' },
+      { title: 'Alas de Fuego',                 file: 'alasdefuego',              url: 'https://www.goodreads.com/book/show/4736889-alas-de-fuego' },
+      { title: 'Alas Negras',                   file: 'alasnegras',               url: 'https://www.goodreads.com/book/show/7336615-alas-negras' },
     ]
   },
   {
     title: 'Mangas',
     items: [
-      { title: 'Berserk', cover: '/favs/mangas/berserk.jpg', url: 'https://myanimelist.net/manga/2/Berserk' },
-      { title: 'One Piece', cover: '/favs/mangas/onepiece.jpg', url: 'https://myanimelist.net/manga/13/One_Piece' },
-      { title: 'Vagabond', cover: '/favs/mangas/vagabond.jpg', url: 'https://myanimelist.net/manga/656/Vagabond' },
-      // Agrega más mangas
+      { title: 'Barakamon',               file: 'barakamon',           url: 'https://myanimelist.net/manga/55895/Barakamon' },
+      { title: 'Hal',                     file: 'hal',                 url: 'https://myanimelist.net/manga/49611/Hal?q=hal&cat=manga' },
+      { title: 'Akatsuki no Yona',        file: 'akatsukinoyona',      url: 'https://myanimelist.net/manga/55539/Akatsuki_no_Yona' },
+      { title: 'Magi',                    file: 'magi',                url: 'https://myanimelist.net/manga/13609/Magi__The_Labyrinth_of_Magic' },
+      { title: 'Omoi, Omoware, Furi, Furare', file: 'omoi',           url: 'https://myanimelist.net/manga/100397/Omoi_Omoware_Furi_Furare' },
+      { title: 'Wotakoi',                 file: 'wotakoi',             url: 'https://myanimelist.net/manga/93266/Wotaku_ni_Koi_wa_Muzukashii' },
+      { title: 'Doughnuts Under a Crescent Moon',                   file: 'donas',               url: 'https://myanimelist.net/manga/120329/Kaketa_Tsuki_to_Doughnut' },
+      { title: 'Is Love the Answer?',     file: 'islovetheanswer',     url: 'https://myanimelist.net/manga/143738/Kimi_no_Sekai_ni_Koi_wa_Nai' },
+      { title: 'Navillera',               file: 'navillera',           url: 'https://myanimelist.net/manga/115728/Navillera' },
+      { title: 'Quiero ser una Pared',    file: 'quieroserunapared',   url: 'https://myanimelist.net/manga/131017/Watashi_wa_Kabe_ni_Naritai' },
+      { title: 'Emma',                    file: 'emma',                url: 'https://myanimelist.net/manga/967/Emma' },
+      { title: 'Kuragehime',              file: 'kuragehime',          url: 'https://myanimelist.net/manga/16161/Kuragehime' },
+      { title: 'El Chico que me gusta no es un chico', file: 'elchicoquemegustaba', url: 'https://myanimelist.net/manga/155861/Kininatteru_Hito_ga_Otoko_ja_Nakatta' },
+      { title: 'Tonari no Kaibutsu-kun',  file: 'tonarinokaibutsu',    url: 'https://myanimelist.net/manga/22301/Tonari_no_Kaibutsu-kun' },
+      { title: 'Orange',                  file: 'orange',              url: 'https://myanimelist.net/manga/76238/Orange' },
+      { title: 'Kimi wa Natsu no Naka',   file: 'kimi',    url: 'https://myanimelist.net/manga/109330/Kimi_wa_Natsu_no_Naka' },
+      { title: 'Nineteen twenty one',                    file: 'nineteentwentyone',   url: 'https://myanimelist.net/manga/25322/Nineteen_Twenty-One' },
     ]
   },
   {
     title: 'Animes',
     items: [
-      { title: 'Cowboy Bebop', cover: '/favs/animes/cowboy-bebop.jpg', url: 'https://myanimelist.net/anime/1/Cowboy_Bebop' },
-      { title: 'Steins;Gate', cover: '/favs/animes/steins-gate.jpg', url: 'https://myanimelist.net/anime/9253/Steins_Gate' },
-      { title: 'Fullmetal Alchemist', cover: '/favs/animes/fma.jpg', url: 'https://myanimelist.net/anime/5114/' },
-      // Agrega más animes
+      { title: 'Natsume Yuujinchou',      file: 'natsumeyuujinchou',  url: 'https://myanimelist.net/anime/4081/Natsume_Yuujinchou' },
+      { title: 'Saiki Kusuo no Ψ-nan',   file: 'saiki',              url: 'https://myanimelist.net/anime/33255/Saiki_Kusuo_no_Psi_Nan' },
+      { title: 'Barakamon',               file: 'barakamon',          url: 'https://myanimelist.net/anime/22125/Barakamon' },
+      { title: 'Angel Beats!',            file: 'angelbeats',         url: 'https://myanimelist.net/anime/6547/Angel_Beats' },
+      { title: 'Kemono no Souja Erin',    file: 'kemono',             url: 'https://myanimelist.net/anime/5258/Kemono_no_Souja_Erin' },
+      { title: 'Mushishi',                file: 'mushishi',           url: 'https://myanimelist.net/anime/457/Mushishi' },
+      { title: 'Yuri!!! on Ice',          file: 'yurionice',          url: 'https://myanimelist.net/anime/32995/Yuri_on_Ice' },
+      { title: 'Haibane Renmei',          file: 'haibanerenmei',      url: 'https://myanimelist.net/anime/387/Haibane_Renmei' },
+      { title: 'Romantic Killer',         file: 'romantickiller',     url: 'https://myanimelist.net/anime/51194/Romantic_Killer' },
+      { title: 'Inuyasha',                file: 'inuyasha',           url: 'https://myanimelist.net/anime/269/Inuyasha' },
+      { title: 'Sousou no Frieren',       file: 'sousounofrieren',    url: 'https://myanimelist.net/anime/52991/Sousou_no_Frieren' },
+      { title: 'Chihayafuru',             file: 'chihayafuru',        url: 'https://myanimelist.net/anime/10800/Chihayafuru' },
+      { title: 'Saiunkoku Monogatari',      file: 'sainkokumonogatari',   url: 'https://myanimelist.net/anime/957/Saiunkoku_Monogatari' },
+      { title: 'Wonder Egg Priority',     file: 'wondereggpriority',  url: 'https://myanimelist.net/anime/40787/Wonder_Egg_Priority' },
+      { title: 'Fullmetal Alchemist: Brotherhood', file: 'fmab',     url: 'https://myanimelist.net/anime/5114/Fullmetal_Alchemist__Brotherhood' },
+      { title: 'Sora yori mo Tooi Basho', file: 'sorayorimo',        url: 'https://myanimelist.net/anime/35839/Sora_yori_mo_Tooi_Basho' },
+      { title: 'Tegami Bachi',            file: 'tegamibachi',        url: 'https://myanimelist.net/anime/6084/Tegami_Bachi' },
+      { title: 'Carol & Tuesday',         file: 'carolandtuesday',    url: 'https://myanimelist.net/anime/38130/Carole_Tuesday' },
+      { title: 'Fumetsu no Anata e',      file: 'fumetsunoanatae',    url: 'https://myanimelist.net/anime/41025/Fumetsu_no_Anata_e' },
+      { title: 'Gintama',                 file: 'Gintama',            url: 'https://myanimelist.net/anime/918/Gintama' },
+      { title: 'Yuru Camp',               file: 'yurucamp',           url: 'https://myanimelist.net/anime/34798/Yuru_Camp' },
+      { title: 'Hyouka',                  file: 'hyouka',             url: 'https://myanimelist.net/anime/12189/Hyouka' },
+      { title: 'Saijaku Tamer wa Gomi Hiroi no Tabi wo Hajimemashita',        file: 'saijakunotamer',     url: 'https://www.imdb.com/es/title/tt30644010/' },
     ]
   },
   {
     title: 'Películas',
     items: [
-      { title: 'El Viaje de Chihiro', cover: '/favs/peliculas/chihiro.jpg', url: 'https://www.imdb.com/title/tt0245429/' },
-      { title: 'Inception', cover: '/favs/peliculas/inception.jpg', url: 'https://www.imdb.com/title/tt1375666/' },
-      { title: 'Interstellar', cover: '/favs/peliculas/interstellar.jpg', url: 'https://www.imdb.com/title/tt0816692/' },
-      // Agrega más películas
+      { title: 'Arrietty',                    file: 'arrietty',             url: 'https://www.imdb.com/title/tt1568921/' },
+      { title: 'Mi Vecino Totoro',             file: 'totoro',               url: 'https://www.imdb.com/title/tt0096283/' },
+      { title: 'El Viaje de Chihiro',          file: 'chihiro',              url: 'https://www.imdb.com/title/tt0245429/' },
+      { title: 'El Castillo Ambulante',        file: 'castilloambulante',    url: 'https://www.imdb.com/title/tt0347149/' },
+      { title: 'Kiki: Entregas a Domicilio',   file: 'kiki',                 url: 'https://www.imdb.com/title/tt0097814/' },
+      { title: 'La Princesa Mononoke',         file: 'mononoke',             url: 'https://www.imdb.com/title/tt0119698/' },
+      { title: 'Susurros del Corazón',         file: 'susurrosdelcorazon',   url: 'https://www.imdb.com/title/tt0113824/' },
+      { title: 'Cuentos de Terramar',          file: 'gedosenki',            url: 'https://www.imdb.com/title/tt0495596/' },
+      { title: 'Iblard Jikan',                file: 'iblardjinkan',         url: 'https://myanimelist.net/anime/7923/Iblard_Jikan' },
+      { title: 'Los Niños Lobo',               file: 'losninoslobo',         url: 'https://myanimelist.net/anime/12355/Ookami_Kodomo_no_Ame_to_Yuki' },
+      { title: 'Hal',                          file: 'halanime',             url: 'https://myanimelist.net/anime/16528/Hal' },
+      { title: 'A Silent Voice',               file: 'koenokatachi',         url: 'https://www.imdb.com/title/tt5323662/' },
+      { title: 'Hotarubi no Mori e',           file: 'Hotarubi_no_Mori_e',   url: 'https://myanimelist.net/anime/10165/Hotarubi_no_Mori_e' },
+      { title: 'Big Fish & Begonia',           file: 'bigfishandbegonia',    url: 'https://myanimelist.net/anime/10259/Da_Yu_Hai_Tang_Movie' },
+      { title: 'Deep Sea',                     file: 'deppsea',              url: 'https://myanimelist.net/anime/44212/Shenhai' },
+      { title: 'Soul',                         file: 'soul',                 url: 'https://www.imdb.com/title/tt2948372/' },
+      { title: 'Flow',                         file: 'flow',                 url: 'https://www.imdb.com/es/title/tt4772188/' },
+      { title: 'Moana',                        file: 'moana1',               url: 'https://www.imdb.com/title/tt3521164/' },
+      { title: 'Nuestra Hermana Pequeña',      file: 'nuestrahermanapequena',url: 'https://www.imdb.com/es/title/tt3756788/' },
+      { title: 'Más Allá de los Sueños',       file: 'masalladelossuenos',   url: 'https://www.imdb.com/es/title/tt0120889/' },
+      { title: 'Encanto',                      file: 'encanto',              url: 'https://www.imdb.com/title/tt2953050/' },
+      { title: 'Frozen 2',                     file: 'frozen2',              url: 'https://www.imdb.com/title/tt4520988/' },
+      { title: 'Lilo & Stitch',                file: 'liloystitch',          url: 'https://www.imdb.com/title/tt0275847/' },
+      { title: 'Joy (2015)',        file: 'joy',                  url: 'https://www.imdb.com/es/title/tt2446980/' },
     ]
   },
   {
     title: 'Series',
     items: [
-      { title: 'Breaking Bad', cover: '/favs/series/breaking-bad.jpg', url: 'https://www.imdb.com/title/tt0903747/' },
-      { title: 'The Office', cover: '/favs/series/office.jpg', url: 'https://www.imdb.com/title/tt0386676/' },
-      { title: 'Avatar: The Last Airbender', cover: '/favs/series/avatar.jpg', url: 'https://www.imdb.com/title/tt0417299/' },
-      // Agrega más series
+      { title: 'Shiawase wa Tabete Nete Mate (2025)',      file: 'shiawasewatabete',   url: 'https://mydramalist.com/782530-shiawase-wa-tabete-nete-mate' },
+      { title: 'My liberation Notes',        file: 'liberationnotes',    url: 'https://mydramalist.com/685441-an-untitled-jtbc-project' },
+      { title: 'Navillera',               file: 'navillera (2)',      url: 'https://mydramalist.com/59381-navillera' },
+      { title: 'Dosis Diaria de Sol',     file: 'dosisdiariadesol',   url: 'https://mydramalist.com/720737-morning-comes-to-the-mental-ward' },
+      { title: 'Brush Up Life',           file: 'brushuplife',        url: 'https://mydramalist.com/743381-brush-up-life' },
+      { title: 'Atom Noko',               file: 'atomnoko',           url: 'https://mydramalist.com/734609-atom-no-warabe' },
+      { title: 'Koisenu Futari',         file: 'koisenufutari',      url: 'https://mydramalist.com/713777-koi-senu-futari' },
+      { title: 'Anne with an E',          file: 'anne',               url: 'https://www.imdb.com/title/tt5421602/' },
+      { title: 'Flower Boy Next Door',    file: 'flowerboynextdoor',  url: 'https://mydramalist.com/5626-flower-boy-next-door' },
+      { title: 'Start-Up',               file: 'startup',            url: 'https://mydramalist.com/51909-sandbox' },
+      { title: 'Good Omens',              file: 'goodomens',          url: 'https://www.imdb.com/title/tt1869454/' },
     ]
   }
 ];
+
+const sectionsConImagenes = sections.map((section) => ({
+  ...section,
+  items: section.items.map((item) => ({
+    ...item,
+    cover: getImage(item.file)
+  }))
+}));
 ---
 
 <BaseLayout
@@ -57,26 +160,24 @@ const sections = [
   <div class="container">
     <main>
       <h1 class="text-3xl font-bold mb-2">Favoritos</h1>
-      <p class="text-zinc-700 dark:text-zinc-300 text-sm mb-10">Una colección curada de mis obras favoritas en diferentes medios.</p>
-      
-      {sections.map((section) => (
+      <p class="text-zinc-700 dark:text-zinc-300 text-sm mb-10">
+        Una colección curada de mis obras favoritas en diferentes medios.
+      </p>
+
+      {sectionsConImagenes.map((section) =>
         <section class="section-block">
           <h2 class="text-2xl font-bold mb-6 text-cyan-400">{section.title}</h2>
           <div class="favs-grid">
-            {section.items.map((item) => (
-              <a 
-                href={item.url} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                class="fav-cover"
-                title={item.title}
-              >
-                <img src={item.cover} alt={item.title} />
-              </a>
-            ))}
+            {section.items.map((item) =>
+              item.cover
+                ? <a href={item.url} target="_blank" rel="noopener noreferrer" class="fav-cover" title={item.title}>
+                    <Image src={item.cover} alt={item.title} width={200} height={280} loading="lazy" />
+                  </a>
+                : null
+            )}
           </div>
         </section>
-      ))}
+      )}
     </main>
   </div>
 </BaseLayout>
@@ -101,7 +202,7 @@ const sections = [
   .fav-cover {
     position: relative;
     width: 100%;
-    padding-bottom: 140%; /* Ratio 5:7 típico de covers */
+    padding-bottom: 140%;
     overflow: hidden;
     border-radius: 0.375rem;
     background-color: #f0f0f0;
@@ -119,7 +220,7 @@ const sections = [
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
   }
 
-  .fav-cover img {
+  .fav-cover :global(img) {
     position: absolute;
     top: 0;
     left: 0;
@@ -130,28 +231,18 @@ const sections = [
   }
 
   @media (max-width: 1400px) {
-    .favs-grid {
-      grid-template-columns: repeat(6, 1fr);
-    }
+    .favs-grid { grid-template-columns: repeat(6, 1fr); }
   }
 
   @media (max-width: 1024px) {
-    .favs-grid {
-      grid-template-columns: repeat(5, 1fr);
-    }
+    .favs-grid { grid-template-columns: repeat(5, 1fr); }
   }
 
   @media (max-width: 768px) {
-    .favs-grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.75rem;
-    }
+    .favs-grid { grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
   }
 
   @media (max-width: 480px) {
-    .favs-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-    }
+    .favs-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
   }
 </style>

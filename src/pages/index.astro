@@ -10,6 +10,53 @@ import { projects } from './links/links';
 import LinksList from '../components/LinksList.astro'
 import PostItem from '../components/PostItem.astro';
 
+// Importar imágenes de la galería
+import pic10 from '@src/assets/img/gallery/pic10.webp';
+import pic from '@src/assets/img/gallery/pic.webp';
+import pic3 from '@src/assets/img/gallery/pic3.webp';
+import pic4 from '@src/assets/img/gallery/pic4.webp';
+import pic5 from '@src/assets/img/gallery/pic5.webp';
+import pic6 from '@src/assets/img/gallery/pic6.webp';
+import pic7 from '@src/assets/img/gallery/pic7.webp';
+import pic8 from '@src/assets/img/gallery/pic8.webp';
+import pic9 from '@src/assets/img/gallery/pic9.webp';
+import pic11 from '@src/assets/img/gallery/pic11.webp';
+import pic12 from '@src/assets/img/gallery/pic12.jpg';
+import pic13 from '@src/assets/img/gallery/pic13.jpg';
+import pic14 from '@src/assets/img/gallery/pic14.jpg';
+import pic15 from '@src/assets/img/gallery/pic15.webp';
+import pic16 from '@src/assets/img/gallery/pic16.webp';
+import pic17 from '@src/assets/img/gallery/pic17.webp';
+import pic18 from '@src/assets/img/gallery/pic18.webp';
+import pic19 from '@src/assets/img/gallery/pic19.webp';
+import pic21 from '@src/assets/img/gallery/pic21.webp';
+import pic22 from '@src/assets/img/gallery/pic22.webp';
+import pic23 from '@src/assets/img/gallery/pic23.webp';
+
+const galleryImages = [
+  { src: pic10, alt: 'Camera roll 1', tooltip: 'Mi gata durmiendo en una cajita'},
+  { src: pic, alt: 'Camera roll 3' },
+  { src: pic3, alt: 'Camera roll 4' },
+  { src: pic4, alt: 'Camera roll 5' },
+  { src: pic5, alt: 'Camera roll 6' },
+  { src: pic6, alt: 'Camera roll 7' },
+  { src: pic7, alt: 'Camera roll 8' },
+  { src: pic8, alt: 'Camera roll 9' },
+  { src: pic9, alt: 'Camera roll 10' },
+  { src: pic11, alt: 'Camera roll 11' },
+  { src: pic12, alt: 'Camera roll 12' },
+  { src: pic13, alt: 'Camera roll 13' },
+  { src: pic14, alt: 'Camera roll 14' },
+  { src: pic15, alt: 'Camera roll 15' },
+  { src: pic16, alt: 'Camera roll 16' },
+  { src: pic17, alt: 'Camera roll 17' },
+  { src: pic18, alt: 'Camera roll 18' },
+  { src: pic19, alt: 'Camera roll 19' },
+  { src: pic21, alt: 'Camera roll 21' },
+  { src: pic22, alt: 'Camera roll 22' },
+  { src: pic23, alt: 'Camera roll 23' },
+];
+
 type BlogPost = CollectionEntry<'blog'>;
 
 const allPosts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -48,7 +95,7 @@ const top6Projects = projects.slice(0, 6);
       <div class='mt-6 mb-12'>
         <div class="flex justify-between gap-2 border-b mb-1 dark:border-b-zinc-700">
           <h2 class="text-lg font-bold mb-3">🌱Jardín</h2>
-          <a href="/jardin/" class="inline-block py-2 underline dark:prose-invert">Todos los posts &raquo;</a>
+          <a href="/posts/" class="inline-block py-2 underline dark:prose-invert">Todos los posts &raquo;</a>
         </div>
         <div class="text-sm">
           {
@@ -75,13 +122,36 @@ const top6Projects = projects.slice(0, 6);
       </div>
 
       <!-- Sección Mis Links -->
-      <div>
+      <div class='mb-12'>
         <div class="flex justify-between gap-2 mb-1">
-          <h2 class="text-lg font-bold mb-3">⭐Mis Links</h2>
-          <a href="/projects/" class="inline-block py-2 underline dark:prose-invert">Todos mis links &raquo;</a>
+          <h2 class="text-lg font-bold mb-3">Proyectos recientes</h2>
+          <a href="/lab/" class="inline-block py-2 underline dark:prose-invert">Todos mis proyectos &raquo;</a>
         </div>
         <div class="text-sm"></div>
         <LinksList projects={top6Projects}/>
+      </div>
+
+      <!-- Sección Camera Roll -->
+      <div class='mt-12'>
+        <h2 class="text-lg font-bold mb-3">📷 Camera roll</h2>
+        <div class="camera-roll-gallery">
+{galleryImages.map((img, index) => (
+  <Image 
+    src={img.src} 
+    alt={img.alt} 
+    class="gallery-item"
+    width={800}
+    height={800}
+    title={img.tooltip || undefined}
+  />
+))}
+        </div>
+
+        <!-- Lightbox Modal -->
+        <div id="lightbox" class="lightbox">
+          <button class="lightbox-close" aria-label="Cerrar">&times;</button>
+          <img src="" alt="" id="lightbox-img" />
+        </div>
       </div>
 		</main>
 	</div>
@@ -94,4 +164,146 @@ const top6Projects = projects.slice(0, 6);
     margin-bottom: 0.75rem;
   
   }
+
+  /* Galería Camera Roll - 7 columnas x 2 filas estilo Instagram */
+  .camera-roll-gallery {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    row-gap: 0px;
+    column-gap: 0.5px;
+    margin-top: 16px;
+    margin-bottom: 20px;
+    max-width: 100%;
+  }
+
+  .gallery-item {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 0;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    display: block;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+
+  .gallery-item:hover {
+    transform: scale(1.02);
+    opacity: 0.9;
+    z-index: 1;
+  }
+
+  /* Asegurar que los tooltips funcionen */
+  .gallery-item[title]:hover::after {
+    content: attr(title);
+  }
+
+  .lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .lightbox.active {
+    display: flex;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 40px;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10000;
+    transition: opacity 0.2s ease;
+    line-height: 1;
+    width: 40px;
+    height: 40px;
+  }
+
+  .lightbox-close:hover {
+    opacity: 0.7;
+  }
+
+  #lightbox-img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .camera-roll-gallery {
+      grid-template-columns: repeat(5, 1fr);
+      column-gap: 0.5px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .camera-roll-gallery {
+      grid-template-columns: repeat(4, 1fr);
+      column-gap: 0.5px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .camera-roll-gallery {
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 0.5px;
+    }
+  }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+    const closeBtn = document.querySelector('.lightbox-close');
+
+    if (!lightbox || !lightboxImg || !closeBtn) return;
+
+    galleryItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const img = this as HTMLImageElement;
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeLightbox);
+    
+    lightbox.addEventListener('click', function(e) {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+        closeLightbox();
+      }
+    });
+  });
+</script>

@@ -11,14 +11,62 @@ const galleryData = {
     { 
       src: '/src/assets/img/aligned.webp', 
       alt: 'Aligned', 
-      externalUrl: 'https://www.instagram.com/p/ejemplo1/' 
+      description: 'Uno de mis dibujos favoritos. El significado es la sincronicidad espiritual colectiva y personal.', 
+      // externalUrl: 'https://www.instagram.com/p/ejemplo1/' 
     },
     { 
       src: '/src/assets/img/catrina.webp', 
       alt: 'Catrina', 
-      externalUrl: 'https://www.instagram.com/p/ejemplo2/' 
+      description: 'Mujer catrina con detalles dorados.',
     },
-    // ... añade el resto aquí
+    { 
+      src: '/src/assets/img/shinyshoes.webp', 
+      alt: 'Shiny Shoes', 
+      description: 'Estudio de texturas brillantes.', 
+      // externalUrl: 'https://www.instagram.com/p/ejemplo1/' 
+    },
+    { 
+      src: '/src/assets/img/temporaryhigh.webp', 
+      alt: 'Temporary High', 
+      description: 'Dibujo sobre la canción de Aurora que habla del tiempo y de vivir en un loop',
+      // externalUrl: 'https://www.instagram.com/p/ejemplo2/' 
+    },    
+    { 
+      src: '/src/assets/img/timebroken.webp', 
+      alt: 'Time Broken', 
+      description: 'Dibujo sobre el tiempo y como nos esclaviza.', 
+      // externalUrl: 'https://www.instagram.com/p/ejemplo1/' 
+    },
+    { 
+      src: '/src/assets/img/practices.webp', 
+      alt: 'Practices', 
+      description: 'Dibujo practicando objetos brillantes.',
+      // externalUrl: 'https://www.instagram.com/p/ejemplo2/' 
+    },    
+    { 
+      src: '/src/assets/img/breadclouds.webp', 
+      alt: 'Bread Clouds', 
+      description: 'Dibujo sobre el concepto de nubes de pan.', 
+      // externalUrl: 'https://www.instagram.com/p/ejemplo1/' 
+    },
+    { 
+      src: '/src/assets/img/puertascielo.webp', 
+      alt: 'Puertas al Cielo', 
+      description: 'Dibujo inspirado en un concepto de puertas en el cielo que se abren al morir.',
+      // externalUrl: 'https://www.instagram.com/p/ejemplo2/' 
+    },    
+    { 
+      src: '/src/assets/img/foxinthenight.webp', 
+      alt: 'Fox in the Night', 
+      description: 'Dibujo de un zorro mágico (kitsune).',
+      // externalUrl: 'https://www.instagram.com/p/ejemplo2/' 
+    },     
+    { 
+      src: '/src/assets/img/jellyfishinthenight.webp', 
+      alt: 'Medusa brillante', 
+      description: 'Dibujo de una medusa porque amo las medusas.',
+      // externalUrl: 'https://www.instagram.com/p/ejemplo2/' 
+    },     
   ]
 };
 
@@ -50,29 +98,27 @@ const { title, images } = galleryData;
               
               <div class="overlay">
                 <div class="icon-container">
-                  {/* BOTÓN LUPA: Abre el archivo de imagen en pestaña nueva */}
-                  <a 
-                    href={imageMetadata.default.src} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    class="icon-link" 
-                    title="Ver imagen completa en pestaña nueva"
+                  {/* 👇 CAMBIO: Añadir data-image-url y cambiar a button */}
+                  <button 
+                    class="icon-link view-image-btn" 
+                    data-image-url={imageMetadata.default.src}
+                    data-image-alt={image.alt}
+                    title="Ver imagen completa"
                   >
                     <span class="icon">🔍</span>
-                  </a>
+                  </button>
                   
-                  {/* BOTÓN ENLACE: Abre Instagram/Externo en pestaña nueva */}
-                  <a 
-                    href={image.externalUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    class="icon-link" 
-                    title="Ver publicación original"
-                  >
-                    <span class="icon">🔗</span>
-                  </a>
+                  {image.externalUrl && (
+                    <a href={image.externalUrl} target="_blank" rel="noopener noreferrer" class="icon-link" title="Ver en Instagram">
+                      <span class="icon">🔗</span>
+                    </a>
+                  )}
                 </div>
-                <span class="overlay-text">{image.alt}</span>
+                
+                <div class="text-content">
+                  <span class="overlay-title">{image.alt}</span>
+                  <p class="overlay-description">{image.description}</p>
+                </div>
               </div>
             </div>
           );
@@ -80,20 +126,239 @@ const { title, images } = galleryData;
       </div>
     </main>
   </div>
+
+  {/* 🔒 MODAL PARA VER IMAGEN EN GRANDE CON PROTECCIÓN */}
+  <div id="imageModal" class="modal">
+    <span class="modal-close">&times;</span>
+    <img id="modalImage" class="modal-content" alt="" />
+    <div id="modalCaption" class="modal-caption"></div>
+  </div>
 </BaseLayout>
 
 <style>
-  /* El CSS se mantiene igual al anterior */
   .container { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; }
   .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
   .gallery-item { position: relative; aspect-ratio: 1/1; overflow: hidden; border-radius: 0.75rem; background-color: #18181b; }
   .main-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-  .overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.6); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(2px); }
+  
+  .overlay { 
+    position: absolute; 
+    inset: 0; 
+    background: rgba(0, 0, 0, 0.75); 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    opacity: 0; 
+    transition: opacity 0.3s ease; 
+    backdrop-filter: blur(4px);
+    padding: 1.5rem;
+    text-align: center;
+  }
+
   .gallery-item:hover .overlay { opacity: 1; }
   .gallery-item:hover .main-img { transform: scale(1.1); }
-  .icon-container { display: flex; gap: 1.5rem; margin-bottom: 1rem; }
-  .icon-link { background: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.2s ease; }
-  .icon-link:hover { transform: translateY(-5px); background: #22d3ee; }
-  .icon { font-size: 1.5rem; }
-  .overlay-text { color: white; font-weight: 600; font-size: 0.9rem; }
+
+  .icon-container { display: flex; gap: 1rem; margin-bottom: 1.25rem; }
+  
+  .icon-link { 
+    background: white; 
+    width: 45px; 
+    height: 45px; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    text-decoration: none; 
+    transition: all 0.2s ease; 
+    border: none;
+    cursor: pointer;
+  }
+  
+  .icon-link:hover { transform: translateY(-3px); background: #22d3ee; }
+  
+  .text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .overlay-title { 
+    color: white; 
+    font-weight: 700; 
+    font-size: 1.1rem; 
+    display: block;
+  }
+
+  .overlay-description { 
+    color: #d4d4d8;
+    font-size: 0.85rem; 
+    line-height: 1.4;
+    margin: 0;
+    max-width: 220px;
+  }
+
+  .icon { font-size: 1.2rem; }
+
+  /* 🔒 ESTILOS DEL MODAL PROTEGIDO */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+  }
+
+  .modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: none;
+    -webkit-touch-callout: none;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10000;
+  }
+
+  .modal-close:hover,
+  .modal-close:focus {
+    color: #22d3ee;
+  }
+
+  .modal-caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 20px;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  @media (max-width: 700px) {
+    .modal-content {
+      max-width: 95%;
+    }
+  }
 </style>
+
+<script>
+  // 🔒 PROTECCIÓN DE IMÁGENES EN MODAL
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage') as HTMLImageElement;
+    const modalCaption = document.getElementById('modalCaption');
+    const closeBtn = document.querySelector('.modal-close');
+    const viewButtons = document.querySelectorAll('.view-image-btn');
+
+    // Abrir modal al hacer click en el botón de lupa
+    viewButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const button = e.currentTarget as HTMLButtonElement;
+        const imageUrl = button.getAttribute('data-image-url');
+        const imageAlt = button.getAttribute('data-image-alt');
+
+        if (modal && modalImg && modalCaption && imageUrl) {
+          modal.style.display = 'block';
+          modalImg.src = imageUrl;
+          modalImg.alt = imageAlt || '';
+          modalCaption.textContent = `${imageAlt || ''} | gvpv12.github.io`;
+        }
+      });
+    });
+
+    // Cerrar modal
+    if (closeBtn && modal) {
+      closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+    }
+
+    // Cerrar con ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    // Cerrar al hacer click fuera de la imagen
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    }
+
+    // 🔒 PROTECCIONES EN EL MODAL
+    if (modalImg) {
+      // ❌ Bloquear drag
+      modalImg.draggable = false;
+      modalImg.addEventListener('dragstart', (e) => {
+        e.preventDefault();
+        return false;
+      });
+
+      // ❌ Bloquear click derecho
+      modalImg.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        return false;
+      });
+
+      // ❌ Bloquear long-press móvil
+      let pressTimer: number;
+      modalImg.addEventListener('touchstart', (e) => {
+        pressTimer = setTimeout(() => {
+          e.preventDefault();
+        }, 500);
+      });
+
+      modalImg.addEventListener('touchend', () => {
+        clearTimeout(pressTimer);
+      });
+
+      modalImg.addEventListener('touchmove', () => {
+        clearTimeout(pressTimer);
+      });
+    }
+
+    // 🔒 Bloquear teclas de guardar cuando el modal está abierto
+    document.addEventListener('keydown', (e) => {
+      if (modal && modal.style.display === 'block') {
+        // Bloquear Ctrl+S (guardar)
+        if (e.ctrlKey && e.key === 's') {
+          e.preventDefault();
+          return false;
+        }
+        // Bloquear Ctrl+P (imprimir)
+        if (e.ctrlKey && e.key === 'p') {
+          e.preventDefault();
+          return false;
+        }
+      }
+    });
+  });
+</script>

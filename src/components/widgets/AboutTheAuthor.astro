@@ -1,10 +1,10 @@
-
 ---
 import Author from '../Author.astro';
+import SpotifyNowPlaying from '../SpotifyNowPlaying.astro';
 ---
 
 <div>
-  <div class="about-the-author py-4 border-b">
+  <div class="about-the-author py-4">
     <h3 class="font-extrabold uppercase mb-4 text-sm">About the Author</h3>
     <Author picSize="md" />
     
@@ -16,75 +16,147 @@ import Author from '../Author.astro';
       <p>Actualmente soy un diseñadora y desarrolladora web que crea experiencias digitales atractivas y funcionales. Pero me apasiona el mundo de desarrollo de videojuegos desde muy pequeña así que una de mis metas de vida es esa. Podria decirse que no tiene mucho sentido por el mainstream de hoy en día, pero para mi un videojuego en su más pura forma es una mezcla de arte.</p>
     </div>
   </div>
+
+  <!-- Componente de Spotify Now Playing -->
+  <SpotifyNowPlaying />
+
   <br>
+
+  <p class="text-xs py-1 border-b mb-3">Index Lists</p>
+  <div class="grid grid-cols-2 gap-x-4">
+    <div class="flex flex-col space-y-1">
+      <a href="/tags/investigaciones" class="text-xs hover:underline" title="Enriquece tu mente y aprende algo interesante">Gemini deep research + Análisis personales</a>
+      <a href="/podcasts-y-videos-favs-index/" class="text-xs hover:underline">Podcasts Fav</a>
+      <a href="/comandos-git/" class="text-xs hover:underline">Comandos escenciales Git para principiantes</a>
+      <!-- <a href="https://chsmc.org/" class="text-xs hover:underline">CHSMC</a>
+      <a href="https://jzhao.xyz" class="text-xs hover:underline">JZ Zhao</a>
+      <a href="https://quartz.eilleeenz.com" class="text-xs hover:underline">Eilleen's</a> -->
+    </div>
+    <!-- <div class="flex flex-col space-y-1">
+      <a href="https://maggieappleton.com" class="text-xs hover:underline">Maggie Appleton</a>
+      <a href="https://hiran.in" class="text-xs hover:underline">Hiran</a>
+      <a href="https://www.kickscondor.com/" class="text-xs hover:underline">Kickscondor</a>
+      <a href="https://maya.land/" class="text-xs hover:underline">Maya land</a>
+      <a href="https://blog.jim-nielsen.com/" class="text-xs hover:underline">Jim Nielsen</a>
+      <a href="https://www.jmduke.com" class="text-xs hover:underline">JM Duke</a>
+    </div> -->
+
+  </div>
+
+
+
+  <br> 
+
   <div class="relative group mt-2 inline-block w-full">
+    <p class="text-xs py-1 border-b mb-3">Blogs I 💙</p>
+    <div class="grid grid-cols-2 gap-x-4">
+      <div class="flex flex-col space-y-1">
+        <a href="https://nicolevanderhoeven.com/" class="text-xs hover:underline">Nicole Vanderhoeven</a>
+        <a href="https://minishinternet.com/" class="text-xs hover:underline">Minish Internet</a>
+        <a href="https://anhvn.com/" class="text-xs hover:underline">Anhvn</a>
+        <a href="https://chsmc.org/" class="text-xs hover:underline">CHSMC</a>
+        <a href="https://jzhao.xyz" class="text-xs hover:underline">JZ Zhao</a>
+        <a href="https://quartz.eilleeenz.com" class="text-xs hover:underline">Eilleen's</a>
+      </div>
+      <div class="flex flex-col space-y-1">
+        <a href="https://maggieappleton.com" class="text-xs hover:underline">Maggie Appleton</a>
+        <a href="https://hiran.in" class="text-xs hover:underline">Hiran</a>
+        <a href="https://www.kickscondor.com/" class="text-xs hover:underline">Kickscondor</a>
+        <a href="https://maya.land/" class="text-xs hover:underline">Maya land</a>
+        <a href="https://blog.jim-nielsen.com/" class="text-xs hover:underline">Jim Nielsen</a>
+        <a href="https://www.jmduke.com" class="text-xs hover:underline">JM Duke</a>
+      </div>
+    </div>
 
-<p class="text-xs py-1 border-b mb-3">Blogs I 💙</p>
-<div class="grid grid-cols-2 gap-x-4">
-  <div class="flex flex-col space-y-1">
-    <a href="https://nicolevanderhoeven.com/" class="text-xs hover:underline">Nicole Vanderhoeven</a>
-    <a href="https://minishinternet.com/" class="text-xs hover:underline">Minish Internet</a>
-    <a href="https://anhvn.com/" class="text-xs hover:underline">Anhvn</a>
-    <a href="https://chsmc.org/" class="text-xs hover:underline">CHSMC</a>
-    <a href="https://jzhao.xyz" class="text-xs hover:underline">JZ Zhao</a>
-    <a href="https://quartz.eilleeenz.com" class="text-xs hover:underline">Eilleen's</a>
+      <br> 
+
+   <p class="text-xs py-1 border-b mb-3">Updates</p>
+   <p class="text-xs">✅<s>Mejorar meta</s></p>
+   <p class="text-xs">❌Mejorar accesibilidad</p>
+   <p class="text-xs">✅<s>Añadir galeria al index</s></p> 
+
+    <br><br>
+
+    <img src="/progresobsiodian.png" alt="Progreso" loading="lazy" class="w-full h-auto rounded-lg" />
+
+    <div class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+      Progreso 2026 segundo cerebro en graph view ✨
+    </div>
   </div>
-  <div class="flex flex-col space-y-1">
-    <a href="https://maggieappleton.com" class="text-xs hover:underline">Maggie Appleton</a>
-    <a href="https://hiran.in" class="text-xs hover:underline">Hiran</a>
-    <a href="https://www.kickscondor.com/" class="text-xs hover:underline">Kickscondor</a>
-    <a href="https://maya.land/" class="text-xs hover:underline">Maya land</a>
-    <a href="https://blog.jim-nielsen.com/" class="text-xs hover:underline">Jim Nielsen</a>
-    <a href="https://www.jmduke.com" class="text-xs hover:underline">JM Duke</a>
-  </div>
-</div>
+  
+  <br><br><br>
 
-<br><br>
+ 
 
-  <img src="/progresobsiodian.png" alt="Progreso" class="w-full h-auto rounded-lg" />
-
-  <div class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-    Progreso 2026 segundo cerebro en graph view ✨
-  </div>
-</div>
-<br><br><br>
-
-  <div style="border: 2px solid #EBE8D5; border-radius:10px; padding: 0px 7px 0px 7px;"><h3 style=""><a href="https://www.goodreads.com/user/show/28477539-moonlight" style="text-decoration: none;color:#aaa;font-family:georgia,serif;font-style:italic;" rel="nofollow">Moonlight’s quotes</a></h3><br/><div id="gr_quote_body"></div><script src="https://www.goodreads.com/quotes/widget/28477539-moonlight?v=2" type="text/javascript"></script><div style="text-align: right;"><a href="https://www.goodreads.com/quotes" style="color: #382110; text-decoration: none; font-size: 6px;" rel="nofollow">Goodreads Quotes</a></div></div>
-
-  <!-- Widget de Goodreads -->
+  <!-- Widget de Últimos libros leídos - OPTIMIZADO -->
   <div class="goodreads-widget py-6">
     <div id="gr_grid_widget_1770187143">
       <h2>
         <a style="text-decoration: none;" rel="nofollow" href="https://www.goodreads.com/review/list/28477539-moonlight?shelf=read&utm_medium=api&utm_source=grid_widget">Últimos libros leídos</a>
       </h2>
-      <div class="gr_grid_container">
-        <div class="gr_grid_book_container"><a title="Masashi: Un viaje hacia el sentido (Spanish Edition)" rel="nofollow" href="https://www.goodreads.com/book/show/217531881-masashi"><img alt="Masashi: Un viaje hacia el sentido" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1723815778l/217531881._SY75_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="The Universal Code / El Código Universal: Understanding the Divine Blueprint / Comprendiendo el Plano Divino (Spanish Edition)" rel="nofollow" href="https://www.goodreads.com/book/show/221005019-the-universal-code-el-c-digo-universal"><img alt="The Universal Code / El Código Universal: Understanding the Divine Blueprint / Comprendiendo el Plano Divino" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1748337539l/221005019._SY75_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="Así se pierde la guerra del tiempo" rel="nofollow" href="https://www.goodreads.com/book/show/58772401-as-se-pierde-la-guerra-del-tiempo"><img alt="Así se pierde la guerra del tiempo" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1629021625l/58772401._SY75_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="Radio Silence" rel="nofollow" href="https://www.goodreads.com/book/show/25322449-radio-silence"><img alt="Radio Silence" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1448470869l/25322449._SY75_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="欠けた月とドーナッツ 4 [Kaketa Tsuki to Doughnut 4] (Doughnuts Under a Crescent Moon, #4)" rel="nofollow" href="https://www.goodreads.com/book/show/59014631-4-kaketa-tsuki-to-doughnut-4"><img alt="欠けた月とドーナッツ 4 [Kaketa Tsuki to Doughnut 4]" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1657393557l/59014631._SX50_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="欠けた月とドーナッツ 3 [Kaketa Tsuki to Doughnut 3] (Doughnuts Under a Crescent Moon, #3)" rel="nofollow" href="https://www.goodreads.com/book/show/55892917-3-kaketa-tsuki-to-doughnut-3"><img alt="欠けた月とドーナッツ 3 [Kaketa Tsuki to Doughnut 3]" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1631884153l/55892917._SX50_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="欠けた月とドーナッツ 2 [Kaketa Tsuki to Doughnut 2] (Doughnuts Under a Crescent Moon, #2)" rel="nofollow" href="https://www.goodreads.com/book/show/55779144-2-kaketa-tsuki-to-doughnut-2"><img alt="欠けた月とドーナッツ 2 [Kaketa Tsuki to Doughnut 2]" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1605467111l/55779144._SX50_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="Doughnuts Under a Crescent Moon, Vol. 1" rel="nofollow" href="https://www.goodreads.com/book/show/54589742-doughnuts-under-a-crescent-moon-vol-1"><img alt="Doughnuts Under a Crescent Moon, Vol. 1" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1608047591l/54589742._SX50_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="ストロボ・エッジ 2 [Sutorobo Ejji 2] (Strobe Edge, #2)" rel="nofollow" href="https://www.goodreads.com/book/show/6019153-2-sutorobo-ejji-2"><img alt="ストロボ・エッジ 2 [Sutorobo Ejji 2]" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1338077053l/6019153._SY75_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="Mine-kun is Asexual" rel="nofollow" href="https://www.goodreads.com/book/show/54647077-mine-kun-is-asexual"><img alt="Mine-kun is Asexual" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1595508546l/54647077._SX50_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="Is Love the Answer?" rel="nofollow" href="https://www.goodreads.com/book/show/60200693-is-love-the-answer"><img alt="Is Love the Answer?" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1661219784l/60200693._SX50_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="I Want to Be a Wall, Vol. 3 (I Want to Be a Wall, #3)" rel="nofollow" href="https://www.goodreads.com/book/show/205008333-i-want-to-be-a-wall-vol-3"><img alt="I Want to Be a Wall, Vol. 3" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1714236707l/205008333._SX50_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="I Want to Be a Wall, Vol. 2" rel="nofollow" href="https://www.goodreads.com/book/show/61991440-i-want-to-be-a-wall-vol-2"><img alt="I Want to Be a Wall, Vol. 2" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1667345367l/61991440._SX50_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="I Want to be a Wall, Vol. 1" rel="nofollow" href="https://www.goodreads.com/book/show/59456542-i-want-to-be-a-wall-vol-1"><img alt="I Want to be a Wall, Vol. 1" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1647810817l/59456542._SX50_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="Moe kare!!, Band 7" rel="nofollow" href="https://www.goodreads.com/book/show/17156510-moe-kare-band-7"><img alt="Moe kare!!, Band 7" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1454633084l/17156510._SY75_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="気になってる人が男じゃなかった VOL.2 [Ki ni Natteru Hito ga Otoko Janakatta, Vol. 2]" rel="nofollow" href="https://www.goodreads.com/book/show/205532064-vol-2-ki-ni-natteru-hito-ga-otoko-janakatta-vol-2"><img alt="気になってる人が男じゃなかった VOL.2 [Ki ni Natteru Hito ga Otoko Janakatta, Vol. 2]" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1705539781l/205532064._SX50_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="気になってる人が男じゃなかった VOL.1 [Ki ni Natteru Hito ga Otoko Janakatta, Vol. 1]" rel="nofollow" href="https://www.goodreads.com/book/show/120730295-vol-1-ki-ni-natteru-hito-ga-otoko-janakatta-vol-1"><img alt="気になってる人が男じゃなかった VOL.1 [Ki ni Natteru Hito ga Otoko Janakatta, Vol. 1]" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1679209103l/120730295._SX50_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="Solitaire" rel="nofollow" href="https://www.goodreads.com/book/show/20618110-solitaire"><img alt="Solitaire" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1680269555l/20618110._SY75_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="Morgana and Oz, Vol. 2" rel="nofollow" href="https://www.goodreads.com/book/show/215363294-morgana-and-oz-vol-2"><img alt="Morgana and Oz, Vol. 2" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1721721423l/215363294._SX50_.jpg" /></a></div>
-        <div class="gr_grid_book_container"><a title="Morgana and Oz, Vol. 1" rel="nofollow" href="https://www.goodreads.com/book/show/198110742-morgana-and-oz-vol-1"><img alt="Morgana and Oz, Vol. 1" border="0" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1707949782l/198110742._SY75_.jpg" /></a></div>
-        <br style="clear: both"/><br/><a class="gr_grid_branding" style="font-size: .9em; color: #382110; text-decoration: none; float: right; clear: both" rel="nofollow" href="https://www.goodreads.com/user/show/28477539-moonlight">Moonlight's favorite books »</a>
-        <noscript><br/>Share <a rel="nofollow" href="/">book reviews</a> and ratings with Moonlight, and even join a <a rel="nofollow" href="/group">book club</a> on Goodreads.</noscript>
-      </div>
+      <div class="gr_grid_container"></div>
     </div>
-    <script src="https://www.goodreads.com/review/grid_widget/28477539.%C3%9Altimos%20libros%20le%C3%ADdos?cover_size=small&hide_link=&hide_title=&num_books=16&order=d&shelf=read&sort=date_added&widget_id=1770187143" type="text/javascript" charset="utf-8"></script>
+    
+    <script 
+      src="https://www.goodreads.com/review/grid_widget/28477539.%C3%9Altimos%20libros%20le%C3%ADdos?cover_size=small&hide_link=&hide_title=&num_books=20&order=d&shelf=read&sort=date_read&widget_id=1770187143" 
+      type="text/javascript" 
+      charset="utf-8"
+      async
+      defer>
+    </script>
   </div>
+
+  <!-- Widget de Currently Reading - OPTIMIZADO -->
+  <div class="goodreads-widget py-6">
+    <h3 class="text-sm font-semibold mb-3" style="color: #ff5ea9;">Leyendo</h3>
+    
+    <div id="gr_grid_widget_1771072813">
+      <h2>
+        <a style="text-decoration: none;" rel="nofollow" href="https://www.goodreads.com/review/list/28477539-moonlight?shelf=currently-reading&utm_medium=api&utm_source=grid_widget">Currently Reading</a>
+      </h2>
+      <div class="gr_grid_container"></div>
+    </div>
+    
+    <script 
+      src="https://www.goodreads.com/review/grid_widget/28477539?cover_size=medium&hide_link=true&hide_title=true&num_books=4&order=a&shelf=currently-reading&sort=date_added&widget_id=1771072813" 
+      type="text/javascript" 
+      charset="utf-8"
+      async
+      defer>
+    </script>
+  </div>
+
+
+<br><br>
+
 </div>
 
-<hr>
+<!-- SCRIPT ÚNICO OPTIMIZADO - Corre solo UNA VEZ cuando todo está cargado -->
+<script is:inline>
+(function() {
+  // Solo correr cuando la página esté completamente cargada
+  window.addEventListener('load', function() {
+    // Esperar 2 segundos para que Goodreads cargue
+    setTimeout(function() {
+      // Verificar si el widget de Currently Reading está vacío
+      const container = document.querySelector('#gr_grid_widget_1771072813 .gr_grid_container');
+      if (container) {
+        const books = container.querySelectorAll('.gr_grid_book_container');
+        if (books.length === 0) {
+          const widget = document.getElementById('gr_grid_widget_1771072813');
+          if (widget && !widget.querySelector('.empty-reading-message')) {
+            const emptyMsg = document.createElement('div');
+            emptyMsg.className = 'empty-reading-message';
+            emptyMsg.style.cssText = 'text-align: center; padding: 20px; color: #999; font-style: italic; font-size: 0.875rem;';
+            emptyMsg.textContent = 'Actualmente no estoy leyendo nada';
+            container.style.display = 'none';
+            widget.appendChild(emptyMsg);
+          }
+        }
+      }
+    }, 2000);
+  });
+})();
+</script>
 
+<hr>

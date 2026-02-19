@@ -1,0 +1,122 @@
+---
+// components/ProtectedImage.astro
+interface Props {
+  src: string;
+  alt: string;
+  watermark?: string;
+  class?: string;
+}
+
+const { src, alt, watermark, class: className } = Astro.props;
+---
+
+<div class="protected-image-container">
+  <img 
+    src={src} 
+    alt={alt} 
+    class={className}
+    draggable="false"
+    data-protected-image
+  />
+  {watermark && (
+    <div class="watermark" aria-hidden="true">
+      {watermark}
+    </div>
+  )}
+  <!-- Capa transparente SOLO sobre la imagen -->
+  <div class="protection-layer"></div>
+</div>
+
+<style>
+  .protected-image-container {
+    position: relative;
+    display: inline-block;
+    /* NO ponemos user-select: none aquí para permitir selección de texto alrededor */
+  }
+
+  .protected-image-container img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    /* Bloquear selección SOLO de la imagen */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    pointer-events: none;
+    /* Bloquear long-press en iOS */
+    -webkit-touch-callout: none;
+  }
+
+  .watermark {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    pointer-events: none;
+    user-select: none;
+    z-index: 2;
+  }
+
+  .protection-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    cursor: default;
+    /* Esta capa captura clicks pero NO texto alrededor */
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const protectedImages = document.querySelectorAll('[data-protected-image]');
+    
+    protectedImages.forEach(img => {
+      // Prevenir drag and drop
+      img.addEventListener('dragstart', (e) => {
+        e.preventDefault();
+        return false;
+      });
+
+      // Prevenir click derecho SOLO en la imagen
+      img.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        return false;
+      });
+
+      // Prevenir long-press en móviles (guardar imagen)
+      let pressTimer: number;
+      img.addEventListener('touchstart', (e) => {
+        pressTimer = setTimeout(() => {
+          e.preventDefault();
+        }, 500);
+      });
+
+      img.addEventListener('touchend', () => {
+        clearTimeout(pressTimer);
+      });
+
+      img.addEventListener('touchmove', () => {
+        clearTimeout(pressTimer);
+      });
+    });
+  });
+
+  // NO bloqueamos DevTools globalmente para permitir copiar texto
+  // Si quieres dificultar un poco el acceso, puedes hacer esto SOLO:
+  
+  // Advertencia en consola (opcional)
+  if (import.meta.env.PROD) {
+    console.log('%c⚠️ Aviso', 'color: red; font-size: 20px; font-weight: bold;');
+    console.log('%cLas imágenes de este sitio están protegidas.', 'font-size: 14px;');
+    console.log('%cEl contenido está protegido por derechos de autor.', 'font-size: 14px;');
+  }
+</script>

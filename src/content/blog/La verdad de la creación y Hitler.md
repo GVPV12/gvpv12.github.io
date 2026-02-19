@@ -12,7 +12,7 @@ tags:
   - Dios
 ---
 - **¿Por qué recomiendo este podcast?:** Puede ser muy brutal este podcast incluso si tienes la mente abierta. A mi me sorprendió el hecho de que tiene mucho sentido y parece a simple vista insensible y cruel. Pero en realidad si lo analizas con neutralidad es como un mecanismo. Adriana lo explica muy bien y si resueno mucho con sus palabras, al igual que con Akisha y con varios canalizadores.
-- **Velo si:** Te interesan los temas de existencialismo, aliens, la creación, civilizaciones perdidas y estelares, etc. No lo veas si eres de una religión extremista que limita el pensamiento. Más recomendado si no tienes religión, eres agnostico o nostico, tienes la menta abierta y te consideras más espiritual que religioso.
+- **Velo si:** Te interesan los temas de existencialismo, aliens, la creación, civilizaciones perdidas y estelares, etc. No lo veas si eres de una religión extremista que limita el pensamiento. Más recomendado si no tienes religión, eres agnóstico o [**_gnóstico_**](https://www.google.com/search?sca_esv=15046669d36cafaf&sxsrf=ANbL-n6-Gz-fyudMjbOqHTgUpOpEYyXRkQ:1770981290493&q=gn%C3%B3stico&spell=1&sa=X&ved=2ahUKEwja6-S1q9aSAxVmRTABHaCjLiYQBSgAegQIGRAB), tienes la menta abierta y te consideras más espiritual que religioso.
 - **Temas que aprenderás:** La verdad de la creación y como todo se conecta como mecanismos que si lo ves desde afuera y con neutralidad tiene más sentido del que crees.
 - **Rating personal:** ⭐⭐⭐⭐⭐ (4.5/5)
 

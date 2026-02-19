@@ -1,34 +1,39 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/img/juegos/*.{jpg,jpeg,png,webp}',
+  { eager: true }
+);
+
+function getImage(file: string): ImageMetadata | null {
+  const key = Object.keys(images).find((k) => k.includes(`/${file}.`));
+  return key ? images[key].default : null;
+}
 
 const juegos = [
-  { title: 'Hollow Knight', cover: '/juegos/covers/hollow-knight.jpg', url: 'https://store.steampowered.com/app/367520/Hollow_Knight/' },
-  { title: 'Celeste', cover: '/juegos/covers/celeste.jpg', url: 'https://store.steampowered.com/app/504230/Celeste/' },
-  { title: 'Stardew Valley', cover: '/juegos/covers/stardew.jpg', url: 'https://store.steampowered.com/app/413150/Stardew_Valley/' },
-  { title: 'Hades', cover: '/juegos/covers/hades.jpg', url: 'https://store.steampowered.com/app/1145360/Hades/' },
-  { title: 'Dead Cells', cover: '/juegos/covers/dead-cells.jpg', url: 'https://store.steampowered.com/app/588650/Dead_Cells/' },
-  { title: 'Undertale', cover: '/juegos/covers/undertale.jpg', url: 'https://store.steampowered.com/app/391540/Undertale/' },
-  { title: 'The Binding of Isaac', cover: '/juegos/covers/isaac.jpg', url: 'https://store.steampowered.com/app/250900/' },
-  { title: 'Cuphead', cover: '/juegos/covers/cuphead.jpg', url: 'https://store.steampowered.com/app/268910/Cuphead/' },
-  
-  { title: 'Terraria', cover: '/juegos/covers/terraria.jpg', url: 'https://store.steampowered.com/app/105600/Terraria/' },
-  { title: 'Enter the Gungeon', cover: '/juegos/covers/gungeon.jpg', url: 'https://store.steampowered.com/app/311690/' },
-  { title: 'Ori and the Blind Forest', cover: '/juegos/covers/ori.jpg', url: 'https://store.steampowered.com/app/261570/' },
-  { title: 'Shovel Knight', cover: '/juegos/covers/shovel-knight.jpg', url: 'https://store.steampowered.com/app/250760/' },
-  { title: 'Slay the Spire', cover: '/juegos/covers/slay-spire.jpg', url: 'https://store.steampowered.com/app/646570/' },
-  { title: 'Minecraft', cover: '/juegos/covers/minecraft.jpg', url: 'https://www.minecraft.net/' },
-  { title: 'Portal 2', cover: '/juegos/covers/portal2.jpg', url: 'https://store.steampowered.com/app/620/' },
-  { title: 'The Witness', cover: '/juegos/covers/witness.jpg', url: 'https://store.steampowered.com/app/210970/' },
+{ title: 'Gris',                          file: 'gris',            url: 'https://store.steampowered.com/app/683320/GRIS/' },
+{ title: 'Spyro Reignited Trilogy',       file: 'spyro',           url: 'https://store.steampowered.com/app/996580/Spyro_Reignited_Trilogy/' },
+{ title: 'Stardew Valley',                file: 'stardew',         url: 'https://store.steampowered.com/app/413150/Stardew_Valley/' },
+{ title: 'Crash Bandicoot N. Sane Trilogy', file: 'crash',         url: 'https://store.steampowered.com/app/731490/Crash_Bandicoot_N_Sane_Trilogy/' },
+{ title: 'Sky children of light',              file: 'sky',            url: 'https://store.steampowered.com/app/2325290/Sky_Nios_de_la_Luz/' },
+{ title: 'River City Girls',            file: 'rcg1',            url: 'https://store.steampowered.com/app/1049320/River_City_Girls/' },
+{ title: 'River City Girls 2',            file: 'rcg2',            url: 'https://store.steampowered.com/app/1920480/River_City_Girls_2/' },
+{ title: 'Neva',                          file: 'neva',            url: 'https://store.steampowered.com/app/2420660/Neva/' },
+{ title: 'La Leyenda de Korra',           file: 'leyendadekorra' },
+{ title: 'Child of Light',                file: 'childoflight',    url: 'https://store.steampowered.com/app/256290/Child_of_Light/' },
+{ title: 'A Space for the Unbound',       file: 'spaceforthe',     url: 'https://store.steampowered.com/app/1201270/A_Space_for_the_Unbound/' },
+{ title: 'Ori and the Blind Forest',      file: 'ori',             url: 'https://store.steampowered.com/app/261570/Ori_and_the_Blind_Forest/' },
+{ title: 'Our Life: Beginnings & Always', file: 'ourlife',         url: 'https://store.steampowered.com/app/1129190/Our_Life_Beginnings__Always/' },
+{ title: 'Paladins',                      file: 'paladins',        url: 'https://store.steampowered.com/app/444090/Paladins/' },
+{ title: 'The Last Campfire',             file: 'thelastcampfire', url: 'https://store.steampowered.com/app/990630/The_Last_Campfire/' },
+{ title: 'Missed Messages',               file: 'missedmessages',  url: 'https://store.steampowered.com/app/812810/missed_messages/' },
+{ title: "There's This Girl",             file: 'theresthisgirl',  url: 'https://play.google.com/store/apps/details?id=com.AngelaHe.TheresThisGirl&pcampaignid=web_share/' },
 
-  { title: 'Gris', cover: '/juegos/covers/gris.jpg', url: 'https://store.steampowered.com/app/683320/GRIS/' },
-  { title: 'A Short Hike', cover: '/juegos/covers/short-hike.jpg', url: 'https://store.steampowered.com/app/1055540/' },
-  { title: 'Spiritfarer', cover: '/juegos/covers/spiritfarer.jpg', url: 'https://store.steampowered.com/app/972660/' },
-  { title: 'Inside', cover: '/juegos/covers/inside.jpg', url: 'https://store.steampowered.com/app/304430/INSIDE/' },
-  { title: 'Limbo', cover: '/juegos/covers/limbo.jpg', url: 'https://store.steampowered.com/app/48000/LIMBO/' },
-  { title: 'Journey', cover: '/juegos/covers/journey.jpg', url: 'https://store.steampowered.com/app/638230/Journey/' },
-  { title: 'Fez', cover: '/juegos/covers/fez.jpg', url: 'https://store.steampowered.com/app/224760/FEZ/' },
-  { title: 'Outer Wilds', cover: '/juegos/covers/outer-wilds.jpg', url: 'https://store.steampowered.com/app/753640/' },
 ];
+
+const juegosConImagen = juegos.map((j) => ({ ...j, cover: getImage(j.file) }));
 ---
 
 <BaseLayout
@@ -38,20 +43,18 @@ const juegos = [
   <div class="container">
     <main>
       <h1 class="text-3xl font-bold mb-2">Videojuegos</h1>
-      <p class="text-zinc-700 dark:text-zinc-300 text-sm mb-10">Una colección de mis videojuegos favoritos que recomiendo totalmente.</p>
-      
+      <p class="text-zinc-700 dark:text-zinc-300 text-sm mb-10">
+        Una colección de mis videojuegos favoritos que recomiendo totalmente.
+      </p>
+
       <div class="games-grid">
-        {juegos.map((juego) => (
-          <a 
-            href={juego.url} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            class="game-cover"
-            title={juego.title}
-          >
-            <img src={juego.cover} alt={juego.title} />
-          </a>
-        ))}
+        {juegosConImagen.map((juego) =>
+          juego.cover
+            ? <a href={juego.url} target="_blank" rel="noopener noreferrer" class="game-cover" title={juego.title}>
+                <Image src={juego.cover} alt={juego.title} width={200} height={280} loading="lazy" />
+              </a>
+            : null
+        )}
       </div>
     </main>
   </div>
@@ -73,7 +76,7 @@ const juegos = [
   .game-cover {
     position: relative;
     width: 100%;
-    padding-bottom: 140%; /* Ratio 5:7 típico de covers */
+    padding-bottom: 140%;
     overflow: hidden;
     border-radius: 0.375rem;
     background-color: #f0f0f0;
@@ -91,7 +94,7 @@ const juegos = [
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
   }
 
-  .game-cover img {
+  .game-cover :global(img) {
     position: absolute;
     top: 0;
     left: 0;
@@ -102,28 +105,18 @@ const juegos = [
   }
 
   @media (max-width: 1400px) {
-    .games-grid {
-      grid-template-columns: repeat(6, 1fr);
-    }
+    .games-grid { grid-template-columns: repeat(6, 1fr); }
   }
 
   @media (max-width: 1024px) {
-    .games-grid {
-      grid-template-columns: repeat(5, 1fr);
-    }
+    .games-grid { grid-template-columns: repeat(5, 1fr); }
   }
 
   @media (max-width: 768px) {
-    .games-grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.75rem;
-    }
+    .games-grid { grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
   }
 
   @media (max-width: 480px) {
-    .games-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-    }
+    .games-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
   }
 </style>

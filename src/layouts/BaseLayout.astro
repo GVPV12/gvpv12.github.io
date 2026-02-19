@@ -13,6 +13,17 @@ const { title, description, image } = Astro.props;
 <!doctype html>
 <html lang='en'>
 	<head>
+    
+      <!-- Bloquear IA en general -->
+  <meta name="robots" content="noai, noimageai" />
+  
+  <!-- Bloquear bots de Google para IA -->
+  <meta name="googlebot" content="noai, noimageai" />
+  <meta name="google-extended" content="noindex, nofollow" />
+  
+  <!-- Bloquear otros bots -->
+  <meta name="AdsBot-Google" content="noai, noimageai" />
+
 		<BaseHead title={title} description={description} image={image} />
 	</head>
 	<body

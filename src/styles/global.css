@@ -40,11 +40,14 @@ kbd {
   .menu a,
   .navigation a,
   [role="navigation"] a {
-    color: #00ffa2 !important;
+    color: #00fbff !important;
     text-decoration: none !important;
     border-bottom: none !important;
     transition: color 0.2s ease;
+    font-size: 0.75rem !important;
   }
+
+  
   
   nav a:hover,
   header a:hover,
@@ -257,4 +260,218 @@ div > h3.font-medium > a:hover {
 .flex.flex-col .text-sm {
   font-size: 0.76rem !important;
 }
+
+/* ============================================
+   TAMAÑO DE TEXTO EN POSTS - AJUSTE GLOBAL
+   ============================================ */
+
+/* Párrafos en posts */
+article p,
+article.prose p,
+.prose p,
+main article p {
+  font-size: 0.855rem !important; /* 14px */
+  line-height: 1.65 !important;
+}
+
+/* Listas en posts */
+article li,
+article.prose li,
+.prose li,
+main article li {
+  font-size: 0.855rem !important;
+  line-height: 1.6 !important;
+}
+
+/* Texto en tablas */
+article td,
+article th,
+.prose td,
+.prose th {
+  font-size: 0.875rem !important;
+}
+
+/* Headers en posts - Ajustados proporcionalmente */
+article h1,
+.prose h1 {
+  font-size: 2rem !important; /* Antes 2.5rem */
+  margin-bottom: 1rem !important;
+}
+
+article h2,
+.prose h2 {
+  font-size: 1.5rem !important; /* Antes 1.875rem */
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+article h3,
+.prose h3 {
+  font-size: 1.25rem !important; /* Antes 1.5rem */
+  margin-top: 1.25rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+article h4,
+.prose h4 {
+  font-size: 1.125rem !important;
+}
+
+article h5,
+.prose h5 {
+  font-size: 1rem !important;
+}
+
+article h6,
+.prose h6 {
+  font-size: 0.875rem !important;
+}
+
+/* Blockquotes */
+article blockquote,
+.prose blockquote {
+  font-size: 0.875rem !important;
+  line-height: 1.6 !important;
+}
+
+/* Texto de descripción/metadata en posts */
+article .text-sm,
+.prose .text-sm {
+  font-size: 0.75rem !important;
+}
+
+/* ============================================
+   ETIQUETAS - SOLO EN CONTENIDO (NO HEADER)
+   ============================================ */
+
+/* Contenedor de tags - SOLO en main */
+main .tags-container,
+main .flex.gap-2,
+main .post-tags,
+main div:has(> a[href*="/tags/"]) {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.4rem !important;
+  align-items: flex-start !important;
+}
+
+/* Estilos base SOLO para tags dentro de main, article, o .post-item */
+main a[href^="/tags/"],
+article a[href^="/tags/"],
+.post-item a[href^="/tags/"],
+.post-tags a[href^="/tags/"],
+main .tag,
+main .badge,
+article .tag,
+article .badge {
+  font-size: 0.65rem !important;
+  padding: 0.35rem 0.65rem !important;
+  display: inline-block !important;
+  border-radius: 0.375rem !important;
+  line-height: 1.3 !important;
+  text-align: center !important;
+  transition: all 0.2s ease !important;
+  
+  /* Truncar con ellipsis */
+  max-width: 140px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  
+  /* Asegurar altura consistente */
+  min-height: 1.6rem !important;
+  vertical-align: middle !important;
+}
+
+/* Hover: mostrar texto completo - SOLO en contenido */
+main a[href^="/tags/"]:hover,
+article a[href^="/tags/"]:hover,
+.post-item a[href^="/tags/"]:hover,
+.post-tags a[href^="/tags/"]:hover,
+main .tag:hover,
+article .tag:hover {
+  max-width: none !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  z-index: 100 !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Tags específicos que son muy largos */
+main a[href*="Mis-temas-de-interés"],
+main a[href*="Neurodivergencia"],
+article a[href*="Mis-temas-de-interés"],
+article a[href*="Neurodivergencia"] {
+  font-size: 0.55rem !important;
+  padding: 0.3rem 0.5rem !important;
+  max-width: 120px !important;
+}
+
+
+
+/* ============================================
+   WIDGET CURRENTLY READING
+   ============================================ */
+
+#gr_grid_widget_1771072813 .gr_grid_container {
+  width: 100% !important;
+  margin: 0 auto !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 12px !important;
+  padding: 0 !important;
+}
+
+#gr_grid_widget_1771072813 .gr_grid_book_container {
+  float: none !important;
+  width: 100% !important;
+  height: auto !important;
+  padding: 4px !important;
+  overflow: visible !important;
+  text-align: center !important;
+  display: block !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+#gr_grid_widget_1771072813 .gr_grid_book_container img {
+  max-width: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0 auto !important;
+  border-radius: 4px !important;
+}
+
+#gr_grid_widget_1771072813 .gr_grid_container::after {
+  content: "" !important;
+  display: table !important;
+  clear: both !important;
+}
+
+#gr_grid_widget_1771072813 h2 {
+  display: none !important;
+}
+
+#gr_grid_widget_1771072813 h2 a {
+  color: #ff5ea9 !important;
+  text-decoration: none !important;
+}
+
+#gr_grid_widget_1771072813 .gr_grid_branding {
+  display: none !important;
+}
+
+#gr_grid_widget_1771072813 br {
+  display: none !important;
+}
+
+/* Ocultar "Moonlight's favorite books" */
+#gr_grid_widget_1770187143 .gr_grid_branding,
+#gr_grid_widget_1771072813 .gr_grid_branding {
+  display: none !important;
+}
+
+
 

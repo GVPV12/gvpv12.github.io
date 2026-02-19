@@ -1,0 +1,77 @@
+---
+// SpotifyNowPlaying.astro - Versión sin separadores
+// Componente que muestra la última canción reproducida usando Stats.fm
+
+const STATSFM_USERNAME = 'gvpv12'; // Cambia esto por tu usuario de Stats.fm
+
+let nowPlaying = null;
+
+async function getRecentTrack() {
+  try {
+    const response = await fetch(
+      `https://api.stats.fm/api/v1/users/${STATSFM_USERNAME}/streams/recent?limit=1`
+    );
+
+    if (!response.ok) {
+      console.error('Error fetching Stats.fm data');
+      return null;
+    }
+
+    const data = await response.json();
+    
+    if (data.items && data.items.length > 0) {
+      const track = data.items[0].track;
+      return {
+        title: track.name,
+        artist: track.artists.map(artist => artist.name).join(', '),
+        albumImageUrl: track.albums[0]?.image || '',
+        songUrl: track.externalIds?.spotify?.[0] 
+          ? `https://open.spotify.com/track/${track.externalIds.spotify[0]}`
+          : '#',
+      };
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Error fetching Stats.fm data:', error);
+    return null;
+  }
+}
+
+nowPlaying = await getRecentTrack();
+---
+
+{nowPlaying && (
+  <div class="spotify-now-playing py-4">
+    <p class="text-[0.625rem] font-semibold uppercase mb-3 opacity-60">Now playing</p>
+    <a 
+      href={nowPlaying.songUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex items-center gap-3 hover:opacity-80 transition-opacity group"
+    >
+      <div class="relative flex-shrink-0">
+        <img 
+          src={nowPlaying.albumImageUrl} 
+          alt={`${nowPlaying.title} album cover`}
+          class="w-12 h-12 rounded-md shadow-md"
+        />
+      </div>
+      
+      <div class="flex-1 min-w-0">
+        <p class="text-xs truncate group-hover:underline">
+          {nowPlaying.title}
+        </p>
+        <p class="text-xs opacity-70 truncate">
+          {nowPlaying.artist}
+        </p>
+      </div>
+    </a>
+  </div>
+)}
+
+<style>
+  .spotify-now-playing {
+    background: linear-gradient(135deg, rgba(30, 215, 96, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+  }
+</style>

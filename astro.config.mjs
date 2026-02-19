@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
-import { fileURLToPath } from 'node:url'; // Necesario para resolver rutas locales
+import { fileURLToPath } from 'node:url';
 import remarkCallouts from './plugins/remark-callouts.js';
 import remarkHighlightToBold from './plugins/remark-highlight-to-bold.js';
 import remarkAutoSlug from './plugins/remark-auto-slug-simple.js'; 
@@ -14,15 +14,31 @@ export default defineConfig({
   base: '/',
   output: 'static',
   integrations: [mdx(), sitemap(), tailwind(), partytown()],
-  // --- CONFIGURACIÓN DEL ALIAS ---
+  
+  // --- CONFIGURACIÓN DEL ALIAS + PROTECCIÓN ANTI-IA ---
   vite: {
     resolve: {
       alias: {
         '@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
       },
     },
+    // 🔒 Headers de protección anti-IA
+    plugins: [
+      {
+        name: 'ai-protection-headers',
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            // Headers anti-IA
+            res.setHeader('X-Robots-Tag', 'noai, noimageai');
+            res.setHeader('X-AI-Crawl', 'none');
+            next();
+          });
+        }
+      }
+    ]
   },
-  // -------------------------------
+  // ------------------------------------------------------
+  
   markdown: {
     remarkPlugins: [
       remarkAutoSlug,

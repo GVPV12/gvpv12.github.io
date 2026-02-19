@@ -6,15 +6,16 @@ tags:
   - películas-recomendadas
   - Mis-temas-de-interés
   - Existencialismo
+  - 🌱Seed
 coverImage: ./truman.jpg
 ---
-
-
+Películas:
 1. Matrix
 2. El show de Truman
 3. Lucy
 4. El Gran Diluvio
 
+## Matrix y el Show de Truman
 ### Dos Arquitecturas de Control
 
 El video argumenta que ambas películas, estrenadas con un año de diferencia, capturaron el miedo ancestral a una realidad falsificada [[00:20](http://www.youtube.com/watch?v=x_vZLlm_3OA&t=20)]:

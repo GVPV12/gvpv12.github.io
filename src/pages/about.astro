@@ -4,6 +4,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import pfp from '@src/assets/img/pfp.jpg';
 import Prose from '../components/Prose.astro';
 
+// Importar imágenes de la galería de memes
+import noImg from '@src/assets/img/gallery/no.jpg';
+import omgImg from '@src/assets/img/gallery/omg.jpg';
+import notebooksImg from '@src/assets/img/gallery/notebooks.jpg';
+import didiaskyouImg from '@src/assets/img/gallery/code.jpg';
+import beyouImg from '@src/assets/img/gallery/beyou.jpg';
+import drugsImg from '@src/assets/img/gallery/questioning.jpg';
+import iamawitchhImg from '@src/assets/img/gallery/iamawitchh.jpg';
+import passwordsImg from '@src/assets/img/gallery/passwords.jpg';
+import sistemaeducImg from '@src/assets/img/gallery/sistemaeduc.jpg';
+import auroraImg from '@src/assets/img/gallery/aurora.jpg';
+
+const memeImages = [
+  { src: noImg, alt: 'no means no' },
+  { src: omgImg, alt: 'omg my laptop', tooltip: 'mi vieja laptop cuando renderizaba 3d' },
+  { src: notebooksImg, alt: 'Notebooks meme' },
+  { src: didiaskyouImg, alt: 'Did I ask you Meme' },
+  { src: beyouImg, alt: 'Be yourself meme' },
+  { src: drugsImg, alt: 'Say no to drugs meme' },
+  { src: iamawitchhImg, alt: 'I am a witch meme' },
+  { src: passwordsImg, alt: 'Passwords meme' },
+  { src: sistemaeducImg, alt: 'Sistema educativo meme' },
+  { src: auroraImg, alt: 'Aurora meme' },
+];
 ---
 
 <BaseLayout
@@ -15,27 +39,245 @@ import Prose from '../components/Prose.astro';
       <article>
         <div class='w-full md:flex md:items-center gap-16 mb-10'>
           <div class="text-pretty leading-9">
-            <h1 class="text-xl font-bold mb-4">hi 👋, thanks for passing by! </h1>
+
+
+<h1 class="text-xl font-bold mb-4">Sobre este jardín digital </h1>
             <Prose>
               <div class="text-sm">
-                <p>Bienvenido a mi segundo cerebro, donde compartiré cualquier cosa que me llame la atención. No, no escribi esto con IA porque me dio flojera. No encontrarás contenido generado por IA pero si por una persona real que tiene demasiadas cosas que le interesan y no sabe realmente en cual concentrarse. Suena caótico pero para un jardín digital tal vez ese defecto puede tornarse en algo divertido y útil que me permita darle mejor uso a mi tiempo ejerciendo más mi pensamiento crítico en vez de ser manipulade junto con las masas.</p>
+                <p>Bienvenido a mi segundo cerebro, donde compartiré cualquier cosa que me llame la atención. No encontrarás contenido generado por IA pero si por una persona real que tiene demasiadas cosas que le interesan y no sabe realmente en cual concentrarse. Suena caótico pero para un jardín digital tal vez ese defecto puede tornarse en algo divertido y útil que me permita darle mejor uso a mi tiempo ejerciendo más mi pensamiento crítico en vez de ser manipulade junto con las masas.</p>
+
+                <p>Te invito también a crear tu propio jardín digital, es una experiencia que te puede ayudar a organizar tus pensamientos, tus intereses y a compartir lo que te gusta con otras personas. Recuerda que no hay una manera correcta o incorrecta de hacer un jardin digital, y esa es la belleza de este. No tiene que ser en <a href="https://obsidian.md" target="_blank" rel="noopener noreferrer">Obsidian</a> como lo hice yo. Puedes usar también <a href="https://www.notion.com/es" target="_blank" rel="no follow noopener noreferrer">Notion</a>, <a href="https://anytype.io" target="_blank" rel="no follow noopener noreferrer">Anytype</a>, <a href="https://logseq.com" target="_blank" rel="nofollow noopener noreferrer">logseq</a>, <a href="https://affine.pro" target="_blank" rel="nofollow noopener noreferrer">affine</a>, el que prefieras. Si te interesa puedes aprender más en: [[Jardines digitales]]</p>
+
                 <p>Quise que este espacio tuviera un sello de mi personalidad y de lo que me gusta. Por ejemplo el nombre, me tarde un poco en encontrar uno que me gustara lo suficiente y decidí quedarme con Alma de estrella nocturna. Quise combinar dos palabras que me gustan: estrella y alma nocturna. Siempre me ha gustado todo lo que tiene que ver con las galaxias y el universo. También me gusta Alma nocturna porque me considero noctambula, me gusta la noche porque es tranquila y invita tanto a la instrospección como a la concentración.</p>  
+              
+
+<!-- Blinkies -->
+<div style="flex-wrap: wrap; gap: 2px; margin-top: 16px; margin-bottom: 16px; max-width: 100%; font-size: 0; line-height: 0;">
+  <img src="/spanglish.gif" alt="Aromantic pride" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+  <img src="/0082-aromantic.gif" alt="Aromantic pride" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+  <img src="/0079-nonbinary.gif" alt="Non-binary pride" title="i don't care how you call me i feel genderless and its valid" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+  <img src="/0081-asexual.gif" alt="Asexual pride" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+     <a href="https://blinkies.cafe" target="_blank" rel="noopener noreferrer">
+    <img src="https://blinkies.cafe/b/display/blinkiesCafe-badge.gif" alt="blinkies.cafe" title="la mayoria de las estampitas las hice en blinkies" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" /></a>
+  
+  <img src="/introvert.gif" alt="Introvert" title="no quiero saludarte" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+  <img src="/0038-exitbutton2.gif" alt="Don't like it" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+   <img src="/0138-greenglow.gif" alt="Asexual pride" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+   
+   <img src="/blinkiesCafe-KT.gif" alt="My cats are crazy" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+   <img src="/nonmorning.gif" alt="nonmorning person" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+<img src="/iloveneon.gif" alt="My cats are crazy" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+<img src="/nostalgia.gif" alt="My cats are crazy" title="bring me nostalgic vibes!!" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+<img src="/winter.gif" alt="winter" title="nada de what time is it? summer time" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+
+  </a>
+</div>
+
+<br>
+                <h3 class="text-lg font-bold mt-6 mb-4">Frase del día🌻</h3>
+                <!-- Widget de Quotes - SIN SCRIPT INLINE -->
+                <div style="border: 2px solid #EBE8D5; border-radius:10px; padding: 0px 7px 0px 7px;">
+                  <h3><a href="https://www.goodreads.com/user/show/28477539-moonlight" style="text-decoration: none;color:#aaa;font-family:georgia,serif;font-style:italic;" rel="nofollow">Moonlight's quotes</a></h3>
+                  <br/>
+                  <div id="gr_quote_body"></div>
+                  <script src="https://www.goodreads.com/quotes/widget/28477539-moonlight?v=2" type="text/javascript" async></script>
+                  <div style="text-align: right;"><a href="https://www.goodreads.com/quotes" style="color: #382110; text-decoration: none; font-size: 6px;" rel="nofollow">Goodreads Quotes</a></div>
+                </div>
+<br>
+                <!-- Galería estilo Instagram -->
+                <h3 class="text-lg font-bold mt-6 mb-4">Low quality memes que me representan</h3>
+                <div class="instagram-gallery">
+{memeImages.map((img, index) => (
+  <Image 
+    src={img.src} 
+    alt={img.alt} 
+    class="gallery-item"
+    width={600}
+    height={600}
+    title={img.tooltip || undefined}
+  />
+))}
+                </div>
+
+                <!-- Lightbox Modal -->
+                <div id="lightbox" class="lightbox">
+                  <button class="lightbox-close" aria-label="Cerrar">&times;</button>
+                  <img src="" alt="" id="lightbox-img" />
+                </div>
+
               </div>
             </Prose>
           </div>
-          <Image src={pfp} alt="Jardin digital Grecia V." width={300}  class="rounded-3xl rotate-3 mx-4 md:mx-0"/>
-        </div>     
-        <article>
-          <Prose>
+          
+          <!-- Contenedor para imagen + blinkies -->
+          <div class="flex flex-col items-center md:items-start">
+            <!-- Contenedor para imagen + blinkies (columna en todos los tamaños) -->
+          <div>
+            <Image src={pfp} alt="Jardin digital Grecia V." width={300} class="rounded-3xl rotate-3 mx-auto md:mx-0 mb-3"/>
+            
+            <!-- Blinkies debajo de la imagen -->
+            <div class="flex flex-wrap gap-2 justify-center md:justify-start" style="max-width: 300px; margin: 0 auto;">
+              
+            </div>
+          </div>
             <h2 class="text-2xl font-bold mb-4">Sobre mi</h2>
             <div class="text-sm">
               <p>Soy Grecia, una persona curiosa y apasionada por aprender cosas nuevas. Me encanta explorar diferentes temas y compartir mis descubrimientos con los demás. Creo que el conocimiento es una herramienta poderosa que puede transformar vidas y abrir puertas a nuevas oportunidades.</p>
               <p>En este espacio, encontrarás una variedad de temas que me interesan, desde tecnología y ciencia hasta arte y cultura. Mi objetivo es crear un lugar donde pueda compartir mis pensamientos, ideas y experiencias, y espero que también puedas encontrar algo que te inspire o te ayude en tu propio viaje de aprendizaje.</p>
               <p>Gracias por visitar mi jardín digital. Espero que disfrutes explorando tanto como yo disfruto creando este espacio.</p>
+
+              <img src="/autum.gif" alt="autum" title="el otoño es lo maximo y yo ni tengo otoño en mi país" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+<img src="/aliens.gif" alt="aliens" title="change my mind" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+<img src="/stars.gif" alt="stars" title="if you love stars as I do i will marry you (no I won't)" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+<img src="/chrome.gif" alt="chrome sucks" title="chrome es el peor error de la humanidad" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+<img src="/perfectsoldier2.gif" alt="sailor moon" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+<img src="/tiredalien2.gif" alt="tired alien" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+<img src="/mspaint.gif" alt="tired alien" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+<img src="/ia.gif" alt="tired alien" title="ia best vocaloid" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+<img src="/aqua.gif" alt="tired alien" title="best color" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+<img src="/romgoth.gif" alt="tired alien" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+<img src="/piano.gif" alt="tired alien" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
+<img src="/pusheen.gif" alt="tired alien" style="display: inline-block; margin: 0; padding: 0; border: 0; border-radius: 0;" />
             </div>
-          </Prose>
-        </article>
+          </div>
+        </div>
       </article>
     </main>
   </div>
 </BaseLayout>
+
+<style>
+  /* Galería estilo Instagram - 2 filas x 5 columnas SIN espacio entre filas */
+  .instagram-gallery {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 0;
+    column-gap: 0.5px;
+    margin-top: 16px;
+    max-width: 550px;
+  }
+
+  .gallery-item {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 0;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    display: block;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+
+  .gallery-item:hover {
+    transform: scale(1.02);
+    opacity: 0.9;
+    z-index: 1;
+  }
+
+  /* Asegurar que los tooltips funcionen */
+  .gallery-item[title]:hover::after {
+    content: attr(title);
+  }
+
+  .lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .lightbox.active {
+    display: flex;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 40px;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10000;
+    transition: opacity 0.2s ease;
+    line-height: 1;
+    width: 40px;
+    height: 40px;
+  }
+
+  .lightbox-close:hover {
+    opacity: 0.7;
+  }
+
+  #lightbox-img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  /* Responsive para móviles */
+  @media (max-width: 768px) {
+    .instagram-gallery {
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 2px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .instagram-gallery {
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 2px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+    const closeBtn = document.querySelector('.lightbox-close');
+
+    if (!galleryItems || !lightbox || !lightboxImg || !closeBtn) return;
+
+    galleryItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const img = this as HTMLImageElement;
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeLightbox);
+    
+    lightbox.addEventListener('click', function(e) {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+        closeLightbox();
+      }
+    });
+  });
+</script>

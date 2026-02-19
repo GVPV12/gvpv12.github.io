@@ -1,0 +1,358 @@
+---
+// src/layouts/BlogPostprotectall.astro
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  frontmatter?: {
+    title?: string;
+    description?: string;
+    date?: string;
+    [key: string]: any;
+  };
+  title?: string;
+  description?: string;
+}
+
+const { frontmatter, title, description } = Astro.props;
+const pageTitle = frontmatter?.title || title || 'Post';
+const pageDescription = frontmatter?.description || description;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <article class="blog-post">
+    <header>
+      <h1>{pageTitle}</h1>
+      {frontmatter?.date && (
+        <time datetime={frontmatter.date}>
+          {new Date(frontmatter.date).toLocaleDateString('es-ES', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </time>
+      )}
+    </header>
+    
+    <div class="blog-content">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<script>
+  // 🔒 PROTECCIÓN COMPLETA DE IMÁGENES
+  document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('.blog-content img');
+    
+    images.forEach((img) => {
+      // === CREAR ESTRUCTURA DE PROTECCIÓN ===
+      const wrapper = document.createElement('div');
+      wrapper.className = 'protected-image-container';
+      
+      const layer = document.createElement('div');
+      layer.className = 'protection-layer';
+      
+      const watermark = document.createElement('div');
+      watermark.className = 'watermark';
+      watermark.textContent = '@tunombre'; // 👈 CAMBIA ESTO
+      watermark.setAttribute('aria-hidden', 'true');
+      
+      // === APLICAR PROTECCIONES ===
+      // ❌ Arrastrar imagen - BLOQUEADO
+      img.draggable = false;
+      
+      // ❌ Click derecho en imagen - BLOQUEADO
+      img.oncontextmenu = () => false;
+      
+      // ❌ Seleccionar imagen - BLOQUEADO
+      img.style.userSelect = 'none';
+      img.style.webkitUserSelect = 'none';
+      img.style.mozUserSelect = 'none';
+      
+      // Marcar como protegida
+      img.setAttribute('data-protected-image', '');
+      
+      // === ENVOLVER LA IMAGEN ===
+      const parent = img.parentNode;
+      parent.insertBefore(wrapper, img);
+      wrapper.appendChild(img);
+      wrapper.appendChild(watermark);
+      wrapper.appendChild(layer);
+    });
+
+    // === EVENTOS DE PROTECCIÓN PARA IMÁGENES ===
+    const protectedImages = document.querySelectorAll('[data-protected-image]');
+    
+    protectedImages.forEach(img => {
+      // ❌ Prevenir drag and drop
+      img.addEventListener('dragstart', (e) => {
+        e.preventDefault();
+        return false;
+      });
+      
+      // ❌ Click derecho - BLOQUEADO
+      img.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        return false;
+      });
+      
+      // ❌ Long-press en móvil - BLOQUEADO
+      let pressTimer: number;
+      
+      img.addEventListener('touchstart', (e) => {
+        pressTimer = window.setTimeout(() => {
+          e.preventDefault();
+        }, 500);
+      });
+      
+      img.addEventListener('touchend', () => {
+        clearTimeout(pressTimer);
+      });
+      
+      img.addEventListener('touchmove', () => {
+        clearTimeout(pressTimer);
+      });
+    });
+
+    // === BLOQUEAR COPIAR TEXTO COMPLETO ===
+    const blogContent = document.querySelector('.blog-content');
+    
+    if (blogContent) {
+      // ❌ Prevenir copiar (Ctrl+C, Cmd+C)
+      blogContent.addEventListener('copy', (e) => {
+        e.preventDefault();
+        e.clipboardData?.setData('text/plain', '');
+        
+        // Mensaje opcional (puedes quitarlo si no quieres alertas)
+        console.log('⚠️ Contenido protegido');
+        return false;
+      });
+
+      // ❌ Prevenir cortar (Ctrl+X, Cmd+X)
+      blogContent.addEventListener('cut', (e) => {
+        e.preventDefault();
+        return false;
+      });
+
+      // ❌ Prevenir seleccionar todo (Ctrl+A)
+      blogContent.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'a') {
+          e.preventDefault();
+          return false;
+        }
+      });
+    }
+  });
+
+  // 🔒 BLOQUEAR DEVTOOLS Y ATAJOS GLOBALES
+  if (import.meta.env.PROD) {
+    document.addEventListener('keydown', (e) => {
+      // ❌ F12 (DevTools)
+      if (e.key === 'F12') {
+        e.preventDefault();
+        return false;
+      }
+      
+      // ❌ Ctrl+Shift+I (DevTools)
+      if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+        e.preventDefault();
+        return false;
+      }
+      
+      // ❌ Ctrl+Shift+C (Selector)
+      if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+        e.preventDefault();
+        return false;
+      }
+      
+      // ❌ Ctrl+Shift+J (Consola)
+      if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+        e.preventDefault();
+        return false;
+      }
+      
+      // ❌ Ctrl+U (Ver código fuente)
+      if (e.ctrlKey && e.key === 'u') {
+        e.preventDefault();
+        return false;
+      }
+
+      // ❌ Ctrl+S (Guardar página)
+      if (e.ctrlKey && e.key === 's') {
+        e.preventDefault();
+        return false;
+      }
+
+      // ❌ Ctrl+P (Imprimir)
+      if (e.ctrlKey && e.key === 'p') {
+        e.preventDefault();
+        return false;
+      }
+      
+      // ❌ Cmd+Option+I (Mac DevTools)
+      if (e.metaKey && e.altKey && e.key === 'i') {
+        e.preventDefault();
+        return false;
+      }
+
+      // ❌ Cmd+Option+C (Mac Selector)
+      if (e.metaKey && e.altKey && e.key === 'c') {
+        e.preventDefault();
+        return false;
+      }
+
+      // ❌ Cmd+Option+J (Mac Consola)
+      if (e.metaKey && e.altKey && e.key === 'j') {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    // ❌ Click derecho GLOBAL en todo el post
+    document.addEventListener('contextmenu', (e) => {
+      if (e.target && (e.target as Element).closest('.blog-post')) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    // ❌ Detectar apertura de DevTools (opcional, puede ser agresivo)
+    const detectDevTools = () => {
+      const threshold = 160;
+      const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+      const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+      
+      if (widthThreshold || heightThreshold) {
+        console.clear();
+        // Opcional: redirigir o mostrar mensaje
+        // document.body.innerHTML = '<h1 style="text-align:center;margin-top:20%;">⚠️ Protección activada</h1>';
+      }
+    };
+
+    // Verificar cada 2 segundos (descomenta si quieres esta protección extra)
+    // setInterval(detectDevTools, 2000);
+  }
+</script>
+
+<style is:global>
+  /* === CONTENEDOR PROTEGIDO === */
+  .protected-image-container {
+    position: relative;
+    display: inline-block;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+  }
+
+  /* === IMAGEN PROTEGIDA === */
+  .protected-image-container img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    
+    /* ❌ Seleccionar - BLOQUEADO */
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    
+    /* ❌ Long-press iOS - BLOQUEADO */
+    -webkit-touch-callout: none !important;
+    
+    /* Deshabilitar interacción directa */
+    pointer-events: none;
+  }
+
+  /* === MARCA DE AGUA === */
+  .watermark {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    pointer-events: none;
+    user-select: none;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  /* === CAPA DE PROTECCIÓN === */
+  .protection-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    cursor: default;
+  }
+
+  /* === BLOQUEAR TODO EL CONTENIDO DEL BLOG === */
+  .blog-post,
+  .blog-content,
+  .blog-content * {
+    /* ❌ Copiar texto - BLOQUEADO */
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    -webkit-touch-callout: none !important;
+  }
+
+  /* === ESTILOS ADICIONALES DEL BLOG === */
+  .blog-post header {
+    margin-bottom: 2rem;
+  }
+
+  .blog-post h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .blog-post time {
+    color: #666;
+    font-size: 0.875rem;
+  }
+
+  .blog-content {
+    line-height: 1.7;
+    font-size: 1.125rem;
+  }
+
+  .blog-content img {
+    margin: 2rem auto;
+    border-radius: 8px;
+  }
+
+  /* === PREVENIR IMPRESIÓN CON MARCA DE AGUA === */
+  @media print {
+    .watermark {
+      display: block !important;
+    }
+    
+    /* Opcional: bloquear impresión completamente */
+    body {
+      display: none !important;
+    }
+  }
+
+  /* === CURSOR ESPECIAL PARA INDICAR NO-SELECCIÓN === */
+  .blog-content {
+    cursor: default;
+  }
+
+  .blog-content::selection {
+    background: transparent;
+    color: inherit;
+  }
+
+  .blog-content *::selection {
+    background: transparent;
+    color: inherit;
+  }
+</style>

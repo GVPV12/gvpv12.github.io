@@ -1,0 +1,213 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+
+const allImages = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/img/musica/*.{jpg,jpeg,png,webp,avif,PNG,JPG,JPEG,WEBP,AVIF}',
+  { eager: true }
+);
+
+const albumData: Record<string, { artist: string; album: string }> = {
+  'aimer (1)':                  { artist: 'Aimer',                   album: 'Best selection Blanc'                   },
+    'bitter&sweet':                  { artist: 'Aimer',                   album: 'Bitter & Sweet'                   },
+  'aimer (2)':                  { artist: 'Aimer',                   album: 'Walpurgis'                     },
+  'aimer (3)':                  { artist: 'Aimer',                   album: 'Best Selection Noir'                           },
+  'aimer (4)':                  { artist: 'Aimer',                   album: 'Dawn'                                 },
+  'aimer (5)':                  { artist: 'Aimer',                   album: 'Daydream'                             },
+  'nagi (2)':                   { artist: 'Nagi Yanagi',             album: 'Nagi no Asakura Ending themes'                          },
+  'nagi (3)':                   { artist: 'Nagi Yanagi',             album: 'Euaru'                          },
+  'radwimps (1)':               { artist: 'RADWIMPS',                album: 'RADWIMPS'                             },
+  'radwimps (2)':               { artist: 'RADWIMPS',                album: 'RADWIMPS'                             },
+  'radwimps (3)':               { artist: 'RADWIMPS',                album: 'RADWIMPS'                             },
+  'imagine':                    { artist: 'Imagine Dragons',         album: 'Imagine Dragons'                      },
+  'omam':                       { artist: 'Of Monsters and Men',     album: 'OMAM'                                 },
+  'celticwoman (1)':            { artist: 'Celtic Woman',            album: 'Celtic Woman'                         },
+  'celticwoman (2)':            { artist: 'Celtic Woman',            album: 'Celtic Woman'                         },
+  'kokia (1)':                  { artist: 'KOKIA',                   album: 'KOKIA'                                },
+  'kokia (2)':                  { artist: 'KOKIA',                   album: 'KOKIA'                                },
+  'kokia (3)':                  { artist: 'KOKIA',                   album: 'KOKIA'                                },
+  'kokia (4)':                  { artist: 'KOKIA',                   album: 'KOKIA'                                },
+  'kokia (5)':                  { artist: 'KOKIA',                   album: 'KOKIA'                                },
+  'kokia (6)':                  { artist: 'KOKIA',                   album: 'KOKIA'                                },
+  'akiko (1)':                  { artist: 'Akiko Shikata',           album: 'Akiko Shikata'                        },
+  'akiko (2)':                  { artist: 'Akiko Shikata',           album: 'Akiko Shikata'                        },
+  'akiko (3)':                  { artist: 'Akiko Shikata',           album: 'Akiko Shikata'                        },
+  'akiko (4)':                  { artist: 'Akiko Shikata',           album: 'Akiko Shikata'                        },
+  'Sekai_no_Owari__Eye':        { artist: 'SEKAI NO OWARI',          album: 'Eye'                                  },
+  'Sekai_no_Owari__Tree':       { artist: 'SEKAI NO OWARI',          album: 'Tree'                                 },
+  'EARTH Cover':                { artist: 'SEKAI NO OWARI',          album: 'EARTH'                                },
+  'spyair (1)':                 { artist: 'SPYAIR',                  album: 'SPYAIR'                               },
+  'spyair (2)':                 { artist: 'SPYAIR',                  album: 'SPYAIR'                               },
+  'spyair (3)':                 { artist: 'SPYAIR',                  album: 'SPYAIR'                               },
+  'gaelica (1)':                { artist: 'Gaelica',                 album: 'Gaelica'                              },
+  'gaelica (2)':                { artist: 'Gaelica',                 album: 'Gaelica'                              },
+  'ambitions':                  { artist: 'ONE OK ROCK',             album: 'Ambitions'                            },
+  'hopeworld':                  { artist: 'j-hope (BTS)',            album: 'Hope World'                           },
+  'd2':                         { artist: 'Agust D (Suga/BTS)',      album: 'D-2'                                  },
+  'themostbeautiful':           { artist: 'BTS',                     album: 'The Most Beautiful Moment in Life'    },
+  'wings':                      { artist: 'BTS',                     album: 'Wings'                                },
+  'tear':                       { artist: 'BTS',                     album: 'Love Yourself: Tear'                  },
+  'allmydemons':                { artist: 'Aurora',                  album: 'All My Demons Greeting Me as a Friend'},
+  'infections-aurora':          { artist: 'Aurora',                  album: 'Infections of a Different Kind'       },
+  'adifferentkindofhuman':      { artist: 'Aurora',                  album: 'A Different Kind of Human'            },
+  'aurora-thegodswecantouch':   { artist: 'Aurora',                  album: 'The Gods We Can Touch'                },
+  'whathappenedtotheheart':     { artist: 'Various',                 album: 'What Happened to the Heart'           },
+  'celinedion':                 { artist: 'Celine Dion',             album: 'Celine Dion'                          },
+  'annewithane':                { artist: 'Various Artists',         album: 'Anne with an E OST'                   },
+  'eyeofthestorm':              { artist: 'Ryan Stevenson',          album: 'Eye of the Storm'                     },
+  'eldiaenquetodocambio':       { artist: 'El Diario que no quemo',  album: 'El Día en que Todo Cambió'            },
+  'oriost':                     { artist: 'Gareth Coker',            album: 'Ori and the Blind Forest OST'         },
+  'arriettyost':                { artist: 'Cecile Corbel',           album: 'Arrietty OST'                         },
+  'songbook1':                  { artist: 'Cecile Corbel',           album: 'Songbook Vol. 1'                      },
+  'cecilecorbelsoundbookvol2':  { artist: 'Cecile Corbel',           album: 'Songbook Vol. 2'                      },
+  'nausicaost':                 { artist: 'Joe Hisaishi',            album: 'Nausicaä OST'                         },
+  'mushishiost':                { artist: 'Toshio Masuda',           album: 'Mushishi OST'                         },
+  'haibaneost':                 { artist: 'Yoshitaka Amano',         album: 'Haibane Renmei OST'                   },
+  'sousouost':                  { artist: 'Evan Call',               album: 'Sousou no Frieren OST'                },
+  'natsumeost':                 { artist: 'Makoto Yoshimori',        album: 'Natsume Yuujinchou OST'               },
+  'clannadost':                 { artist: 'Jun Maeda',               album: 'Clannad OST'                          },
+  'hotarubiost':                { artist: 'OST',                     album: 'Hotarubi no Mori e OST'               },
+  'angelbeatsost':              { artist: 'Jun Maeda',               album: 'Angel Beats! OST'                     },
+  'guiltycrwnnost':             { artist: 'Hiroyuki Sawano',         album: 'Guilty Crown OST'                     },
+  'charlotteost':               { artist: 'Jun Maeda',               album: 'Charlotte OST'                        },
+  'susurrososr':                { artist: 'Joe Hisaishi',            album: 'Susurros del Corazón OST'             },
+  'totoroost':                  { artist: 'Joe Hisaishi',            album: 'Mi Vecino Totoro OST'                 },
+  'castilloambulanteeost':      { artist: 'Joe Hisaishi',            album: 'El Castillo Ambulante OST'            },
+  'chihiroost':                 { artist: 'Joe Hisaishi',            album: 'El Viaje de Chihiro OST'              },
+  'kazeost':                    { artist: 'Joe Hisaishi',            album: 'Kaze Tachinu OST'                     },
+  'hyoukaost':                  { artist: 'Satoru Kousaki',          album: 'Hyouka OST'                           },
+  'tegamiost':                  { artist: 'OST',                     album: 'Tegami Bachi OST'                     },
+  'anohanaost':                 { artist: 'OST',                     album: 'Anohana OST'                          },
+  'extraterrestrialost':        { artist: 'Aurora',                  album: 'Extraterrestrial'                     },
+  'rdgost':                     { artist: 'OST',                     album: 'RD OST'                               },
+  'worlddomination':            { artist: 'Various',                 album: 'World Domination'                     },
+  'justbringit':                { artist: 'WWE',                     album: 'Just Bring It'                        },
+  'marnieost':                  { artist: 'Cecile Corbel',           album: 'When Marnie Was There OST'            },
+};
+
+const albums = Object.entries(allImages).map(([path, mod]) => {
+  const filename = path.split('/').pop() ?? '';
+  const dotIndex = filename.lastIndexOf('.');
+  const nameBase = dotIndex !== -1 ? filename.slice(0, dotIndex) : filename;
+  const data = albumData[nameBase];
+  return {
+    key: path,
+    cover: mod.default,
+    artist: data?.artist ?? nameBase,
+    album:  data?.album  ?? nameBase,
+  };
+});
+---
+
+<BaseLayout
+  title="Todos mis álbumes favoritos"
+  description="Mi colección completa de álbumes favoritos"
+>
+  <div class="container">
+    <main>
+      <a href="/biblioteca/musica" class="back-link">← Volver a Música</a>
+      <h1 class="text-3xl font-bold mb-2">Todos mis álbumes favoritos</h1>
+      <p class="text-zinc-700 dark:text-zinc-300 text-sm mb-10">
+        Amo la música, así que tengo muchos. ({albums.length} albumes y todavia me faltan por agregar). Algunos no les he colocado el nombre del album, los iré editando poco a poco.
+      </p>
+
+      <div class="albums-grid">
+        {albums.map((item) =>
+          <div class="album-cover" title={`${item.artist} - ${item.album}`}>
+            <Image src={item.cover} alt={`${item.artist} - ${item.album}`} width={200} height={200} loading="lazy" />
+            <div class="album-overlay">
+              <p class="album-name">{item.album}</p>
+              <p class="artist-name">{item.artist}</p>
+            </div>
+          </div>
+        )}
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: 0.875rem;
+    color: #67e8f9;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+
+  .back-link:hover { opacity: 1; }
+
+  .albums-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 1rem;
+  }
+
+  .album-cover {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    border-radius: 0.375rem;
+    background-color: #f0f0f0;
+    cursor: default;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: block;
+  }
+
+  :global(.dark) .album-cover { background-color: #2a2a2a; }
+
+  .album-cover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .album-cover :global(img) {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .album-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 60%, transparent 100%);
+    padding: 0.75rem 0.5rem 0.5rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .album-cover:hover .album-overlay { opacity: 1; }
+
+  .album-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .artist-name {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.8);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 1400px) { .albums-grid { grid-template-columns: repeat(6, 1fr); } }
+  @media (max-width: 1024px) { .albums-grid { grid-template-columns: repeat(5, 1fr); } }
+  @media (max-width: 768px)  { .albums-grid { grid-template-columns: repeat(4, 1fr); gap: 0.75rem; } }
+  @media (max-width: 480px)  { .albums-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; } }
+</style>
