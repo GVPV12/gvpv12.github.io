@@ -43,7 +43,7 @@ const albumData: Record<string, { artist: string; album: string }> = {
   'gaelica (2)':                { artist: 'Gaelica',                 album: 'Gaelica'                              },
   'ambitions':                  { artist: 'ONE OK ROCK',             album: 'Ambitions'                            },
   'hopeworld':                  { artist: 'j-hope (BTS)',            album: 'Hope World'                           },
-  'd2':                         { artist: 'Agust D (Suga/BTS)',      album: 'D-2'                                  },
+  'd2':                         { artist: 'Agust D (Suga)',      album: 'D-2'                                  },
   'themostbeautiful':           { artist: 'BTS',                     album: 'The Most Beautiful Moment in Life'    },
   'wings':                      { artist: 'BTS',                     album: 'Wings'                                },
   'tear':                       { artist: 'BTS',                     album: 'Love Yourself: Tear'                  },
@@ -52,10 +52,10 @@ const albumData: Record<string, { artist: string; album: string }> = {
   'adifferentkindofhuman':      { artist: 'Aurora',                  album: 'A Different Kind of Human'            },
   'aurora-thegodswecantouch':   { artist: 'Aurora',                  album: 'The Gods We Can Touch'                },
   'whathappenedtotheheart':     { artist: 'Various',                 album: 'What Happened to the Heart'           },
-  'celinedion':                 { artist: 'Celine Dion',             album: 'Celine Dion'                          },
+  'celinedion':                 { artist: 'All the way',             album: 'Celine Dion'                          },
   'annewithane':                { artist: 'Various Artists',         album: 'Anne with an E OST'                   },
   'eyeofthestorm':              { artist: 'Ryan Stevenson',          album: 'Eye of the Storm'                     },
-  'eldiaenquetodocambio':       { artist: 'El Diario que no quemo',  album: 'El Día en que Todo Cambió'            },
+  'eldiaenquetodocambio':       { artist: 'Gaelica',  album: 'El Día en que Todo Cambió'            },
   'oriost':                     { artist: 'Gareth Coker',            album: 'Ori and the Blind Forest OST'         },
   'arriettyost':                { artist: 'Cecile Corbel',           album: 'Arrietty OST'                         },
   'songbook1':                  { artist: 'Cecile Corbel',           album: 'Songbook Vol. 1'                      },
@@ -76,13 +76,13 @@ const albumData: Record<string, { artist: string; album: string }> = {
   'chihiroost':                 { artist: 'Joe Hisaishi',            album: 'El Viaje de Chihiro OST'              },
   'kazeost':                    { artist: 'Joe Hisaishi',            album: 'Kaze Tachinu OST'                     },
   'hyoukaost':                  { artist: 'Satoru Kousaki',          album: 'Hyouka OST'                           },
-  'tegamiost':                  { artist: 'OST',                     album: 'Tegami Bachi OST'                     },
-  'anohanaost':                 { artist: 'OST',                     album: 'Anohana OST'                          },
-  'extraterrestrialost':        { artist: 'Aurora',                  album: 'Extraterrestrial'                     },
-  'rdgost':                     { artist: 'OST',                     album: 'RD OST'                               },
-  'worlddomination':            { artist: 'Various',                 album: 'World Domination'                     },
-  'justbringit':                { artist: 'WWE',                     album: 'Just Bring It'                        },
-  'marnieost':                  { artist: 'Cecile Corbel',           album: 'When Marnie Was There OST'            },
+  'tegamiost':                  { artist: 'Varios artistas',                     album: 'Tegami Bachi Ops & Ends'                     },
+  'anohanaost':                 { artist: 'Anime OST',                     album: 'Anohana OST'                          },
+  'extraterrestrialost':        { artist: 'EGOIST',                  album: 'Extraterrestrial biological entities'                     },
+
+  'worlddomination':            { artist: 'Band Maid',                 album: 'World Domination'                     },
+  'justbringit':                { artist: 'Band Maid',                     album: 'Just Bring It'                        },
+  'marnieost':                  { artist: 'Priscila Ahn',           album: 'When Marnie Was There Ending Theme'            },
 };
 
 const albums = Object.entries(allImages).map(([path, mod]) => {
@@ -108,7 +108,7 @@ const albums = Object.entries(allImages).map(([path, mod]) => {
       <a href="/biblioteca/musica" class="back-link">← Volver a Música</a>
       <h1 class="text-3xl font-bold mb-2">Todos mis álbumes favoritos</h1>
       <p class="text-zinc-700 dark:text-zinc-300 text-sm mb-10">
-        Amo la música, así que tengo muchos. ({albums.length} albumes y todavia me faltan por agregar). Algunos no les he colocado el nombre del album, los iré editando poco a poco.
+        Amo la música, así que tengo muchos. ({albums.length} albumes y todavia me faltan por agregar). Algunos no les he colocado el nombre del album, los iré editando.
       </p>
 
       <div class="albums-grid">

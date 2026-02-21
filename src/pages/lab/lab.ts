@@ -13,10 +13,10 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    name: 'LinkedIn',
-    description: 'Si no prefieres correo, puedes mandarme un DM (trabajos).',
+    name: 'Web retro en Nekoweb',
+    description: 'Web inpirada en los 2000s.',
     demoLink: 'https://www.linkedin.com/in/grecia-valentina-valero/',
-    tags: ['Networking', 'Freelance', 'Proyectos'],
+    tags: ['Web dev', 'HTML', 'CSS', 'JS'],
     image: '/src/content/blog/githubglasses.jpg'
   },
   {
