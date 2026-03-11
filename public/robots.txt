@@ -1,5 +1,5 @@
 # ============================================
-# BOTS DE IA - BLOQUEO TOTAL (texto + imágenes)
+# BOTS DE IA - BLOQUEO TOTAL
 # ============================================
 
 User-agent: GPTBot
@@ -84,7 +84,7 @@ User-agent: AI2Bot-Dolma
 Disallow: /
 
 # ============================================
-# BOTS BUENOS (Google, Bing) - Permitir
+# BOTS BUENOS - PERMITIR
 # ============================================
 
 User-agent: Googlebot
@@ -104,3 +104,12 @@ Allow: /
 
 User-agent: YandexBot
 Allow: /
+
+# ============================================
+# RESTO - CONFIGURACIÓN GENERAL
+# ============================================
+
+User-agent: *
+Allow: /
+Disallow: /404.html
+Sitemap: https://gvpv12.github.io/sitemap.xml

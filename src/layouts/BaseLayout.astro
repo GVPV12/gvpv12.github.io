@@ -13,6 +13,39 @@ const { title, description, image } = Astro.props;
 <!doctype html>
 <html lang='en'>
 	<head>
+
+<!-- ========== SEO BÁSICO ========== -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<meta name="author" content="gvpv12">
+<meta name="theme-color" content="#000000">
+
+<!-- Cambia la description por una descripción real de tu página (150-160 caracteres max) -->
+<meta name="description" content={description}>
+
+<!-- Evita contenido duplicado -->
+<link rel="canonical" href="https://gvpv12.github.io/">
+
+<!-- ========== OPEN GRAPH (WhatsApp, Facebook, LinkedIn) ========== -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gvpv12.github.io/">
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:image" content="https://gvpv12.github.io/jardin.jpg">
+<meta property="og:image:width" content="540">
+<meta property="og:image:height" content="675">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:title" content={title}>
+
+<!-- ========== TWITTER CARD (X / Twitter) ========== -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://gvpv12.github.io/">
+<meta name="twitter:title" content={title}>
+<meta name="twitter:description" content={description}>
+<meta name="twitter:image" content="https://gvpv12.github.io/jardin.jpg">
+
+
     
       <!-- Bloquear IA en general -->
   <meta name="robots" content="noai, noimageai" />
