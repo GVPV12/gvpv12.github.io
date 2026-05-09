@@ -12,35 +12,40 @@ function getImage(file: string): ImageMetadata | null {
   return key ? images[key].default : null;
 }
 
-const juegos = [
-{ title: 'Gris',                          file: 'gris',            url: 'https://store.steampowered.com/app/683320/GRIS/' },
-{ title: 'Spyro Reignited Trilogy',       file: 'spyro',           url: 'https://store.steampowered.com/app/996580/Spyro_Reignited_Trilogy/' },
-{ title: 'Stardew Valley',                file: 'stardew',         url: 'https://store.steampowered.com/app/413150/Stardew_Valley/' },
-{ title: 'Crash Bandicoot N. Sane Trilogy', file: 'crash',         url: 'https://store.steampowered.com/app/731490/Crash_Bandicoot_N_Sane_Trilogy/' },
-{ title: 'Sky children of light',              file: 'sky',            url: 'https://store.steampowered.com/app/2325290/Sky_Nios_de_la_Luz/' },
-{ title: 'River City Girls',            file: 'rcg1',            url: 'https://store.steampowered.com/app/1049320/River_City_Girls/' },
-{ title: 'River City Girls 2',            file: 'rcg2',            url: 'https://store.steampowered.com/app/1920480/River_City_Girls_2/' },
-{ title: 'Neva',                          file: 'neva',            url: 'https://store.steampowered.com/app/2420660/Neva/' },
-{ title: 'La Leyenda de Korra',           file: 'leyendadekorra' },
-{ title: 'Child of Light',                file: 'childoflight',    url: 'https://store.steampowered.com/app/256290/Child_of_Light/' },
-{ title: 'A Space for the Unbound',       file: 'spaceforthe',     url: 'https://store.steampowered.com/app/1201270/A_Space_for_the_Unbound/' },
-{ title: 'Ori and the Blind Forest',      file: 'ori',             url: 'https://store.steampowered.com/app/261570/Ori_and_the_Blind_Forest/' },
-{ title: 'Our Life: Beginnings & Always', file: 'ourlife',         url: 'https://store.steampowered.com/app/1129190/Our_Life_Beginnings__Always/' },
-{ title: 'Paladins',                      file: 'paladins',        url: 'https://store.steampowered.com/app/444090/Paladins/' },
-{ title: 'The Last Campfire',             file: 'thelastcampfire', url: 'https://store.steampowered.com/app/990630/The_Last_Campfire/' },
-{ title: 'Missed Messages',               file: 'missedmessages',  url: 'https://store.steampowered.com/app/812810/missed_messages/' },
-{ title: "There's This Girl",             file: 'theresthisgirl',  url: 'https://play.google.com/store/apps/details?id=com.AngelaHe.TheresThisGirl&pcampaignid=web_share/' },
-
+const played = [
+{ title: 'Gris', file: 'gris', url: 'https://store.steampowered.com/app/683320/GRIS/' },
+{ title: 'Spyro Reignited Trilogy', file: 'spyro', url: 'https://store.steampowered.com/app/996580/Spyro_Reignited_Trilogy/' },
+{ title: 'Stardew Valley', file: 'stardew', url: 'https://store.steampowered.com/app/413150/Stardew_Valley/' },
+{ title: 'Crash Bandicoot N. Sane Trilogy', file: 'crash', url: 'https://store.steampowered.com/app/731490/Crash_Bandicoot_N_Sane_Trilogy/' },
+{ title: 'Sky children of light', file: 'sky', url: 'https://store.steampowered.com/app/2325290/Sky_Nios_de_la_Luz/' },
+{ title: 'River City Girls', file: 'rcg1', url: 'https://store.steampowered.com/app/1049320/River_City_Girls/' },
+{ title: 'River City Girls 2', file: 'rcg2', url: 'https://store.steampowered.com/app/1920480/River_City_Girls_2/' },
+{ title: 'Neva', file: 'neva', url: 'https://store.steampowered.com/app/2420660/Neva/' },
+{ title: 'La Leyenda de Korra', file: 'leyendadekorra' },
+{ title: 'Child of Light', file: 'childoflight', url: 'https://store.steampowered.com/app/256290/Child_of_Light/' },
+{ title: 'A Space for the Unbound', file: 'spaceforthe', url: 'https://store.steampowered.com/app/1201270/A_Space_for_the_Unbound/' },
+{ title: 'Ori and the Blind Forest', file: 'ori', url: 'https://store.steampowered.com/app/261570/Ori_and_the_Blind_Forest/' },
+{ title: 'Our Life: Beginnings & Always', file: 'ourlife', url: 'https://store.steampowered.com/app/1129190/Our_Life_Beginnings__Always/' },
+{ title: 'Paladins', file: 'paladins', url: 'https://store.steampowered.com/app/444090/Paladins/' },
+{ title: 'The Last Campfire', file: 'thelastcampfire', url: 'https://store.steampowered.com/app/990630/The_Last_Campfire/' },
+{ title: 'Missed Messages', file: 'missedmessages', url: 'https://store.steampowered.com/app/812810/missed_messages/' },
+{ title: "There's This Girl", file: 'theresthisgirl', url: 'https://play.google.com/store/apps/details?id=com.AngelaHe.TheresThisGirl&pcampaignid=web_share/' },
 ];
-
-const juegosConImagen = juegos.map((j) => ({ ...j, cover: getImage(j.file) }));
 
 const wishlist = [
-  { title: 'Spyro Reignited Trilogy', file: 'spyro', url: 'https://store.steampowered.com/app/996580/Spyro_Reignited_Trilogy/' },
-  { title: 'Crash Bandicoot N. Sane Trilogy', file: 'crash', url: 'https://store.steampowered.com/app/731490/Crash_Bandicoot_N_Sane_Trilogy/' },
+{ title: 'Spyro Reignited Trilogy', file: 'spyro', url: 'https://store.steampowered.com/app/996580/Spyro_Reignited_Trilogy/' },
+{ title: 'Crash Bandicoot N. Sane Trilogy', file: 'crash', url: 'https://store.steampowered.com/app/731490/Crash_Bandicoot_N_Sane_Trilogy/' },
 ];
 
-const wishlistConImagen = wishlist.map((j) => ({ ...j, cover: getImage(j.file) }));
+function withImages(list: typeof played) {
+  return list.map((j) => ({
+    ...j,
+    cover: getImage(j.file)
+  }));
+}
+
+const playedGames = withImages(played);
+const wishlistGames = withImages(wishlist);
 ---
 
 <BaseLayout
@@ -50,35 +55,67 @@ const wishlistConImagen = wishlist.map((j) => ({ ...j, cover: getImage(j.file) }
   <div class="container">
     <main>
       <h1 class="text-3xl font-bold mb-2">Videojuegos</h1>
-      <p class="text-zinc-700 dark:text-zinc-300 text-sm mb-10">
-        Una colección de mis videojuegos favoritos que recomiendo totalmente.
+
+      <p class="text-zinc-700 dark:text-zinc-300 text-sm mb-12">
+        Una colección de mis videojuegos favoritos y algunos que quiero jugar.
       </p>
 
-      <section class="games-section">
-        <h2 class="section-title">Played</h2>
+      <!-- Played -->
+      <section class="category">
+        <div class="category-header">
+          <h2>Played</h2>
+          <span>{playedGames.length}</span>
+        </div>
+
         <div class="games-grid">
-          {juegosConImagen.map((juego) =>
+          {playedGames.map((juego) =>
             juego.cover
-              ? <a href={juego.url} target="_blank" rel="noopener noreferrer" class="game-cover" title={juego.title}>
-                  <Image src={juego.cover} alt={juego.title} width={200} height={280} loading="lazy" />
+              ? <a
+                  href={juego.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="game-cover"
+                  title={juego.title}
+                >
+                  <Image
+                    src={juego.cover}
+                    alt={juego.title}
+                    width={200}
+                    height={280}
+                    loading="lazy"
+                  />
                 </a>
               : null
           )}
         </div>
       </section>
 
-      <section class="games-section">
-        <h2 class="section-title">Wishlist</h2>
-        <div class="wishlist-grid">
-          {wishlistConImagen.map((juego) =>
+      <!-- Wishlist -->
+      <section class="category">
+        <div class="category-header">
+          <h2>Wishlist</h2>
+          <span>{wishlistGames.length}</span>
+        </div>
+
+        <div class="games-grid">
+          {wishlistGames.map((juego) =>
             juego.cover
-              ? <a href={juego.url} target="_blank" rel="noopener noreferrer" class="wishlist-item" title={juego.title}>
-                  <Image src={juego.cover} alt={juego.title} width={200} height={280} loading="lazy" />
-                  <span>{juego.title}</span>
+              ? <a
+                  href={juego.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="game-cover"
+                  title={juego.title}
+                >
+                  <Image
+                    src={juego.cover}
+                    alt={juego.title}
+                    width={200}
+                    height={280}
+                    loading="lazy"
+                  />
                 </a>
-              : <a href={juego.url} target="_blank" rel="noopener noreferrer" class="wishlist-item">
-                  <span>{juego.title}</span>
-                </a>
+              : null
           )}
         </div>
       </section>
@@ -91,6 +128,36 @@ const wishlistConImagen = wishlist.map((j) => ({ ...j, cover: getImage(j.file) }
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 1.5rem;
+  }
+
+  .category {
+    margin-bottom: 4rem;
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .category-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #18181b;
+  }
+
+  .category-header span {
+    font-size: 0.875rem;
+    color: #71717a;
+  }
+
+  :global(.dark) .category-header h2 {
+    color: #f4f4f5;
+  }
+
+  :global(.dark) .category-header span {
+    color: #a1a1aa;
   }
 
   .games-grid {
@@ -107,7 +174,9 @@ const wishlistConImagen = wishlist.map((j) => ({ ...j, cover: getImage(j.file) }
     border-radius: 0.375rem;
     background-color: #f0f0f0;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
     display: block;
   }
 
@@ -122,80 +191,36 @@ const wishlistConImagen = wishlist.map((j) => ({ ...j, cover: getImage(j.file) }
 
   .game-cover :global(img) {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
   }
 
-  .games-section {
-    margin-bottom: 2rem;
-  }
-
-  .section-title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-  }
-
-  .wishlist-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-  }
-
-  .wishlist-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 0.75rem;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    background-color: #fafafa;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .wishlist-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-  }
-
-  .wishlist-item span {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #111827;
-  }
-
-  .wishlist-item :global(img) {
-    width: 100%;
-    height: auto;
-    border-radius: 0.375rem;
-    object-fit: cover;
-    object-position: center;
-  }
-
   @media (max-width: 1400px) {
-    .games-grid { grid-template-columns: repeat(6, 1fr); }
-    .wishlist-grid { grid-template-columns: repeat(3, 1fr); }
+    .games-grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
   }
 
   @media (max-width: 1024px) {
-    .games-grid { grid-template-columns: repeat(5, 1fr); }
-    .wishlist-grid { grid-template-columns: repeat(2, 1fr); }
+    .games-grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
   }
 
   @media (max-width: 768px) {
-    .games-grid { grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
-    .wishlist-grid { grid-template-columns: repeat(2, 1fr); }
+    .games-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
   }
 
   @media (max-width: 480px) {
-    .games-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
-    .wishlist-grid { grid-template-columns: 1fr; }
+    .games-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
   }
 </style>
