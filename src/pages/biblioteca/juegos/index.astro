@@ -34,6 +34,13 @@ const juegos = [
 ];
 
 const juegosConImagen = juegos.map((j) => ({ ...j, cover: getImage(j.file) }));
+
+const wishlist = [
+  { title: 'Spyro Reignited Trilogy', file: 'spyro', url: 'https://store.steampowered.com/app/996580/Spyro_Reignited_Trilogy/' },
+  { title: 'Crash Bandicoot N. Sane Trilogy', file: 'crash', url: 'https://store.steampowered.com/app/731490/Crash_Bandicoot_N_Sane_Trilogy/' },
+];
+
+const wishlistConImagen = wishlist.map((j) => ({ ...j, cover: getImage(j.file) }));
 ---
 
 <BaseLayout
@@ -47,15 +54,34 @@ const juegosConImagen = juegos.map((j) => ({ ...j, cover: getImage(j.file) }));
         Una colección de mis videojuegos favoritos que recomiendo totalmente.
       </p>
 
-      <div class="games-grid">
-        {juegosConImagen.map((juego) =>
-          juego.cover
-            ? <a href={juego.url} target="_blank" rel="noopener noreferrer" class="game-cover" title={juego.title}>
-                <Image src={juego.cover} alt={juego.title} width={200} height={280} loading="lazy" />
-              </a>
-            : null
-        )}
-      </div>
+      <section class="games-section">
+        <h2 class="section-title">Played</h2>
+        <div class="games-grid">
+          {juegosConImagen.map((juego) =>
+            juego.cover
+              ? <a href={juego.url} target="_blank" rel="noopener noreferrer" class="game-cover" title={juego.title}>
+                  <Image src={juego.cover} alt={juego.title} width={200} height={280} loading="lazy" />
+                </a>
+              : null
+          )}
+        </div>
+      </section>
+
+      <section class="games-section">
+        <h2 class="section-title">Wishlist</h2>
+        <div class="wishlist-grid">
+          {wishlistConImagen.map((juego) =>
+            juego.cover
+              ? <a href={juego.url} target="_blank" rel="noopener noreferrer" class="wishlist-item" title={juego.title}>
+                  <Image src={juego.cover} alt={juego.title} width={200} height={280} loading="lazy" />
+                  <span>{juego.title}</span>
+                </a>
+              : <a href={juego.url} target="_blank" rel="noopener noreferrer" class="wishlist-item">
+                  <span>{juego.title}</span>
+                </a>
+          )}
+        </div>
+      </section>
     </main>
   </div>
 </BaseLayout>
@@ -104,19 +130,72 @@ const juegosConImagen = juegos.map((j) => ({ ...j, cover: getImage(j.file) }));
     object-position: center;
   }
 
+  .games-section {
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .wishlist-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .wishlist-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: #fafafa;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .wishlist-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .wishlist-item span {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  .wishlist-item :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: 0.375rem;
+    object-fit: cover;
+    object-position: center;
+  }
+
   @media (max-width: 1400px) {
     .games-grid { grid-template-columns: repeat(6, 1fr); }
+    .wishlist-grid { grid-template-columns: repeat(3, 1fr); }
   }
 
   @media (max-width: 1024px) {
     .games-grid { grid-template-columns: repeat(5, 1fr); }
+    .wishlist-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 768px) {
     .games-grid { grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+    .wishlist-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 480px) {
     .games-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+    .wishlist-grid { grid-template-columns: 1fr; }
   }
 </style>
