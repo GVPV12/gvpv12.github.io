@@ -50,7 +50,7 @@ export const projects: Project[] = [
   {
     name: 'Substack',
     description: 'Algunos posts y opiniones sobre cosas que me interesan.',
-    demoLink: 'https://substack.com/@greciart',
+    demoLink: 'https://greciart.substack.com/',
     demoLinkRel: 'noopener noreferrer',
     tags: ['Blog', 'Opiniones']
   },
