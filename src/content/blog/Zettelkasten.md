@@ -5,7 +5,7 @@ pubDate: 2026-02-09
 tags:
   - Obsidian
   - Jardin-digital
-coverImage: ./secondbrain.jpg
+coverImage: ./secondbrain.webp
 ---
 
 
@@ -23,7 +23,7 @@ El método **Zettelkasten** no es solo una forma de guardar archivos, sino un si
     
 - **El legado de Niklas Luhmann:** Fue un sociólogo alemán que usó este sistema (con fichas de papel reales) para escribir más de 70 libros y cientos de artículos. Obsidian es básicamente la versión digital y supervitaminada de su caja de madera.
 
-![Mi foto](./Zettelkasten.jpg)
+![Mi foto](./Zettelkasten.webp)
 
 ### 1. Metodologías Principales
 

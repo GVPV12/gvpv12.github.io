@@ -10,7 +10,7 @@ tags:
 ---
 
 
-![[image-37.png]]
+![[image-37.webp]]
 
 Prompts vistos en el curso [que sirven de ejemplo]:
 - generate 10 of ideas for [your input here]

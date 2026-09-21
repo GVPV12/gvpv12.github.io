@@ -9,7 +9,7 @@ tags:
   - Frameworks-JS
   - Frameworks-favs
   - Astro
-coverImage: ./blog-placeholder-2.jpg
+coverImage: ./blog-placeholder-2.webp
 ---
 
 
@@ -33,7 +33,7 @@ Next.js generalmente impide que los desarrolladores usen bibliotecas de React, l
 
 Sin embargo, Astro no es un framework frontend, ya que no exige el uso de ninguna biblioteca de interfaz de usuario específica ni de capacidades específicas del framework. Gracias a su compatibilidad integrada, Astro permite a los desarrolladores elegir y combinar diversas bibliotecas y frameworks, como React, Vue y Svelte, para adaptarlos a las necesidades de su proyecto.
 
-![astro](./astro.png)
+![astro](./astro.webp)
 
 
 | Comparaciones       | Astro | Nuxt.js | Gatsby | Next.js |

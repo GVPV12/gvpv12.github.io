@@ -8,9 +8,9 @@ tags:
   - Resumenes
   - dev
   - Notas
-coverImage: ./github.jpg
+coverImage: ./github.webp
 ---
-![Mi foto](gitvsgithub.jpg)
+![Mi foto](gitvsgithub.webp)
 
 [[Git]]
 

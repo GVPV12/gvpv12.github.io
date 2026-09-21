@@ -8,7 +8,7 @@ tags:
   - Solarpunk
   - 🌱Seed
   - investigaciones
-coverImage: ./solarpunk(2).jpg
+coverImage: ./solarpunk(2).webp
 ---
 Infografía explicativa: https://gvpv12.github.io/solarpunk-repositorio/
 
@@ -180,7 +180,7 @@ El solarpunk nos ofrece un vocabulario de esperanza, una estética de abundancia
 <center><iframe width="560" height="315" src="https://www.youtube.com/embed/UVlBmdvIC6s?si=xGKB2fENRjDHATQK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></center>
 
 
-![Mi foto](./solarpunk(1).jpg)
+![Mi foto](./solarpunk(1).webp)
 
 ---
 

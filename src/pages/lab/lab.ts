@@ -18,7 +18,7 @@ export const projects: Project[] = [
     demoLink: 'https://starmoon.nekoweb.org/',
     demoLinkRel: 'noopener noreferrer',
     tags: ['Web dev', 'HTML', 'CSS', 'JS'],
-    image: '/images/lab/starmoon-nekoweb.png'
+    image: '/images/lab/starmoon-nekoweb.webp'
   },
   {
     name: 'Games',
@@ -26,7 +26,7 @@ export const projects: Project[] = [
     demoLink: 'https://starmoon.nekoweb.org/games.html',
     demoLinkRel: 'noopener noreferrer',
     tags: ['Web dev', 'Juegos', 'HTML'],
-    image: '/src/assets/img/pfp.jpg'
+    image: '/images/lab/games.webp'
   },
   {
     name: 'Commonplace book',
@@ -34,7 +34,7 @@ export const projects: Project[] = [
     demoLink: 'https://starmoon.nekoweb.org/commonplace_book.html',
     demoLinkRel: 'noopener noreferrer',
     tags: ['Web dev', 'Escritura', 'HTML'],
-    image: '/src/assets/img/pfp.jpg'
+    image: '/images/lab/commonplace-book.webp'
   },
   {
     name: 'Explorer',
@@ -42,6 +42,6 @@ export const projects: Project[] = [
     demoLink: 'https://starmoon.nekoweb.org/explorer.html',
     demoLinkRel: 'noopener noreferrer',
     tags: ['Web dev', 'HTML', 'CSS'],
-    image: '/src/assets/img/pfp.jpg'
+    image: '/images/lab/explorer.webp'
   },
 ];

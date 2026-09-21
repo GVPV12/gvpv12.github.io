@@ -9,13 +9,13 @@ tags:
   - dev
   - Resumenes
   - Notas
-coverImage: ./githubglasses.jpg
+coverImage: ./githubglasses.webp
 ---
 Después de entender la teoría, ahora viene lo más importante: la practica. O más bien lo esencial para la practica y de verdad usarlo.
 
 Hay muchos comandos de Git, acá abajo dejaré una imagen que para mi resume los más importantes porque hay muchos que no se usan mucho realmente. De todos modos si no lo logras leer leer no importa porque más abajo explico y dejo para copiar cada uno.
 
-![Mi foto](gitcheatsheet.jpg)
+![Mi foto](gitcheatsheet.webp)
 
 ## Casos aparentemente más "sencillos"
 Hay varios casos que se pueden presentar cuando queremos usar Git y Github. El más sencillo aparentemente es subirlo directamente, esto es lo recomendado si no se van a hacer cambios [[subir aplicacion a internet]], si se van a hacer cambios hay que usar Git (a menos que cada cambio lo quieras subir manualmente lo cual no creo). También se puede usar Github desktop [[Subir a Github con Github Desktop]] pero honestamente a mi me parece incluso más dificil que Git (porque es más confuso en cambio con Git solo te memorizas los comandos que vas a necesitar que honestamente no son demasiados como parecen).

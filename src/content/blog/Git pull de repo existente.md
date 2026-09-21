@@ -9,7 +9,7 @@ tags:
   - dev
   - Comandos
   - Notas
-coverImage: ./gitandgithub.jpg
+coverImage: ./gitandgithub.webp
 ---
 
 Esto es cuando tienes un repo y lo quieres traer sin tenerlo local.
