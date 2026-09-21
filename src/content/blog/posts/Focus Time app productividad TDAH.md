@@ -185,11 +185,23 @@ Y una cosa que me importaba mucho: el puntaje final no premia el burnout, pero t
 
 Ya hice un video con el desglose completo de qué mecánica específica apunta a TDAH y cuál a neurotípicos, y una versión corta y resumida de lo mismo; si prefieres algo más rápido, los dejo linkeados abajo.
 
+### Vídeos sobre el diseño de FOCUS TIME
+
+<div class="video-embed">
+  <iframe src="https://www.youtube-nocookie.com/embed/pKM_wpzLSVk?start=3s&rel=0" title="Desglose de las mecánicas de FOCUS TIME para TDAH y personas neurotípicas" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+<div class="video-embed">
+  <iframe src="https://www.youtube-nocookie.com/embed/H1q0V8ISxkE?rel=0" title="Resumen del diseño de FOCUS TIME" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+También puedes ver el [vídeo completo en YouTube](https://www.youtube.com/watch?v=pKM_wpzLSVk) o el [vídeo corto en YouTube](https://www.youtube.com/watch?v=H1q0V8ISxkE).
+
 ## Es gratis y es open source
 
 El repo es open source y está abierto a contribuciones si quieres mejorarla.
 
-- App en vivo: [FOCUS TIME](https://focustimeisnow.netlify.app/)
+- App: [FOCUS TIME](https://focustimeisnow.netlify.app/)
 - Repositorio en GitHub: [GVPV12/focus-time](https://github.com/GVPV12/focus-time)
 - Video completo: desglose TDAH vs. neurotípico
 - Video corto: El resumen
