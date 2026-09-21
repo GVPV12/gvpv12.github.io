@@ -1,6 +1,7 @@
 ---
-title: La mejor manera de contar una historia tipo novela visual sobre salud mental, disociación y duelo
-description: Reseña de A Space for the Unbound
+title: "A Space for the Unbound: reseña sobre salud mental y duelo"
+seoTitle: "A Space for the Unbound: reseña sobre salud mental y duelo"
+description: Reseña de A Space for the Unbound, una novela visual pixel art sobre salud mental, disociación, trauma, duelo y una historia inolvidable.
 pubDate: 2026-09-18
 tags:
   - blog
@@ -9,7 +10,9 @@ tags:
   - reseñas
 ---
 
-![A Space for the Unbound](https://substackcdn.com/image/fetch/$s_!5KqK!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1b483321-ddef-4014-850e-c7137433b0d1_460x215.jpeg)
+<div style="display: flex; justify-content: center;">
+  <img src="https://substackcdn.com/image/fetch/$s_!5KqK!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1b483321-ddef-4014-850e-c7137433b0d1_460x215.jpeg" alt="A Space for the Unbound" />
+</div>
 
 Esta es la mejor novela visual retro contando de manera hermosa una historia trágica.
 
