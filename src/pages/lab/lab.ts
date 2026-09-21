@@ -18,7 +18,7 @@ export const projects: Project[] = [
     demoLink: 'https://starmoon.nekoweb.org/',
     demoLinkRel: 'noopener noreferrer',
     tags: ['Web dev', 'HTML', 'CSS', 'JS'],
-    image: '/src/content/blog/githubglasses.jpg'
+    image: '/images/lab/starmoon-nekoweb.png'
   },
   {
     name: 'Games',
