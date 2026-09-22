@@ -1,6 +1,6 @@
 ---
-title: "A Space for the Unbound: reseña sobre salud mental y duelo"
-seoTitle: "A Space for the Unbound: reseña sobre salud mental y duelo"
+title: "A Space for the Unbound: reseña de juego sobre salud mental y duelo"
+seoTitle: "A Space for the Unbound: salud mental, trauma, disociación y duelo"
 description: Reseña de A Space for the Unbound, una novela visual pixel art sobre salud mental, disociación, trauma, duelo y una historia inolvidable.
 pubDate: 2026-09-18
 tags:
