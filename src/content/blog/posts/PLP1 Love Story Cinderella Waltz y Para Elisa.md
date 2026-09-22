@@ -21,8 +21,9 @@ En total, me he aprendido a tocar desde que empecé el piano: Himno a la alegrí
 ## Love Story
 
 <video controls preload="metadata" playsinline style="width: 100%;" poster="https://substack-video.s3.amazonaws.com/video_upload/post/216810860/a274534c-a2fc-43f8-b4b7-578a11cdda77/transcoded-00001.png">
-  <source src="https://stream.mux.com/d1ymeT4YF4osCByD5BeyTObxpYikfQiHoHNCzB3uz02A.mp4" type="video/mp4" />
-  <a href="https://stream.mux.com/d1ymeT4YF4osCByD5BeyTObxpYikfQiHoHNCzB3uz02A.mp4">Ver el video de Love Story</a>
+  <source src="https://greciart.substack.com/api/v1/video/upload/a274534c-a2fc-43f8-b4b7-578a11cdda77/src?override_publication_id=11167082&type=hls" type="application/x-mpegURL" />
+  <source src="https://greciart.substack.com/api/v1/video/upload/a274534c-a2fc-43f8-b4b7-578a11cdda77/src?override_publication_id=11167082&type=mp4" type="video/mp4" />
+  <a href="https://greciart.substack.com/api/v1/video/upload/a274534c-a2fc-43f8-b4b7-578a11cdda77/src?override_publication_id=11167082&type=mp4">Ver el video de Love Story</a>
 </video>
 
 Esta canción es muy romántica y muy popular. Demasiado dramática para mi gusto, pero es fácil de tocar y me gustó cómo quedó.
@@ -30,8 +31,9 @@ Esta canción es muy romántica y muy popular. Demasiado dramática para mi gust
 ## Cinderella Waltz
 
 <video controls preload="metadata" playsinline style="width: 100%;" poster="https://substack-video.s3.amazonaws.com/video_upload/post/216810860/1bb7c971-b55d-49db-b5b2-a65edc9eb115/transcoded-00001.png">
-  <source src="https://stream.mux.com/zjNZfT00L600IjLmugugQyBIipMBvhY9hVyMBuk8ngr300.mp4" type="video/mp4" />
-  <a href="https://stream.mux.com/zjNZfT00L600IjLmugugQyBIipMBvhY9hVyMBuk8ngr300.mp4">Ver el video de Cinderella Waltz</a>
+  <source src="https://greciart.substack.com/api/v1/video/upload/1bb7c971-b55d-49db-b5b2-a65edc9eb115/src?override_publication_id=11167082&type=hls" type="application/x-mpegURL" />
+  <source src="https://greciart.substack.com/api/v1/video/upload/1bb7c971-b55d-49db-b5b2-a65edc9eb115/src?override_publication_id=11167082&type=mp4" type="video/mp4" />
+  <a href="https://greciart.substack.com/api/v1/video/upload/1bb7c971-b55d-49db-b5b2-a65edc9eb115/src?override_publication_id=11167082&type=mp4">Ver el video de Cinderella Waltz</a>
 </video>
 
 Esta canción es muchísimo más fácil de tocar de lo que parece y es fácil de escuchar y alegre; me gustó mucho.
@@ -39,8 +41,9 @@ Esta canción es muchísimo más fácil de tocar de lo que parece y es fácil de
 ## Para Elisa
 
 <video controls preload="metadata" playsinline style="width: 100%;" poster="https://substack-video.s3.amazonaws.com/video_upload/post/216810860/9ca7c507-5743-4487-8e6f-a6c63dcf3e09/transcoded-00001.png">
-  <source src="https://stream.mux.com/VTUWFU9CyYMqjBqGmvZ82lIwtNHzvKvyDA2Op00Wa4hQ.mp4" type="video/mp4" />
-  <a href="https://stream.mux.com/VTUWFU9CyYMqjBqGmvZ82lIwtNHzvKvyDA2Op00Wa4hQ.mp4">Ver el video de Para Elisa</a>
+  <source src="https://greciart.substack.com/api/v1/video/upload/9ca7c507-5743-4487-8e6f-a6c63dcf3e09/src?override_publication_id=11167082&type=hls" type="application/x-mpegURL" />
+  <source src="https://greciart.substack.com/api/v1/video/upload/9ca7c507-5743-4487-8e6f-a6c63dcf3e09/src?override_publication_id=11167082&type=mp4" type="video/mp4" />
+  <a href="https://greciart.substack.com/api/v1/video/upload/9ca7c507-5743-4487-8e6f-a6c63dcf3e09/src?override_publication_id=11167082&type=mp4">Ver el video de Para Elisa</a>
 </video>
 
 ¿Quién no conoce esta canción? A pesar de que me costó terminar la primera parte, aun así estoy orgullosa de que pude hacer esta primera parte sin errores.
