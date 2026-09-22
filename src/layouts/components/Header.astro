@@ -1,7 +1,7 @@
 ---
 import HeaderLink from './HeaderLink.astro';
 import { Image } from 'astro:assets';
-import AvaLogo from '@src/assets/img/avatar.webp';
+import SiteLogo from '@src/assets/img/favicon.webp';
 import GithubWhite from '@src/assets/img/github-mark-white.svg';
 import GithubBlack from '@src/assets/img/github-mark.svg';
 
@@ -47,12 +47,19 @@ const menu = [
 		<nav class='flex gap-4 items-center justify-between py-3'>
 			<h2 class='m-0'>
 				<a href='/' class='flex gap-4 items-center text-xl font-black uppercase'>
-					<!-- You can use your site logo, rounded ava or simply your site name here-->
-          <Image src={AvaLogo} alt='Your site name' class="rounded-full w-11 border-white border-2 shadow-lg"/> 
+					<Image src={SiteLogo} alt='Crónicas de una menta divergente' class="rounded-full w-11 border-white border-2 shadow-lg"/>
 					<!-- {SITE_TITLE} -->
 				</a>
 			</h2>
 			<div class='flex items-center'>
+				<button class='menu-toggle p-3' id='menuToggle' aria-label='Abrir menú' aria-controls='navigation-menu' aria-expanded='false'>
+					<svg class='menu-open-icon' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'>
+						<path d='M4 6h16'></path><path d='M4 12h16'></path><path d='M4 18h16'></path>
+					</svg>
+					<svg class='menu-close-icon' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'>
+						<path d='M18 6 6 18'></path><path d='m6 6 12 12'></path>
+					</svg>
+				</button>
 				<!-- Google Translate Widget (oculto) -->
 				<div id="google_translate_element" class="hidden"></div>
 				
@@ -121,8 +128,8 @@ const menu = [
 				</button>
 			</div>
 		</nav>
-    <div class='fixed top-3 w-auto max-w-full px-3 left-1/2 -translate-x-1/2 z-[999]' id='navigation-menu'>
-      <div class="flex px-2.5 bg-white/90 dark:bg-zinc-900/75 backdrop-blur-md leading-tight rounded-full border dark:border-zinc-700">
+		<div class='fixed top-3 w-auto max-w-full px-3 left-1/2 -translate-x-1/2 z-[999]' id='navigation-menu'>
+			<div id='navigation-links' class="flex px-2.5 bg-white/90 dark:bg-zinc-900/75 backdrop-blur-md leading-tight rounded-full border dark:border-zinc-700">
         <div class="px-2.5 text-sm">
           <HeaderLink class="py-3 flex items-center" href="/" aria-label="Home">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
@@ -182,6 +189,66 @@ const menu = [
 			display: block !important;
 			visibility: visible !important;
 			opacity: 1 !important;
+		}
+
+		.menu-toggle,
+		.menu-close-icon {
+			display: none;
+		}
+
+		@media (max-width: 640px) {
+			.menu-toggle {
+				display: block;
+			}
+
+			.menu-toggle[aria-expanded='true'] .menu-open-icon {
+				display: none;
+			}
+
+			.menu-toggle[aria-expanded='true'] .menu-close-icon {
+				display: block;
+			}
+
+			.menu-close-icon {
+				display: none;
+			}
+
+			#navigation-menu {
+				display: none !important;
+				top: 4.5rem;
+				left: 0;
+				width: 100%;
+				max-width: none;
+				padding: 0 1rem;
+				transform: none;
+			}
+
+			#navigation-menu.is-open {
+				display: block !important;
+			}
+
+			#navigation-links {
+				width: 100%;
+				flex-direction: column;
+				align-items: stretch;
+				gap: 0;
+				padding: 0.5rem;
+				border-radius: 1rem;
+			}
+
+			#navigation-links > div {
+				width: 100%;
+				padding: 0;
+			}
+
+			#navigation-links > div:has(> span) {
+				display: none;
+			}
+
+			#navigation-links a {
+				justify-content: flex-start;
+				padding: 0.75rem 1rem;
+			}
 		}
 
 		/* Estilos para el selector de idioma */
@@ -516,6 +583,30 @@ const menu = [
 			}
 		};
 
+		function toggleMobileMenu() {
+			const menu = document.getElementById('navigation-menu');
+			const toggle = document.getElementById('menuToggle');
+			if (!menu || !toggle) return;
+
+			const isOpen = menu.classList.toggle('is-open');
+			toggle.setAttribute('aria-expanded', String(isOpen));
+			toggle.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+			toggle.querySelector('.menu-open-icon')?.toggleAttribute('hidden', isOpen);
+			toggle.querySelector('.menu-close-icon')?.toggleAttribute('hidden', !isOpen);
+		}
+
+		function closeMobileMenu() {
+			const menu = document.getElementById('navigation-menu');
+			const toggle = document.getElementById('menuToggle');
+			if (!menu || !toggle) return;
+
+			menu.classList.remove('is-open');
+			toggle.setAttribute('aria-expanded', 'false');
+			toggle.setAttribute('aria-label', 'Abrir menú');
+			toggle.querySelector('.menu-open-icon')?.removeAttribute('hidden');
+			toggle.querySelector('.menu-close-icon')?.setAttribute('hidden', '');
+		}
+
 		// Event listeners optimizados
 		document.addEventListener('DOMContentLoaded', () => {
 			loadSavedLanguage();
@@ -523,6 +614,16 @@ const menu = [
 			// Theme toggle
 			const themeToggle = document.getElementById('themeToggle');
 			themeToggle?.addEventListener('click', handleToggleClick);
+			document.getElementById('menuToggle')?.addEventListener('click', toggleMobileMenu);
+			document.querySelectorAll('#navigation-menu a').forEach((link) => {
+				link.addEventListener('click', closeMobileMenu);
+			});
+			document.addEventListener('click', (event) => {
+				const target = event.target;
+				if (target instanceof Node && !document.getElementById('site-header')?.contains(target)) {
+					closeMobileMenu();
+				}
+			});
 			
 			// Language selector
 			const languageToggle = document.getElementById('languageToggle');
