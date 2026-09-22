@@ -1,7 +1,7 @@
 ---
 import HeaderLink from './HeaderLink.astro';
 import { Image } from 'astro:assets';
-import SiteLogo from '@src/assets/img/favicon.webp';
+import SiteLogo from '@src/assets/img/logo.ico';
 import GithubWhite from '@src/assets/img/github-mark-white.svg';
 import GithubBlack from '@src/assets/img/github-mark.svg';
 
@@ -47,7 +47,7 @@ const menu = [
 		<nav class='flex gap-4 items-center justify-between py-3'>
 			<h2 class='m-0'>
 				<a href='/' class='flex gap-4 items-center text-xl font-black uppercase'>
-					<Image src={SiteLogo} alt='Crónicas de una menta divergente' class="rounded-full w-11 border-white border-2 shadow-lg"/>
+					<img src={SiteLogo.src} alt='Crónicas de una menta divergente' class="rounded-full w-11 border-white border-2 shadow-lg" width='44' height='44'/>
 					<!-- {SITE_TITLE} -->
 				</a>
 			</h2>
