@@ -140,6 +140,7 @@ const sections = [
       { title: 'Flower Boy Next Door',       file: 'flowerboynextdoor',  url: 'https://mydramalist.com/5626-flower-boy-next-door' },
       { title: 'Start-Up',                   file: 'startup',            url: 'https://mydramalist.com/51909-start-up' },
       { title: 'Good Omens',                 file: 'goodomens',          url: 'https://www.imdb.com/title/tt1869454/' },
+      { title: 'Undone',                     file: 'undone',             url: 'https://www.imdb.com/es/title/tt8101850/' },
     ]
   }
 ];
@@ -173,7 +174,9 @@ const sectionsConImagenes = sections.map((section) => ({
                 ? <a href={item.url} target="_blank" rel="noopener noreferrer" class="fav-cover" title={item.title}>
                     <Image src={item.cover} alt={item.title} width={200} height={280} loading="lazy" />
                   </a>
-                : null
+                : <a href={item.url} target="_blank" rel="noopener noreferrer" class="fav-cover fav-cover-missing" title={item.title}>
+                    <span>{item.title}</span>
+                  </a>
             )}
           </div>
         </section>
@@ -218,6 +221,16 @@ const sectionsConImagenes = sections.map((section) => ({
   .fav-cover:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .fav-cover-missing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    color: #fff;
+    text-align: center;
+    background: #172b35;
   }
 
   .fav-cover :global(img) {

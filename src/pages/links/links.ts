@@ -19,11 +19,18 @@ export const projects: Project[] = [
     tags: ['Tutoriales', 'Timelapses', 'Proyectos']
   },
   {
-    name: 'Website',
-    description: 'Mi portfolio y sitio personal.',
-    demoLink: 'https://grevaleart.com/',
+    name: 'Instagram art',
+    description: 'Mis dibujos e ilustraciones.',
+    demoLink: 'https://www.instagram.com/grevaleartdraws',
     demoLinkRel: 'noopener noreferrer',
-    tags: ['Portfolio', 'Web']
+    tags: ['Arte', 'Ilustración']
+  },
+  {
+    name: 'Instagram 3d art',
+    description: 'Mi arte y proyectos en 3D.',
+    demoLink: 'https://www.instagram.com/grevaleart3d',
+    demoLinkRel: 'noopener noreferrer',
+    tags: ['Arte', '3D']
   },
   {
     name: 'Itch.io',
