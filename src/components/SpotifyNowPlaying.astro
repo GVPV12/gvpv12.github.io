@@ -1,74 +1,81 @@
 ---
-// SpotifyNowPlaying.astro - Versión sin separadores
-// Componente que muestra la última canción reproducida usando Stats.fm
+// SpotifyNowPlaying.astro
+// Muestra la última canción escuchada usando Stats.fm.
+// - Al compilar se obtiene una canción como respaldo (por si el navegador no puede consultar la API).
+// - En el navegador se vuelve a consultar al cargar, para mostrar la canción real del momento.
 
-const STATSFM_USERNAME = 'gvpv12'; // Cambia esto por tu usuario de Stats.fm
+const STATSFM_USERNAME = 'gvpv12';
+const API_URL = `https://api.stats.fm/api/v1/users/${STATSFM_USERNAME}/streams/recent?limit=1`;
 
-let nowPlaying = null;
+type Track = { title: string; artist: string; albumImageUrl: string; songUrl: string };
 
-async function getRecentTrack() {
-  try {
-    const response = await fetch(
-      `https://api.stats.fm/api/v1/users/${STATSFM_USERNAME}/streams/recent?limit=1`
-    );
-
-    if (!response.ok) {
-      console.error('Error fetching Stats.fm data');
-      return null;
-    }
-
-    const data = await response.json();
-    
-    if (data.items && data.items.length > 0) {
-      const track = data.items[0].track;
-      return {
-        title: track.name,
-        artist: track.artists.map(artist => artist.name).join(', '),
-        albumImageUrl: track.albums[0]?.image || '',
-        songUrl: track.externalIds?.spotify?.[0] 
-          ? `https://open.spotify.com/track/${track.externalIds.spotify[0]}`
-          : '#',
-      };
-    }
-
-    return null;
-  } catch (error) {
-    console.error('Error fetching Stats.fm data:', error);
-    return null;
-  }
+function toTrack(data: any): Track | null {
+  const track = data?.items?.[0]?.track;
+  if (!track) return null;
+  const spotifyId = track.externalIds?.spotify?.[0];
+  return {
+    title: track.name,
+    artist: (track.artists || []).map((a: any) => a.name).join(', '),
+    albumImageUrl: track.albums?.[0]?.image || '',
+    songUrl: spotifyId ? `https://open.spotify.com/track/${spotifyId}` : 'https://stats.fm/' + STATSFM_USERNAME,
+  };
 }
 
-nowPlaying = await getRecentTrack();
+let initial: Track | null = null;
+try {
+  const res = await fetch(API_URL);
+  if (res.ok) initial = toTrack(await res.json());
+} catch {
+  // Si la API falla al compilar, el navegador intentará cargarla.
+}
 ---
 
-{nowPlaying && (
-  <div class="spotify-now-playing py-4">
-    <p class="text-[0.625rem] font-semibold uppercase mb-3 opacity-60">Now playing</p>
-    <a 
-      href={nowPlaying.songUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="flex items-center gap-3 hover:opacity-80 transition-opacity group"
-    >
-      <div class="relative flex-shrink-0">
-        <img 
-          src={nowPlaying.albumImageUrl} 
-          alt={`${nowPlaying.title} album cover`}
-          class="w-12 h-12 rounded-md shadow-md"
-        />
-      </div>
-      
-      <div class="flex-1 min-w-0">
-        <p class="text-xs truncate group-hover:underline">
-          {nowPlaying.title}
-        </p>
-        <p class="text-xs opacity-70 truncate">
-          {nowPlaying.artist}
-        </p>
-      </div>
-    </a>
-  </div>
-)}
+<div class="spotify-now-playing py-4" data-api={API_URL} hidden={!initial}>
+  <p class="text-[0.625rem] font-semibold uppercase mb-3 opacity-60">Lo último que escuché</p>
+  <a
+    href={initial?.songUrl ?? '#'}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="np-link flex items-center gap-3 hover:opacity-80 transition-opacity group"
+  >
+    <div class="relative flex-shrink-0">
+      <img
+        class="np-cover w-12 h-12 rounded-md shadow-md"
+        src={initial?.albumImageUrl || undefined}
+        alt={initial ? `Portada del álbum de ${initial.title}` : ''}
+        width="48"
+        height="48"
+        loading="lazy"
+      />
+    </div>
+    <div class="flex-1 min-w-0">
+      <p class="np-title text-xs truncate group-hover:underline">{initial?.title}</p>
+      <p class="np-artist text-xs opacity-70 truncate">{initial?.artist}</p>
+    </div>
+  </a>
+</div>
+
+<script is:inline>
+  (function () {
+    var box = document.querySelector('.spotify-now-playing');
+    if (!box) return;
+    fetch(box.dataset.api)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        var track = data && data.items && data.items[0] && data.items[0].track;
+        if (!track) return;
+        var id = track.externalIds && track.externalIds.spotify && track.externalIds.spotify[0];
+        var img = track.albums && track.albums[0] && track.albums[0].image;
+        box.querySelector('.np-title').textContent = track.name;
+        box.querySelector('.np-artist').textContent = (track.artists || []).map(function (a) { return a.name; }).join(', ');
+        box.querySelector('.np-link').href = id ? 'https://open.spotify.com/track/' + id : 'https://stats.fm/gvpv12';
+        var cover = box.querySelector('.np-cover');
+        if (img) { cover.src = img; cover.alt = 'Portada del álbum de ' + track.name; }
+        box.hidden = false;
+      })
+      .catch(function () { /* se queda la versión generada al compilar */ });
+  })();
+</script>
 
 <style>
   .spotify-now-playing {

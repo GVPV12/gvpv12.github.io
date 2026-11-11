@@ -4,11 +4,19 @@ const today = new Date();
 
 <footer class='container mt-8'>
   <div class="justify-center flex gap-4 py-8 prose dark:prose-invert text-sm">
-    <a href="https://rssby.email/">Newsletter</a>|
-    <a href="mailto:greciavalentinapv@gmail.com">Email me</a>|
-    <a href="https://gvpv12.github.io/rss.xml">RSS</a>|
-    <a href="https://gvpv12.github.io/rss.xml">Substack Newsletter</a>
+    <a href="https://rssby.email/" rel="noopener noreferrer">Newsletter</a>|
+    <!-- El correo se arma con JS para que los bots de spam no lo lean del HTML -->
+    <a href="#" id="email-link" data-u="greciavalentinapv" data-d="gmail.com">Email me</a>|
+    <a href="/rss.xml">RSS</a>|
+    <a href="https://substack.com/@greciart" rel="noopener noreferrer">Substack</a>
   </div>
+  <script is:inline>
+    (function () {
+      var a = document.getElementById('email-link');
+      if (!a) return;
+      a.href = 'mailto:' + a.dataset.u + '@' + a.dataset.d;
+    })();
+  </script>
 
 	<div class='py-4 border-t dark:border-t-zinc-700'>
     <div class="md:flex text-xs text-zinc-500 dark:text-zinc-300 prose dark:prose-invert justify-between">

@@ -2,60 +2,23 @@
 import { SITE_TITLE, SITE_TAGLINE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import Ava from '@src/assets/img/ava.jpg';
 import Prose from '../components/Prose.astro';
-import { projects } from './lab/lab';
+import { projects } from '../data/lab';
 import LinksList from '../components/LinksList.astro'
 import PostItem from '../components/PostItem.astro';
 
-// Importar imágenes de la galería
-import pic10 from '@src/assets/img/gallery/pic10.webp';
-import pic from '@src/assets/img/gallery/pic.webp';
-import pic3 from '@src/assets/img/gallery/pic3.webp';
-import pic4 from '@src/assets/img/gallery/pic4.webp';
-import pic5 from '@src/assets/img/gallery/pic5.webp';
-import pic6 from '@src/assets/img/gallery/pic6.webp';
-import pic7 from '@src/assets/img/gallery/pic7.webp';
-import pic8 from '@src/assets/img/gallery/pic8.webp';
-import pic9 from '@src/assets/img/gallery/pic9.webp';
-import pic11 from '@src/assets/img/gallery/pic11.webp';
-import pic12 from '@src/assets/img/gallery/pic12.jpg';
-import pic13 from '@src/assets/img/gallery/pic13.jpg';
-import pic14 from '@src/assets/img/gallery/pic14.jpg';
-import pic15 from '@src/assets/img/gallery/pic15.webp';
-import pic16 from '@src/assets/img/gallery/pic16.webp';
-import pic17 from '@src/assets/img/gallery/pic17.webp';
-import pic18 from '@src/assets/img/gallery/pic18.webp';
-import pic19 from '@src/assets/img/gallery/pic19.webp';
-import pic21 from '@src/assets/img/gallery/pic21.webp';
-import pic22 from '@src/assets/img/gallery/pic22.webp';
-import pic23 from '@src/assets/img/gallery/pic23.webp';
+import { galleryImages } from '../data/gallery';
 
-const galleryImages = [
-  { src: pic10, alt: 'Camera roll 1', tooltip: 'Mi gata durmiendo en una cajita'},
-  { src: pic, alt: 'Camera roll 3' },
-  { src: pic3, alt: 'Camera roll 4' },
-  { src: pic4, alt: 'Camera roll 5' },
-  { src: pic5, alt: 'Camera roll 6' },
-  { src: pic6, alt: 'Camera roll 7' },
-  { src: pic7, alt: 'Camera roll 8' },
-  { src: pic8, alt: 'Camera roll 9' },
-  { src: pic9, alt: 'Camera roll 10' },
-  { src: pic11, alt: 'Camera roll 11' },
-  { src: pic12, alt: 'Camera roll 12' },
-  { src: pic13, alt: 'Camera roll 13' },
-  { src: pic14, alt: 'Camera roll 14' },
-  { src: pic15, alt: 'Camera roll 15' },
-  { src: pic16, alt: 'Camera roll 16' },
-  { src: pic17, alt: 'Camera roll 17' },
-  { src: pic18, alt: 'Camera roll 18' },
-  { src: pic19, alt: 'Camera roll 19' },
-  { src: pic21, alt: 'Camera roll 21' },
-  { src: pic22, alt: 'Camera roll 22' },
-  { src: pic23, alt: 'Camera roll 23' },
-];
+// Versión grande solo para el lightbox (se descarga al hacer clic, no al cargar la página)
+const galleryWithFull = await Promise.all(
+  galleryImages.map(async (img) => ({
+    ...img,
+    full: (await getImage({ src: img.src, width: 1400, format: 'webp' })).src,
+  }))
+);
 
 type BlogPost = CollectionEntry<'blog'>;
 
@@ -135,13 +98,20 @@ const top6Projects = projects.slice(0, 6);
       <div class='mt-12'>
         <h2 class="text-lg font-bold mb-3">📷 Camera roll</h2>
         <div class="camera-roll-gallery">
-{galleryImages.map((img, index) => (
-  <Image 
-    src={img.src} 
-    alt={img.alt} 
+{galleryWithFull.map((img) => (
+  <Image
+    src={img.src}
+    alt={img.alt}
     class="gallery-item"
-    width={800}
-    height={800}
+    width={360}
+    height={360}
+    widths={[180, 360]}
+    sizes="(max-width: 480px) 33vw, (max-width: 768px) 25vw, (max-width: 1024px) 20vw, 180px"
+    format="webp"
+    quality={70}
+    loading="lazy"
+    decoding="async"
+    data-full={img.full}
     title={img.tooltip || undefined}
   />
 ))}
@@ -280,7 +250,7 @@ const top6Projects = projects.slice(0, 6);
     galleryItems.forEach(item => {
       item.addEventListener('click', function() {
         const img = this as HTMLImageElement;
-        lightboxImg.src = img.src;
+        lightboxImg.src = img.dataset.full || img.currentSrc || img.src;
         lightboxImg.alt = img.alt;
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden';

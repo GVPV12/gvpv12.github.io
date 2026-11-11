@@ -9,7 +9,12 @@ const allImages = import.meta.glob<{ default: ImageMetadata }>(
 
 function getImage(file: string): ImageMetadata | null {
   const key = Object.keys(allImages).find((k) => k.includes(`/favs/${file}.`));
-  return key ? allImages[key].default : null;
+  if (!key) {
+    // Sin esto, un favorito con nombre de archivo mal escrito desaparece sin avisar.
+    console.warn(`[favs] No se encontró portada para "${file}" en src/assets/img/favs/`);
+    return null;
+  }
+  return allImages[key].default;
 }
 
 const sections = [
@@ -18,31 +23,32 @@ const sections = [
     items: [
       { title: 'Mujercitas',                  file: 'mujercitas',              url: 'https://www.goodreads.com/book/show/1934.Little_Women' },
       { title: 'Orgullo y Prejuicio',           file: 'orgulloyprejuicio',        url: 'https://www.goodreads.com/book/show/1885.Pride_and_Prejudice' },
-      { title: 'Ikigai Esencial',               file: 'ikigai-esencial',         url: 'https://www.goodreads.com/book/show/39995046-ikigai' },
+      { title: 'Ikigai Esencial',               file: 'ikigai-esencial',         url: 'https://www.goodreads.com/search?q=Ikigai+esencial+Ken+Mogi' },
       { title: 'Kintsugi',                      file: 'kintsugi',                 url: 'https://www.goodreads.com/book/show/42202746-kintsugi' },
       { title: 'Jane Eyre',                     file: 'janeeyre',                 url: 'https://www.goodreads.com/book/show/10210.Jane_Eyre' },
       { title: 'Muchas Vidas, Muchos Maestros', file: 'muchasvidasmuchosmaestros',url: 'https://www.goodreads.com/book/show/34452.Many_Lives_Many_Masters' },
-      { title: 'Cómo criar y mantener un dragón',     file: 'entrenardragon',           url: 'https://www.goodreads.com/book/show/45866069-c-mo-criar-y-mantener-un-drag-n-albumes-deluxe' },
+      { title: 'Cómo criar y mantener un dragón',     file: 'entrenardragon',           url: 'https://www.goodreads.com/book/show/759715.How_to_Raise_and_Keep_a_Dragon' },
       { title: 'Ella Enchanted',                file: 'ellaenchanted',            url: 'https://www.goodreads.com/book/show/24337.Ella_Enchanted' },
       { title: 'El Camino del Artista',         file: 'elcaminodelartista',       url: 'https://www.goodreads.com/book/show/615570.The_Artist_s_Way' },
-      { title: 'Iskari',         file: 'iskari',       url: 'https://www.goodreads.com/book/show/39892884-iskari' },      
+      { title: 'Iskari',         file: 'iskari',       url: 'https://www.goodreads.com/book/show/34701849-the-last-namsara' },
       { title: 'La Invención de Hugo Cabret',   file: 'hugocabret',               url: 'https://www.goodreads.com/book/show/9673436-the-invention-of-hugo-cabret' },
       { title: 'Los que se Alejan de Omelas',   file: 'omelas',                   url: 'https://www.goodreads.com/book/show/92625.The_Ones_Who_Walk_Away_from_Omelas' },
       { title: 'La casa de los Mil Pasillos',   file: 'milpasillos',              url: 'https://www.goodreads.com/book/show/2173611.House_of_Many_Ways' },
       { title: 'Sabriel',                       file: 'sabriel',                  url: 'https://www.goodreads.com/book/show/518848.Sabriel' },
-      { title: 'Lirael',                        file: 'lirael',                   url: 'https://www.goodreads.com/book/show/518849.Lirael' },
-      { title: 'Abhorsen',                      file: 'abhorsen',                 url: 'https://www.goodreads.com/book/show/518850.Abhorsen' },
+      { title: 'Lirael',                        file: 'lirael',                   url: 'https://www.goodreads.com/book/show/47624.Lirael' },
+      { title: 'Abhorsen',                      file: 'abhorsen',                 url: 'https://www.goodreads.com/book/show/535144.Abhorsen' },
       { title: 'Juana de Arco',                 file: 'juanadearco',              url: 'https://www.goodreads.com/book/show/223442.Saint_Joan' },
-      { title: 'Ondina',                        file: 'ondina',                   url: 'https://www.goodreads.com/book/show/16240498-ondina' },
+      { title: 'Ondina',                        file: 'ondina',                   url: 'https://www.goodreads.com/book/show/13629581-ondine' },
       { title: 'Cress',                         file: 'cress',                    url: 'https://www.goodreads.com/book/show/13206828-cress' },
       { title: 'Winter',                        file: 'winter',                   url: 'https://www.goodreads.com/book/show/13206900-winter' },
       { title: 'Radio Silence',                 file: 'radiosilence',             url: 'https://www.goodreads.com/book/show/25322449-radio-silence' },
+      { title: 'Solitaire',                     file: 'solitaire',                url: 'https://www.goodreads.com/book/show/61780028-solitaire' },
       { title: 'Libera tu Magia',               file: 'liberatumagia',            url: 'https://www.goodreads.com/book/show/30652271-libera-tu-magia' },
       { title: 'Narnia 1',                      file: 'narnia1',                  url: 'https://www.goodreads.com/book/show/100915.The_Lion_the_Witch_and_the_Wardrobe' },
       { title: 'Narnia 2',                      file: 'narnia2',                  url: 'https://www.goodreads.com/book/show/65641.Prince_Caspian' },
       { title: 'Tormenta',                      file: 'tormenta',                 url: 'https://www.goodreads.com/book/show/10852343-stormdancer' },
-      { title: 'Kinslayer',                     file: 'kinslayer',                url: 'https://www.goodreads.com/book/show/15773979-kinslayer' },
-      { title: 'Última',                        file: 'ultima',                   url: 'https://www.goodreads.com/book/show/17928198-endsinger' },
+      { title: 'Kinslayer',                     file: 'kinslayer',                url: 'https://www.goodreads.com/book/show/28366275-kinslayer' },
+      { title: 'Última',                        file: 'ultima',                   url: 'https://www.goodreads.com/search?q=Endsinger+Jay+Kristoff' },
       { title: 'Alas de Fuego',                 file: 'alasdefuego',              url: 'https://www.goodreads.com/book/show/4736889-alas-de-fuego' },
     ]
   },
@@ -50,20 +56,21 @@ const sections = [
     title: 'Mangas, manhwas, comics y webtoons',
     items: [
 
-      { title: 'Big Mushy Happy Lump',           file: 'bigmushyhappylump',         url: 'https://www.goodreads.com/book/show/28186562-big-mushy-happy-lump' },
-      { title: 'Akatsuki no Yona',         file: 'akatsukinoyona',      url: 'https://myanimelist.net/manga/55539/Akatsuki_no_Yona' },
-      { title: 'Magi',                     file: 'magi',                url: 'https://myanimelist.net/manga/13609/Magi' },
-      { title: 'Omoi, Omoware, Furi, Furare', file: 'omoi',            url: 'https://myanimelist.net/manga/100397/Omoi_Omoware_Furi_Furare' },
-      { title: 'Wotakoi',                  file: 'wotakoi',             url: 'https://myanimelist.net/manga/93266/Wotaku_ni_Koi_wa_Muzukashii' },
+      { title: 'Big Mushy Happy Lump',           file: 'bigmushyhappylump',         url: 'https://www.goodreads.com/book/show/36176225-big-mushy-happy-lump' },
+      { title: 'Akatsuki no Yona',         file: 'akatsukinoyona',      url: 'https://myanimelist.net/manga/21525/Akatsuki_no_Yona' },
+      { title: 'Magi',                     file: 'magi',                url: 'https://myanimelist.net/manga/14790/Magi' },
+      { title: 'Omoi, Omoware, Furi, Furare', file: 'omoi',            url: 'https://myanimelist.net/manga/89217/Omoi_Omoware_Furi_Furare' },
+      { title: 'Wotakoi',                  file: 'wotakoi',             url: 'https://myanimelist.net/manga/89087/Wotaku_ni_Koi_wa_Muzukashii' },
       { title: 'Doughnuts Under a Crescent Moon', file: 'donas',       url: 'https://myanimelist.net/manga/120329/Kaketa_Tsuki_to_Doughnut' },
       { title: 'Is Love the Answer?',      file: 'islovetheanswer',     url: 'https://myanimelist.net/manga/143738/Kimi_no_Sekai_ni_Koi_wa_Nai' },
-      { title: 'Navillera',                file: 'navillera',           url: 'https://myanimelist.net/manga/115728/Navillera' },
+      { title: 'Navillera',                file: 'navillera',           url: 'https://myanimelist.net/manga/112245/Navillera__Like_a_Butterfly' },
       { title: 'Quiero ser una Pared',     file: 'quieroserunapared',   url: 'https://myanimelist.net/manga/131017/Watashi_wa_Kabe_ni_Naritai' },
-      { title: 'Emma',                     file: 'emma',                url: 'https://myanimelist.net/manga/967/Emma' },
-      { title: 'Kuragehime',               file: 'kuragehime',          url: 'https://myanimelist.net/manga/16161/Kuragehime' },
+      { title: 'Vanitas no Carte',         file: 'vanitasnocarte',      url: 'https://myanimelist.net/manga/93753/Vanitas_no_Carte' },
+      { title: 'Emma',                     file: 'emma',                url: 'https://myanimelist.net/manga/729/Emma' },
+      { title: 'Kuragehime',               file: 'kuragehime',          url: 'https://myanimelist.net/manga/17904/Kuragehime' },
       { title: 'El Chico que me gusta no es un chico', file: 'elchicoquemegustaba', url: 'https://myanimelist.net/manga/155861/Kininatteru_Hito_ga_Otoko_ja_Nakatta' },
-      { title: 'Tonari no Kaibutsu-kun',   file: 'tonarinokaibutsu',     url: 'https://myanimelist.net/manga/22301/Tonari_no_Kaibutsu-kun' },
-      { title: 'Orange',                   file: 'orange',               url: 'https://myanimelist.net/manga/76238/Orange' },
+      { title: 'Tonari no Kaibutsu-kun',   file: 'tonarinokaibutsu',     url: 'https://myanimelist.net/manga/13702/Tonari_no_Kaibutsu-kun' },
+      { title: 'Orange',                   file: 'orange',               url: 'https://myanimelist.net/manga/35573/Orange' },
       { title: 'Kimi wa Natsu no Naka',    file: 'kimi',                 url: 'https://myanimelist.net/manga/109330/Kimi_wa_Natsu_no_Naka' },
       { title: 'Nineteen twenty one',      file: 'nineteentwentyone',    url: 'https://myanimelist.net/manga/25322/Nineteen_Twenty-One' },
     ]
@@ -73,14 +80,14 @@ const sections = [
     items: [
       { title: 'Natsume Yuujinchou',       file: 'natsumeyuujinchou',  url: 'https://myanimelist.net/anime/4081/Natsume_Yuujinchou' },
       { title: 'Saiki Kusuo no Ψ-nan',    file: 'saiki',               url: 'https://myanimelist.net/anime/33255/Saiki_Kusuo_no_Psi_Nan' },
-      { title: 'Barakamon',                file: 'barakamon (2)',       url: 'https://myanimelist.net/anime/22125/Barakamon' },
+      { title: 'Barakamon',                file: 'barakamon (2)',       url: 'https://myanimelist.net/anime/22789/Barakamon' },
       { title: 'Angel Beats!',             file: 'angelbeats',          url: 'https://myanimelist.net/anime/6547/Angel_Beats' },
-      { title: 'Kemono no Souja Erin',     file: 'kemono',              url: 'https://myanimelist.net/anime/5258/Kemono_no_Souja_Erin' },
+      { title: 'Kemono no Souja Erin',     file: 'kemono',              url: 'https://myanimelist.net/anime/5420/Kemono_no_Souja_Erin' },
       { title: 'Mushishi',                 file: 'mushishi',            url: 'https://myanimelist.net/anime/457/Mushishi' },
       { title: 'Yuri!!! on Ice',           file: 'yurionice',           url: 'https://myanimelist.net/anime/32995/Yuri_on_Ice' },
       { title: 'Haibane Renmei',           file: 'haibanerenmei',       url: 'https://myanimelist.net/anime/387/Haibane_Renmei' },
-      { title: 'Romantic Killer',          file: 'romantickiller',      url: 'https://myanimelist.net/anime/51194/Romantic_Killer' },
-      { title: 'Inuyasha',                 file: 'inuyasha',            url: 'https://myanimelist.net/anime/269/Inuyasha' },
+      { title: 'Romantic Killer',          file: 'romantickiller',      url: 'https://myanimelist.net/anime/52865/Romantic_Killer' },
+      { title: 'Inuyasha',                 file: 'inuyasha',            url: 'https://myanimelist.net/anime/249/InuYasha' },
       { title: 'Sousou no Frieren',        file: 'sousounofrieren',     url: 'https://myanimelist.net/anime/52991/Sousou_no_Frieren' },
       { title: 'Chihayafuru',              file: 'chihayafuru',         url: 'https://myanimelist.net/anime/10800/Chihayafuru' },
       { title: 'Saiunkoku Monogatari',     file: 'sainkokumonogatari',  url: 'https://myanimelist.net/anime/957/Saiunkoku_Monogatari' },
@@ -88,7 +95,7 @@ const sections = [
       { title: 'Fullmetal Alchemist: Brotherhood', file: 'fmab',        url: 'https://myanimelist.net/anime/5114/Fullmetal_Alchemist__Brotherhood' },
       { title: 'Sora yori mo Tooi Basho',  file: 'sorayorimo',          url: 'https://myanimelist.net/anime/35839/Sora_yori_mo_Tooi_Basho' },
       { title: 'Tegami Bachi',             file: 'tegamibachi',         url: 'https://myanimelist.net/anime/6444/Tegamibachi' },
-      { title: 'Carol & Tuesday',          file: 'carolendtuesday',     url: 'https://myanimelist.net/anime/38130/Carole_Tuesday' },
+      { title: 'Carol & Tuesday',          file: 'caroleandtuesday',    url: 'https://myanimelist.net/anime/37435/Carole__Tuesday' },
       { title: 'Fumetsu no Anata e',       file: 'fumetsunoanatae',     url: 'https://myanimelist.net/anime/41025/Fumetsu_no_Anata_e' },
       { title: 'Gintama',                  file: 'Gintama',             url: 'https://myanimelist.net/anime/918/Gintama' },
       { title: 'Yuru Camp',                file: 'yurucamp',            url: 'https://myanimelist.net/anime/34798/Yuru_Camp' },
@@ -107,11 +114,11 @@ const sections = [
       { title: 'La Princesa Mononoke',          file: 'mononoke',             url: 'https://www.imdb.com/title/tt0119698/' },
       { title: 'Susurros del Corazón',          file: 'susurrosdelcorazon',   url: 'https://www.imdb.com/title/tt0113824/' },
       { title: 'Cuentos de Terramar',           file: 'gedosenki',            url: 'https://www.imdb.com/title/tt0495596/' },
-      { title: 'Iblard Jikan',                 file: 'iblardjinkan',         url: 'https://myanimelist.net/anime/7923/Iblard_Jikan' },
+      { title: 'Iblard Jikan',                 file: 'iblardjinkan',         url: 'https://myanimelist.net/anime/2891/Iblard_Jikan' },
       { title: 'Los Niños Lobo',                file: 'losninoslobo',         url: 'https://myanimelist.net/anime/12355/Ookami_Kodomo_no_Ame_to_Yuki' },
 
       { title: 'A Silent Voice',               file: 'koenokatachi',         url: 'https://www.imdb.com/title/tt5323662/' },
-      { title: 'Hotarubi no Mori e',           file: 'Hotarubi_no_Mori_e',   url: 'https://myanimelist.net/anime/10165/Hotarubi_no_Mori_e' },
+      { title: 'Hotarubi no Mori e',           file: 'Hotarubi_no_Mori_e',   url: 'https://myanimelist.net/anime/10408/Hotarubi_no_Mori_e' },
       { title: 'Big Fish & Begonia',           file: 'bigfishandbegonia',    url: 'https://myanimelist.net/anime/10259/Da_Yu_Hai_Tang_Movie' },
       { title: 'Deep Sea',                     file: 'deppsea',              url: 'https://myanimelist.net/anime/44212/Shenhai' },
       { title: 'Soul',                         file: 'soul',                 url: 'https://www.imdb.com/title/tt2948372/' },
@@ -154,8 +161,8 @@ const sectionsConImagenes = sections.map((section) => ({
 ---
 
 <BaseLayout
-  title="Favoritos"
-  description="Mis cosas favoritas de entretenimiento"
+  title="Favoritos: libros, manga, anime, películas y series | Alma de estrella nocturna"
+  description="Mis libros, mangas, animes, películas y series favoritas: Ghibli, Natsume, Frieren, Alice Oseman, Garth Nix y más, con enlaces a Goodreads, MyAnimeList e IMDb."
 >
   <div class="container">
     <main>
@@ -171,7 +178,7 @@ const sectionsConImagenes = sections.map((section) => ({
             {section.items.map((item) =>
               item.cover
                 ? <a href={item.url} target="_blank" rel="noopener noreferrer" class="fav-cover" title={item.title}>
-                    <Image src={item.cover} alt={item.title} width={200} height={280} loading="lazy" />
+                    <Image src={item.cover} alt={`Portada de ${item.title}`} width={200} height={280} format="webp" quality={75} loading="lazy" />
                   </a>
                 : null
             )}

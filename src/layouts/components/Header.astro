@@ -48,7 +48,7 @@ const menu = [
 			<h2 class='m-0'>
 				<a href='/' class='flex gap-4 items-center text-xl font-black uppercase'>
 					<!-- You can use your site logo, rounded ava or simply your site name here-->
-          <Image src={AvaLogo} alt='Your site name' class="rounded-full w-11 border-white border-2 shadow-lg"/> 
+          <Image src={AvaLogo} alt='Alma de estrella nocturna — inicio' class="rounded-full w-11 border-white border-2 shadow-lg"/> 
 					<!-- {SITE_TITLE} -->
 				</a>
 			</h2>
@@ -248,6 +248,34 @@ const menu = [
 			'en': 'ENG'
 		};
 
+		// Carga el script de Google solo cuando hace falta (antes se cargaba en cada visita,
+		// enviando IP y página a Google aunque nadie usara el traductor).
+		let translateScriptRequested = false;
+		function loadGoogleTranslate() {
+			if (translateScriptRequested) return;
+			translateScriptRequested = true;
+			const s = document.createElement('script');
+			s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+			s.async = true;
+			document.head.appendChild(s);
+		}
+
+		function wantsTranslation() {
+			if (location.hash.includes('googtrans(')) return true;
+			if (document.cookie.includes('googtrans=/es/en')) return true;
+			try {
+				const saved = JSON.parse(localStorage.getItem('selectedLanguage') || 'null');
+				return saved?.code === 'en';
+			} catch (e) { return false; }
+		}
+
+		function clearGoogTransCookie() {
+			const expired = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+			document.cookie = expired;
+			document.cookie = expired + '; domain=' + location.hostname;
+			document.cookie = expired + '; domain=.' + location.hostname;
+		}
+
 		// Función requerida por Google Translate (optimizada)
 		function googleTranslateElementInit() {
 			try {
@@ -372,10 +400,15 @@ const menu = [
 			try {
 				// Español (original)
 				if (langCode === '') {
+					// Sin borrar la cookie, Google seguía traduciendo tras recargar
+					clearGoogTransCookie();
+					updateLanguageUI('', 'ESP');
 					window.location.hash = '';
 					window.location.reload();
 					return;
 				}
+
+				loadGoogleTranslate();
 
 				// Otros idiomas - método optimizado
 				const changeWithSelector = (attempts = 0) => {
@@ -484,20 +517,7 @@ const menu = [
 			}
 		}
 
-		// Tema toggle (código original optimizado)
-		const theme = (() => {
-			if (typeof localStorage !== 'undefined') {
-				const saved = localStorage.getItem('theme');
-				if (saved) return saved;
-			}
-			return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-		})();
-
-		document.documentElement.classList.toggle('dark', theme === 'dark');
-		if (typeof localStorage !== 'undefined') {
-			localStorage.setItem('theme', theme);
-		}
-
+		// El tema inicial se aplica en el <head> (BaseLayout) para evitar el destello.
 		function sendMessage(message) {
 			const iframe = document.querySelector('iframe.giscus-frame');
 			iframe?.contentWindow?.postMessage({ giscus: message }, 'https://giscus.app');
@@ -519,6 +539,7 @@ const menu = [
 		// Event listeners optimizados
 		document.addEventListener('DOMContentLoaded', () => {
 			loadSavedLanguage();
+			if (wantsTranslation()) loadGoogleTranslate();
 
 			// Theme toggle
 			const themeToggle = document.getElementById('themeToggle');
@@ -561,9 +582,5 @@ const menu = [
 		});
 	</script>
 
-	<!-- Cargar Google Translate de forma optimizada -->
-	<script type="text/javascript" 
-		src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-		async>
-	</script>
+	<!-- Google Translate se carga bajo demanda (ver loadGoogleTranslate): privacidad y rendimiento -->
 </header>

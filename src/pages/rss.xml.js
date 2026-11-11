@@ -8,9 +8,16 @@ export async function GET(context) {
 		title: SITE_TITLE,
 		description: SITE_DESCRIPTION,
 		site: context.site,
-		items: posts.map((post) => ({
-			...post.data,
-			link: `/${post.slug}/`,
-		})),
+		// En Astro 5 (loader glob) las entradas no tienen `slug`, solo `id`.
+		// Con post.slug todos los enlaces del RSS salían como /undefined/.
+		items: posts
+			.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+			.map((post) => ({
+				title: post.data.title,
+				description: post.data.description,
+				pubDate: post.data.pubDate,
+				categories: post.data.tags,
+				link: `/${post.id}/`,
+			})),
 	});
 }

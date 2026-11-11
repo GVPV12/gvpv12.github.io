@@ -1,6 +1,6 @@
 ---
 title: Comandos esenciales de Git INDEX
-slug: comandos-git
+slug: comandos-esenciales-de-git-index
 description: El mero masterlist de todos los comandos core para conectar tu proyecto a Github
 pubDate: 2026-02-03
 tags:

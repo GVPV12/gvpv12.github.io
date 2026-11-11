@@ -15,29 +15,16 @@ export default defineConfig({
   output: 'static',
   integrations: [mdx(), sitemap(), tailwind(), partytown()],
   
-  // --- CONFIGURACIÓN DEL ALIAS + PROTECCIÓN ANTI-IA ---
+  // La protección anti-IA en producción la hacen public/robots.txt y la meta
+  // "robots: noai, noimageai" de BaseLayout. GitHub Pages no permite cabeceras HTTP
+  // personalizadas, así que un plugin de cabeceras solo afectaría a `pnpm dev`.
   vite: {
     resolve: {
       alias: {
         '@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
       },
     },
-    // 🔒 Headers de protección anti-IA
-    plugins: [
-      {
-        name: 'ai-protection-headers',
-        configureServer(server) {
-          server.middlewares.use((req, res, next) => {
-            // Headers anti-IA
-            res.setHeader('X-Robots-Tag', 'noai, noimageai');
-            res.setHeader('X-AI-Crawl', 'none');
-            next();
-          });
-        }
-      }
-    ]
   },
-  // ------------------------------------------------------
   
   markdown: {
     remarkPlugins: [
@@ -47,7 +34,7 @@ export default defineConfig({
     ],
     extendDefaultPlugins: true,
     rehypePlugins: [[autoNewTabExternalLinks, {
-      domain: 'localhost:4321'
+      domain: 'gvpv12.github.io'
     }]]
   }
 });

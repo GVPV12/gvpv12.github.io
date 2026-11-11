@@ -12,7 +12,9 @@ interface Props {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = '/syakir.webp' } = Astro.props;
+// '/jardin.jpg' existe en public/; el valor anterior ('/syakir.webp') era del template y daba 404
+const { title, description, image = '/jardin.jpg' } = Astro.props;
+const imageURL = new URL(image, Astro.site);
 ---
 
 <!-- Global Metadata -->
@@ -28,17 +30,20 @@ const { title, description, image = '/syakir.webp' } = Astro.props;
 <title>{title}</title>
 <meta name='title' content={title} />
 <meta name='description' content={description} />
+<meta name='author' content='gvpv12' />
+<link rel='alternate' type='application/rss+xml' title='Alma de estrella nocturna' href={new URL('rss.xml', Astro.site)} />
 
-<!-- Open Graph / Facebook -->
+<!-- Open Graph / Facebook / WhatsApp -->
 <meta property='og:type' content='website' />
-<meta property='og:url' content={Astro.url} />
+<meta property='og:locale' content='es_ES' />
+<meta property='og:url' content={canonicalURL} />
 <meta property='og:title' content={title} />
 <meta property='og:description' content={description} />
-<meta property='og:image' content={new URL(image, Astro.url)} />
+<meta property='og:image' content={imageURL} />
 
-<!-- Twitter -->
-<meta property='twitter:card' content='summary_large_image' />
-<meta property='twitter:url' content={Astro.url} />
-<meta property='twitter:title' content={title} />
-<meta property='twitter:description' content={description} />
-<meta property='twitter:image' content={new URL(image, Astro.url)} />
+<!-- Twitter / X -->
+<meta name='twitter:card' content='summary_large_image' />
+<meta name='twitter:url' content={canonicalURL} />
+<meta name='twitter:title' content={title} />
+<meta name='twitter:description' content={description} />
+<meta name='twitter:image' content={imageURL} />

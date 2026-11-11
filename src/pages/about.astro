@@ -1,8 +1,20 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import pfp from '@src/assets/img/pfp.jpg';
 import Prose from '../components/Prose.astro';
+import { galleryImages } from '../data/gallery';
+
+// Foto de perfil aleatoria: se generan versiones cuadradas optimizadas de todas
+// las fotos del camera roll y el navegador elige una en cada visita.
+const profilePhotos = await Promise.all(
+  galleryImages.map(async (img) => {
+    const opt = await getImage({ src: img.src, width: 300, height: 300, format: 'webp', quality: 75 });
+    const opt2x = await getImage({ src: img.src, width: 600, height: 600, format: 'webp', quality: 75 });
+    return { src: opt.src, srcset: `${opt.src} 1x, ${opt2x.src} 2x`, title: img.tooltip ?? '' };
+  })
+);
+// Respaldo sin JavaScript: una elegida al compilar
+const initialPhoto = profilePhotos[Math.floor(Math.random() * profilePhotos.length)];
 
 // Importar imágenes de la galería de memes
 import noImg from '@src/assets/img/gallery/no.jpg';
@@ -31,8 +43,8 @@ const memeImages = [
 ---
 
 <BaseLayout
-	title="Info"
-	description="Lorem ipsum dolor sit amet"
+	title="Info | Alma de estrella nocturna"
+	description="Sobre Grecia V. y este jardín digital: diseño, desarrollo web, videojuegos, arte y todo lo que me interesa."
 >
   <div class='container'>
 		<main class='prose text-lg dark:prose-invert'>
@@ -44,7 +56,7 @@ const memeImages = [
 <h1 class="text-xl font-bold mb-4">Sobre este jardín digital </h1>
             <Prose>
               <div class="text-sm">
-                <p>Bienvenido a mi segundo cerebro, donde compartiré cualquier cosa que me llame la atención. No encontrarás contenido generado por IA (a excepción obvia de algunos iconos, imagenes y resumenes en notas debido a que me tomaria demasiado tiempo innecesario hacerlo todo yo) pero si por una persona real que tiene demasiadas cosas que le interesan y no sabe realmente en cual concentrarse. Suena caótico pero para un jardín digital tal vez ese defecto puede tornarse en algo divertido y útil que me permita darle mejor uso a mi tiempo ejerciendo más mi pensamiento crítico en vez de ser manipulade junto con las masas.</p>
+                <p>Bienvenido a mi segundo cerebro, donde compartiré cualquier cosa que me llame la atención. No uso ninguna foto generada por IA. Detrás de este espacio hay una persona real que tiene demasiadas cosas que le interesan y no sabe realmente en cual concentrarse. Suena caótico pero para un jardín digital tal vez ese defecto puede tornarse en algo divertido y útil que me permita darle mejor uso a mi tiempo ejerciendo más mi pensamiento crítico en vez de ser manipulade junto con las masas.</p>
 
                 <p>Te invito también a crear tu propio jardín digital, es una experiencia que te puede ayudar a organizar tus pensamientos, tus intereses y a compartir lo que te gusta con otras personas. Recuerda que no hay una manera correcta o incorrecta de hacer un jardin digital, y esa es la belleza de este. No tiene que ser en <a href="https://obsidian.md" target="_blank" rel="noopener noreferrer">Obsidian</a> como lo hice yo. Puedes usar también <a href="https://www.notion.com/es" target="_blank" rel="no follow noopener noreferrer">Notion</a>, <a href="https://anytype.io" target="_blank" rel="no follow noopener noreferrer">Anytype</a>, <a href="https://logseq.com" target="_blank" rel="nofollow noopener noreferrer">logseq</a>, <a href="https://affine.pro" target="_blank" rel="nofollow noopener noreferrer">affine</a>, el que prefieras. Si te interesa puedes aprender más en: [[Jardines digitales]]</p>
 
@@ -113,7 +125,27 @@ const memeImages = [
           <div class="flex flex-col items-center md:items-start">
             <!-- Contenedor para imagen + blinkies (columna en todos los tamaños) -->
           <div>
-            <Image src={pfp} alt="Jardin digital Grecia V." width={300} class="rounded-3xl rotate-3 mx-auto md:mx-0 mb-3"/>
+            <img
+              id="profile-photo"
+              src={initialPhoto.src}
+              srcset={initialPhoto.srcset}
+              title={initialPhoto.title || undefined}
+              alt="Foto del camera roll de Grecia V."
+              width="300"
+              height="300"
+              loading="eager"
+              class="rounded-3xl rotate-3 mx-auto md:mx-0 mb-3 aspect-square object-cover"
+            />
+            <script is:inline define:vars={{ profilePhotos }}>
+              (function () {
+                var el = document.getElementById('profile-photo');
+                if (!el || !profilePhotos.length) return;
+                var p = profilePhotos[Math.floor(Math.random() * profilePhotos.length)];
+                el.srcset = p.srcset;
+                el.src = p.src;
+                if (p.title) el.title = p.title; else el.removeAttribute('title');
+              })();
+            </script>
             
             <!-- Blinkies debajo de la imagen -->
             <div class="flex flex-wrap gap-2 justify-center md:justify-start" style="max-width: 300px; margin: 0 auto;">
