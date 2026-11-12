@@ -8,7 +8,7 @@ tags:
   - Notas
   - Jardin-digital
   - Resumenes
-coverImage: ./jardin.jpg
+coverImage: ./jardin.webp
 ---
 
 

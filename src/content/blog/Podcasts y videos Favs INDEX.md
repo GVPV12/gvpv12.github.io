@@ -6,7 +6,7 @@ tags:
   - podcasts
   - Videos
   - Mis-temas-de-interés
-coverImage: ./podcast.jpg
+coverImage: ./podcast.webp
 ---
 [[Civilizaciones estelares y la nueva era]]
 [[Podcast autismo]]

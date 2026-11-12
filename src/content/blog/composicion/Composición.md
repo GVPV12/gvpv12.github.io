@@ -12,12 +12,12 @@ tags:
 ## Narración y simbología
 el orden de las imágenes si altera el producto. pensar en como se le narraría la escena a alguien con simbolismo, posición, símbolos, etc. cuales elementos son los importantes y cuales son los de relleno. orden de importancia. la composición se pone a la orden de la narración.
 
-![Mi foto](./Pasted-image-20240115193842.png)
+![Mi foto](./Pasted-image-20240115193842.webp)
 
 Las dos imágenes poseen buena composición. una nos cuenta una historia y otra no. a pesar de que las dos son buenas, se recordara mas la que tiene una historia.
 
 ## Regla de los tercios, puntos de interés
-![Mi foto](./Pasted-image-20240115193935.png)
+![Mi foto](./Pasted-image-20240115193935.webp)
 
 Ayuda a tener la imagen balanceada. para no tener un punto de la imagen lleno de información y la otra completamente vacía. lo que suele funcionar es un 70, 30. También 50, 50 o 10, 90, etc.
 
@@ -41,7 +41,7 @@ todos estos son elementos que llaman la atención en una imagen y es en lo que s
 - alas
 - ramas
 
-![Mi foto](./Pasted-image-20240115194107.png)
+![Mi foto](./Pasted-image-20240115194107.webp)
 
 
 ## contraste
@@ -53,16 +53,16 @@ todos estos son elementos que llaman la atención en una imagen y es en lo que s
 - geometría
 - enfocado o desenfocado
 
-![Mi foto](./Pasted-image-20240115194156.png)
+![Mi foto](./Pasted-image-20240115194156.webp)
 
 
-![Mi foto](./Pasted-image-20240115194208.png)
+![Mi foto](./Pasted-image-20240115194208.webp)
 
-![Mi foto](./Pasted-image-20240115194221.png)
+![Mi foto](./Pasted-image-20240115194221.webp)
 
-![Mi foto](./Pasted-image-20240115194232.png)
+![Mi foto](./Pasted-image-20240115194232.webp)
 
-![Mi foto](./Pasted-image-20240115194257.png)
+![Mi foto](./Pasted-image-20240115194257.webp)
 ⬆️ detallado y sin detallar ⬆️
 
 ## Luz
@@ -70,7 +70,7 @@ todos estos son elementos que llaman la atención en una imagen y es en lo que s
 dureza de la luz, color, como están dispuestos. se puede esconder elementos y enfocar elementos con la luz
 
 
-![Mi foto](./Pasted-image-20240115194336.png)
+![Mi foto](./Pasted-image-20240115194336.webp)
 
 ## marcos
 

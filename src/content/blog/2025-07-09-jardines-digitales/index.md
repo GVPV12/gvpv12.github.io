@@ -4,7 +4,7 @@ slug: 'jardines-digitales'
 description: 'Mis notas sobre los jardines digitales'
 pubDate: '2025-09-07'
 tags: ["Notas","Jardin-digital"]
-coverImage: './blog-placeholder-1.jpg'
+coverImage: './blog-placeholder-1.webp'
 ---
 
 [[La mierdificación de internet]]

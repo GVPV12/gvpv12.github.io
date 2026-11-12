@@ -6,7 +6,7 @@ tags:
   - github
   - dev
   - Notas
-coverImage: ./github.jpg
+coverImage: ./github.webp
 ---
 
 

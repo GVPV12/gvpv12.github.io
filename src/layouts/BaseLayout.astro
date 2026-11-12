@@ -13,11 +13,8 @@ const { title, description, image } = Astro.props;
 <!doctype html>
 <html lang='es'>
 	<head>
-		<!-- Meta, canonical, Open Graph y Twitter se generan por página en BaseHead -->
+		<!-- Meta, canonical, robots, Open Graph y Twitter se generan por página en BaseHead -->
 		<BaseHead title={title} description={description} image={image} />
-
-		<meta name="robots" content="index, follow, noai, noimageai" />
-		<meta name="theme-color" content="#000000" />
 
 		<!-- Aplica el tema antes de pintar la página para evitar el destello en modo claro -->
 		<script is:inline>

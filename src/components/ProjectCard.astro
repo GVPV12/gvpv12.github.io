@@ -5,17 +5,16 @@ interface Props {
   name: string;
   description?: string;
   demoLink: string;
+  postLink?: string;
+  substackLink?: string;
   tags?: string[];
   image?: string;
 }
 
-const { name, description, demoLink, tags, image } = Astro.props;
+const { name, description, demoLink, postLink, substackLink, tags, image } = Astro.props;
 ---
 
-<a 
-  href={demoLink} 
-  target="_blank" 
-  rel="noopener noreferrer"
+<div
   class="group block bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-all duration-300 hover:scale-[1.02]"
 >
   {image && (
@@ -48,5 +47,11 @@ const { name, description, demoLink, tags, image } = Astro.props;
         ))}
       </div>
     )}
+
+    <div class="mt-4 flex flex-wrap gap-3 text-sm">
+      <a href={demoLink} target="_blank" rel="noopener noreferrer" class="underline hover:text-zinc-300">Abrir app</a>
+      {postLink && <a href={postLink} target="_blank" rel="noopener noreferrer" class="underline hover:text-zinc-300">Post</a>}
+      {substackLink && <a href={substackLink} target="_blank" rel="noopener noreferrer" class="underline hover:text-zinc-300">Substack</a>}
+    </div>
   </div>
-</a>
+</div>

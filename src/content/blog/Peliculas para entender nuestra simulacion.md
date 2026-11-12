@@ -7,7 +7,7 @@ tags:
   - Mis-temas-de-interés
   - Existencialismo
   - 🌱Seed
-coverImage: ./truman.jpg
+coverImage: ./truman.webp
 ---
 Películas:
 1. Matrix

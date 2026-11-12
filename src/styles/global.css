@@ -4,6 +4,25 @@
 @tailwind components;
 @tailwind utilities;
 
+.video-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 1.5rem 0;
+}
+
+.video-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+html {
+  font-size: 90%;
+}
+
 /* global.css – AFTER @tailwind utilities */
 kbd {
   display: inline-block !important;
@@ -364,8 +383,8 @@ main .tag,
 main .badge,
 article .tag,
 article .badge {
-  font-size: 0.65rem !important;
-  padding: 0.35rem 0.65rem !important;
+  font-size: 0.55rem !important;
+  padding: 0.25rem 0.5rem !important;
   display: inline-block !important;
   border-radius: 0.375rem !important;
   line-height: 1.3 !important;
@@ -379,7 +398,7 @@ article .badge {
   white-space: nowrap !important;
   
   /* Asegurar altura consistente */
-  min-height: 1.6rem !important;
+  min-height: 1.35rem !important;
   vertical-align: middle !important;
 }
 
@@ -403,8 +422,8 @@ main a[href*="Mis-temas-de-interés"],
 main a[href*="Neurodivergencia"],
 article a[href*="Mis-temas-de-interés"],
 article a[href*="Neurodivergencia"] {
-  font-size: 0.55rem !important;
-  padding: 0.3rem 0.5rem !important;
+  font-size: 0.5rem !important;
+  padding: 0.2rem 0.4rem !important;
   max-width: 120px !important;
 }
 

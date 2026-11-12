@@ -11,13 +11,13 @@ tags:
   - Notas
   - Masterlists
   - Index
-coverImage: ./githubglasses.jpg
+coverImage: ./githubglasses.webp
 ---
 Después de entender la teoría, ahora viene lo más importante: la practica. O más bien lo esencial para la practica y de verdad usarlo.
 
 Hay muchos comandos de Git, acá abajo dejaré una imagen que para mi resume los más importantes porque hay muchos que no se usan mucho realmente. De todos modos si no lo logras leer leer no importa porque más abajo explico y dejo para copiar cada uno.
 
-![Mi foto](gitcheatsheet.jpg)
+![Mi foto](gitcheatsheet.webp)
 
 ## Proyectos externos
 [[Pull request]]

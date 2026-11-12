@@ -7,7 +7,7 @@ tags:
   - Git
   - Resumenes
   - Notas
-coverImage: ./git.png
+coverImage: ./git.webp
 ---
 
 [[Github]]
