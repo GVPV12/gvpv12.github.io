@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
+  # Compila (sin publicar) cada pull request, para ver ✅/❌ antes de aceptarlo
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
@@ -11,22 +14,23 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  # Los PRs no cancelan ni esperan al deploy de main
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'pages' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      
+        uses: actions/checkout@v7
+
       # Usa la versión de "packageManager" en package.json (la misma que en local)
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: pnpm
@@ -36,16 +40,21 @@ jobs:
 
       - name: Build with Astro
         run: pnpm run build
-      
+
+      # Solo se prepara el artefacto de Pages cuando se va a publicar
       - name: Setup Pages
-        uses: actions/configure-pages@v4
-      
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v6
+
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./dist
 
   deploy:
+    # Nunca publica desde un pull request
+    if: github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -54,4 +63,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

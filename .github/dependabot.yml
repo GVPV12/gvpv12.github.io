@@ -1,15 +1,23 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
-
+# Docs: https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 version: 2
 updates:
-  - package-ecosystem: "npm" # también lee pnpm-lock.yaml
+  # Dependencias del sitio (lee pnpm-lock.yaml)
+  - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      # Parches y versiones menores juntos en un solo PR
+      npm-menores:
+        update-types: ["minor", "patch"]
+      # Las versiones mayores (pueden romper cosas) llegan en PRs separados
+
+  # Acciones del workflow de deploy
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      # Todas en un PR, para que las acciones de Pages se actualicen a juego
+      github-actions:
+        patterns: ["*"]
