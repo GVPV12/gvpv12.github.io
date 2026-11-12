@@ -69,6 +69,22 @@ export const projects: Project[] = [
 
   // ---------- Juegos (itch.io) ----------
   {
+    name: 'Unspoken Words: Shape of Silence',
+    description: 'Una chica que no sabe nombrar lo que siente y una caja de música rota: cinco mundos de sueño para encontrar las palabras. Hecho con torinko.',
+    demoLink: 'https://grecia-v.itch.io/unspoken-words-shape-of-silence',
+    demoLinkRel: 'noopener noreferrer',
+    tags: ['Videojuego', 'Puzzle', 'Novela visual', '3D'],
+    image: '/images/lab/unspoken-words.webp',
+  },
+  {
+    name: "Grandma's PC",
+    description: 'La abuela necesita que le "arregles la computadora". Te lo explicó todo, y nada tiene sentido. Simulador de escritorio retro y absurdo.',
+    demoLink: 'https://grecia-v.itch.io/grandmas-pc',
+    demoLinkRel: 'noopener noreferrer',
+    tags: ['Videojuego', 'Puzzle', 'Retro', 'Point & click'],
+    image: '/images/lab/grandmas-pc.webp',
+  },
+  {
     name: 'Serperwave',
     description: 'Snake reimaginado como una máquina arcade vaporwave de los 90: 13 mundos neón, cajas misteriosas y banda sonora retro.',
     demoLink: 'https://grecia-v.itch.io/serperwave',
