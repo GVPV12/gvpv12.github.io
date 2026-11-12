@@ -7,6 +7,9 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+  # Reconstruye cada día para que la sección Log del home muestre los commits nuevos
+  schedule:
+    - cron: '0 10 * * *'
 
 permissions:
   contents: read
@@ -40,6 +43,9 @@ jobs:
 
       - name: Build with Astro
         run: pnpm run build
+        env:
+          # Solo lectura de repos públicos para la sección Log (sube el límite de la API de GitHub)
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Solo se prepara el artefacto de Pages cuando se va a publicar
       - name: Setup Pages

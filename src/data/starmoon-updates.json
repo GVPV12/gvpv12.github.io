@@ -1,0 +1,19 @@
+{
+  "_info": "Copia de respaldo. El archivo que se edita es starmoon.nekoweb.org/starmoon-updates.json (en STARMOON); este solo se usa si esa URL no responde durante el build.",
+  "updates": [
+    { "date": "2026-11-11", "text": "Web templates page", "url": "/templates.html" },
+    { "date": "2026-11-11", "text": "TODO.exe got a HyperCard makeover" },
+    { "date": "2026-11-11", "text": "Star pixel favicon" },
+    { "date": "2026-11-11", "text": "Games page: my itch.io games + recommended", "url": "/games.html" },
+    { "date": "2026-11-11", "text": "Blog updates window with pages, drag & drop fixed" },
+    { "date": "2026-04-22", "text": "New windows added" },
+    { "date": "2026-04-22", "text": "Fixing buttons" },
+    { "date": "2026-04-22", "text": "Microblogs and short thoughts" },
+    { "date": "2026-04-18", "text": "Webcam added" },
+    { "date": "2026-04-10", "text": "Uninstall window added" },
+    { "date": "2026-03-15", "text": "Are you lost window added" },
+    { "date": "2026-01-24", "text": "New layout desktop OS" },
+    { "date": "2026-01-13", "text": "Music player added" },
+    { "date": "2026-01-06", "text": "Initial launch" }
+  ]
+}

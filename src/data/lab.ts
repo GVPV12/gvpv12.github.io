@@ -85,14 +85,6 @@ export const projects: Project[] = [
     image: '/images/lab/el-peso-del-si.webp',
   },
   {
-    name: 'Balam Ball',
-    description: 'Arcade inspirado en el pok-ta-pok: Balam contra Tezcat en la cancha sagrada.',
-    demoLink: 'https://neurocode.itch.io/balam-ball',
-    demoLinkRel: 'noopener noreferrer',
-    tags: ['Videojuego', 'Arcade', 'Colaboración'],
-    image: '/images/lab/balam-ball.webp',
-  },
-  {
     name: 'Comedian Dreams',
     description: 'Ficción interactiva sobre Sam, que quiere alegrar a la gente con la comedia. Global Game Jam 2024.',
     demoLink: 'https://dreamteamlatam.itch.io/comedian-dreams',

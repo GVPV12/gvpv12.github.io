@@ -61,12 +61,12 @@ const description = 'Explora las etiquetas que agrupan las publicaciones por tem
       {groupedTags.map(({ letter, tags }) => (
         <div class="flex gap-2 border-b dark:border-b-zinc-700 py-3 mb-5 capitalize">
           <h2 class="text-2xl font-bold text-zinc-800 dark:text-zinc-200 w-7 shrink-0">{letter}</h2>
-          <div class='flex gap-2 flex-wrap'>
+          <div class='flex gap-1.5 flex-wrap items-center'>
             {
               (tags || [] )?.map((tag: Tag) => (
                 <a
                   class='border border-zinc-300 dark:border-zinc-700 rounded-2xl
-                    text-sm text-zinc-700 dark:text-zinc-300 no-underline px-3 py-1
+                    text-[0.6rem] leading-tight text-zinc-700 dark:text-zinc-300 no-underline px-2 py-0.5
                     transition-all duration-700
                   hover:border-zinc-700 dark:hover:border-zinc-300'
                   href={`/tags/${slugify(tag.value)}/`}>

@@ -21,8 +21,6 @@ La parte de la que más me gusta hablar es la que no se ve. Cada 30 minutos, una
 
 Como leer una web ajena siempre tiene sus riesgos, el script rechaza cualquier tasa que salte más de un 25 % respecto a la anterior. Es una red de seguridad sencilla para que un error de lectura no termine mostrándole a alguien un precio absurdo. Además, la web consulta también DolarApi como respaldo, y si te quedas sin conexión te muestra la última tasa que guardó.
 
-![Convertidor BCV en el teléfono: tasa oficial del dólar en bolívares, conversión y frase del día](../../../assets/img/posts/convertidor-bcv-version-movil.webp)
-
 ## Más que una calculadora
 
 Además de convertir, la página enseña la tasa de hoy con una gráfica histórica de 7, 30 o 90 días y su variación porcentual, para entender si el dólar viene subiendo o se está quedando quieto. Hay un botón para pasar del dólar al euro, otro opcional que te lleva a la página oficial del BCV para verificar la cifra, y una vista simple que deja solo el precio cuando no quieres ver nada más.

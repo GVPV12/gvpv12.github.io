@@ -5,15 +5,30 @@ interface Props {
   demoLink: string;
   tags?: string[];
   postLink?: string;
+  image?: string;
 }
 
-const { name, description, demoLink, tags, postLink } = Astro.props;
+const { name, description, demoLink, tags, postLink, image } = Astro.props;
 ---
 
-<div class="col-span-12 sm:col-span-6 lg:col-span-4 border dark:border-zinc-700 rounded-xl p-5 hover:shadow-lg transition-all duration-300">
-  <div class="flex flex-wrap gap-2 mb-3">
+<div class="col-span-12 sm:col-span-6 lg:col-span-4 border dark:border-zinc-700 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
+  {image && (
+    <a href={demoLink} target="_blank" rel="noopener noreferrer" class="block relative w-full overflow-hidden bg-zinc-950" style="aspect-ratio: 16/9;" tabindex="-1" aria-hidden="true">
+      <img
+        src={image}
+        alt=""
+        width="800"
+        height="450"
+        loading="lazy"
+        decoding="async"
+        class="absolute inset-0 w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
+      />
+    </a>
+  )}
+  <div class="p-5">
+  <div class="flex flex-wrap gap-1 mb-3">
     {tags && tags.map((tag) => (
-      <span class="border border-zinc-300 dark:border-zinc-700 rounded-2xl text-xs text-zinc-700 dark:text-zinc-300 px-2 py-1">
+      <span class="border border-zinc-300 dark:border-zinc-700 rounded-2xl text-[0.55rem] leading-tight text-zinc-700 dark:text-zinc-300 px-1.5 py-0.5">
         {tag}
       </span>
     ))}
@@ -59,5 +74,6 @@ const { name, description, demoLink, tags, postLink } = Astro.props;
         Último proyecto
       </a>
     )}
+  </div>
   </div>
 </div>

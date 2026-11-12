@@ -11,6 +11,10 @@ import LinksList from '../components/LinksList.astro'
 import PostItem from '../components/PostItem.astro';
 
 import { galleryImages } from '../data/gallery';
+import { getDevLog } from '../data/devlog';
+import FormattedDate from '../components/FormattedDate.astro';
+
+const devLog = await getDevLog();
 
 // Versión grande solo para el lightbox (se descarga al hacer clic, no al cargar la página)
 const galleryWithFull = await Promise.all(
@@ -123,6 +127,31 @@ const top6Projects = projects.slice(0, 6);
           <img src="" alt="" id="lightbox-img" />
         </div>
       </div>
+
+      <!-- Sección Log: commits de GitHub (GVPV12 y greciart) + cambios de STARMOON -->
+      {devLog.length > 0 && (
+        <section class='mt-12 mb-12' aria-labelledby='log-title'>
+          <div class="flex justify-between gap-2 border-b mb-1 dark:border-b-zinc-700">
+            <h2 id='log-title' class="text-lg font-bold mb-3">📜 Log</h2>
+            <a href="https://github.com/GVPV12" class="inline-block py-2 underline dark:prose-invert">GitHub &raquo;</a>
+          </div>
+          <ol class="log-list text-sm">
+            {devLog.map((entry) => (
+              <li class="flex flex-col sm:flex-row gap-1 sm:gap-3 sm:items-baseline border-b py-2 dark:border-b-zinc-700">
+                <span class="text-zinc-700 dark:text-zinc-300 w-24 shrink-0">
+                  <FormattedDate date={new Date(`${entry.date}T12:00:00Z`)} />
+                </span>
+                <span class="grow min-w-0 break-words">
+                  {entry.url
+                    ? <a href={entry.url}>{entry.text}</a>
+                    : entry.text}
+                </span>
+                <span class={`log-source shrink-0 ${entry.source === 'starmoon' ? 'log-starmoon' : ''}`}>{entry.source}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
 		</main>
 	</div>
 </BaseLayout>
@@ -133,6 +162,33 @@ const top6Projects = projects.slice(0, 6);
     line-height: 1.6;
     margin-bottom: 0.75rem;
   
+  }
+
+  /* Log: lista con scroll para no alargar demasiado el home */
+  .log-list {
+    max-height: 26rem;
+    overflow-y: auto;
+    list-style: none;
+    margin: 0;
+    padding: 0 0.25rem 0 0;
+  }
+
+  .log-source {
+    font-size: 0.6rem;
+    border: 1px solid #d4d4d8;
+    border-radius: 1rem;
+    padding: 0.05rem 0.5rem;
+    opacity: 0.85;
+    white-space: nowrap;
+  }
+
+  :global(.dark) .log-source {
+    border-color: #3f3f46;
+  }
+
+  .log-starmoon {
+    border-color: #22d3ee;
+    color: #22d3ee;
   }
 
   /* Galería Camera Roll - 7 columnas x 2 filas estilo Instagram */
