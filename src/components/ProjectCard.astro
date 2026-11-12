@@ -21,7 +21,9 @@ const { name, description, demoLink, postLink, substackLink, tags, image } = Ast
     <div class="relative w-full overflow-hidden bg-zinc-950" style="aspect-ratio: 16/9;">
       <img 
         src={image} 
-        alt={`Preview de ${name}`}
+        alt={`Captura de ${name}`}
+        loading="lazy"
+        decoding="async"
         class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
       />
     </div>
@@ -39,9 +41,9 @@ const { name, description, demoLink, postLink, substackLink, tags, image } = Ast
     )}
     
     {tags && tags.length > 0 && (
-      <div class="flex flex-wrap gap-2">
+      <div class="flex flex-wrap gap-1">
         {tags.map((tag) => (
-          <span class="px-2 py-1 text-xs rounded-md bg-zinc-800 text-zinc-300">
+          <span class="px-1.5 py-0.5 text-[0.55rem] leading-tight rounded bg-zinc-800 text-zinc-300">
             {tag}
           </span>
         ))}
@@ -49,8 +51,8 @@ const { name, description, demoLink, postLink, substackLink, tags, image } = Ast
     )}
 
     <div class="mt-4 flex flex-wrap gap-3 text-sm">
-      <a href={demoLink} target="_blank" rel="noopener noreferrer" class="underline hover:text-zinc-300">Abrir app</a>
-      {postLink && <a href={postLink} target="_blank" rel="noopener noreferrer" class="underline hover:text-zinc-300">Post</a>}
+      <a href={demoLink} target="_blank" rel="noopener noreferrer" class="underline hover:text-zinc-300">Abrir</a>
+      {postLink && <a href={postLink} class="underline hover:text-zinc-300">Post</a>}
       {substackLink && <a href={substackLink} target="_blank" rel="noopener noreferrer" class="underline hover:text-zinc-300">Substack</a>}
     </div>
   </div>

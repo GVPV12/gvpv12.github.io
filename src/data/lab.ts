@@ -15,6 +15,15 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    name: 'BrainDeck',
+    description: 'Mesa de trabajo con más de 20 herramientas para artistas y autodidactas: planes de estudio, OCR a notas, paletas, quitar fondo, PDFs y subtítulos. Todo en el navegador.',
+    demoLink: 'https://mybraindeck.netlify.app/',
+    demoLinkRel: 'noopener noreferrer',
+    postLink: '/posts/braindeck-herramientas-gratis-para-artistas-y-autodidactas/',
+    tags: ['Web dev', 'Herramientas', 'IA local', 'Open source'],
+    image: '/images/lab/braindeck.webp',
+  },
+  {
     name: 'Web retro en Nekoweb',
     description: 'Web inpirada en los 2000s.',
     demoLink: 'https://starmoon.nekoweb.org/',
@@ -35,6 +44,7 @@ export const projects: Project[] = [
     description: 'Cuaderno digital con cosas variadas.',
     demoLink: 'https://starmoon.nekoweb.org/commonplace_book.html',
     demoLinkRel: 'noopener noreferrer',
+    postLink: '/posts/commonplace-book-digital-tracker-de-libros-y-juegos/',
     tags: ['Web dev', 'Escritura', 'HTML'],
     image: '/images/lab/commonplace-book.webp',
   },
@@ -64,6 +74,7 @@ export const projects: Project[] = [
     demoLink: 'https://grecia-v.itch.io/serperwave',
     demoLinkRel: 'noopener noreferrer',
     tags: ['Videojuego', 'Arcade', 'Retro'],
+    image: '/images/lab/serperwave.webp',
   },
   {
     name: 'El Peso del Sí',
@@ -71,6 +82,7 @@ export const projects: Project[] = [
     demoLink: 'https://grecia-v.itch.io/el-peso-del-si',
     demoLinkRel: 'noopener noreferrer',
     tags: ['Videojuego', 'Novela visual', 'Pixel art'],
+    image: '/images/lab/el-peso-del-si.webp',
   },
   {
     name: 'Balam Ball',
@@ -78,6 +90,7 @@ export const projects: Project[] = [
     demoLink: 'https://neurocode.itch.io/balam-ball',
     demoLinkRel: 'noopener noreferrer',
     tags: ['Videojuego', 'Arcade', 'Colaboración'],
+    image: '/images/lab/balam-ball.webp',
   },
   {
     name: 'Comedian Dreams',
@@ -85,5 +98,6 @@ export const projects: Project[] = [
     demoLink: 'https://dreamteamlatam.itch.io/comedian-dreams',
     demoLinkRel: 'noopener noreferrer',
     tags: ['Videojuego', 'Ficción interactiva', 'Game jam'],
+    image: '/images/lab/comedian-dreams.webp',
   },
 ];
