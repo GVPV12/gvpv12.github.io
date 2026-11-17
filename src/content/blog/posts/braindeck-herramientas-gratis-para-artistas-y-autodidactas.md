@@ -48,4 +48,4 @@ Por dentro es HTML, CSS y JavaScript sin compilación. Cada librería pesada se 
 
 BrainDeck es gratis y open source. Puedes usarla directamente en [mybraindeck.netlify.app](https://mybraindeck.netlify.app/), clonarla para tenerla en local o publicarla tú en GitHub Pages o Netlify tal cual, sin configurar nada. Si se te ocurre una herramienta que falte, añadir una nueva es cuestión de un archivo de JavaScript.
 
-El código está en GitHub: [GVPV12/braindeck](https://github.com/GVPV12/braindeck). Si la usas, me encantaría saber qué herramienta terminó siendo tu favorita.
+El código está en GitHub: [GVPV12/braindeck](https://github.com/GVPV12/braindeck). Si quieres ver cada herramienta con capturas, incluido el tracker de progreso pensado para TDAH, lo cuento con más detalle en [BrainDeck: más de 20 herramientas gratis para estudiar y crear](https://grevaleart.com/es/blog/posts/braindeck-free-study-and-art-tools/). Si la usas, me encantaría saber qué herramienta terminó siendo tu favorita.
